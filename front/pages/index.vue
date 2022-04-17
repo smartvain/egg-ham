@@ -31,6 +31,21 @@
             </div>
           </template>
         </v-select>
+
+        <v-card>
+          <v-row class="ml-0">
+            <v-col cols="2">
+              <v-btn
+                :loading="loading.getTranscript"
+                :disabled="isSelectLang"
+                color="primary"
+                @click="validate().then(passes(getTranscript))"
+              >
+                fetch
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-card>
     </v-col>
   </v-row>
 </template>
@@ -46,10 +61,17 @@ export default {
     langList: [],
     loading: {
       getLangList: false,
+      getTranscript: false
     },
     selectLang: null,
+    transcript: null,
     videoUrl: ''
   }),
+  computed: {
+    isSelectLang() {
+      return !this.selectLang
+    }
+  },
   methods: {
     async getLangList() {
       this.loading.getLangList = true
@@ -65,6 +87,21 @@ export default {
 
       this.loading.getLangList = false
     },
+    async getTranscript() {
+      this.loading.getTranscript = true
+
+      try {
+        const url = new URL(this.videoUrl)
+        console.log(this.selectLang)
+        this.transcript = await this.$axios.$get('transcript', {params: {
+          videoId: url.searchParams.get('v'),
+          lang: this.selectLang
+        }})
+      } catch(e) {
+        console.log('字幕が存在しません。')
+      }
+
+      this.loading.getTranscript = false
     }
   }
 }
