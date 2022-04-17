@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\YoutubeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,4 +20,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('getUsers', [UserController::class, 'getUsers']);
+Route::get('transcript', [YoutubeController::class, 'getTranscript']);
+Route::get('langList', [YoutubeController::class, 'getLangList']);
