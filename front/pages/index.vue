@@ -46,6 +46,11 @@
               </v-btn>
             </v-col>
           </v-row>
+          <v-card-text>
+            <p v-for="(line, index) in transcript" :key="index">
+              {{ line }}
+            </p>
+          </v-card-text>
         </v-card>
       </ValidationObserver>
     </v-col>
