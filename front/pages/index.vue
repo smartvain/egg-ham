@@ -2,6 +2,7 @@
   <v-row justify="center" align="center">
     <v-col cols="12" sm="8" md="6">
       <!-- test -->
+      <ValidationObserver v-slot="{ passes, validate }">
         <ValidationProvider v-slot="{ errors }" rules="required" name="URL">
           <v-text-field
             v-model="videoUrl"
@@ -46,6 +47,7 @@
             </v-col>
           </v-row>
         </v-card>
+      </ValidationObserver>
     </v-col>
   </v-row>
 </template>
