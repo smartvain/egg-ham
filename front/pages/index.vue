@@ -11,6 +11,26 @@
             @blur="langList = []; getLangList()"
           />
         </ValidationProvider>
+
+        <v-select
+          v-model="selectLang"
+          :loading="loading.getLangList"
+          :items="langList"
+          item-text="text"
+          item-value="value"
+          label="言語を選択"
+          no-data-text="URLが入力されていません"
+          dense solo
+        >
+          <template v-slot:no-data>
+            <div v-if="loading.getLangList" class="text-center">
+              <v-progress-circular indeterminate color="primary" />
+            </div>
+            <div v-else class="text-center">
+              <span class="grey--text">URLが入力されていません</span>
+            </div>
+          </template>
+        </v-select>
     </v-col>
   </v-row>
 </template>
@@ -27,6 +47,7 @@ export default {
     loading: {
       getLangList: false,
     },
+    selectLang: null,
     videoUrl: ''
   }),
   methods: {
