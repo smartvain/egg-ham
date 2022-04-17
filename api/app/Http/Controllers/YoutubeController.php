@@ -14,7 +14,7 @@ class YoutubeController extends Controller
     {
         $client = new Google_Client();
         $client->setScopes('https://www.googleapis.com/auth/youtubepartner');
-        $client->setDeveloperKey(env('GOOGLE_API_KEY'));
+        $client->setDeveloperKey(config('google_api_key'));
 
         $this->youtube = new Google_Service_YouTube($client);
     }
