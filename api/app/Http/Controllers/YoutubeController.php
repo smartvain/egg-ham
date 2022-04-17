@@ -19,46 +19,48 @@ class YoutubeController extends Controller
         $this->youtube = new Google_Service_YouTube($client);
     }
 
+    public function getLangList(Request $request)
+    {
+        $videoId = $request->get('videoId');
+        
+        $res = $this->getUrlContent("https://www.youtube.com/watch?v={$videoId}");
+
+        $captionTracks = $this->extractCaptionTrack($res);
+        
+        $langList = collect();
+        foreach ($captionTracks as $captionTrack) {
+            $langList->push([
+                'text' => $captionTrack->name->simpleText,
+                'value' => substr($captionTrack->vssId, (strpos($captionTrack->vssId, '.') + strlen('.')))
+            ]);
+        }
+        
+        return $langList;
+    }
+
     public function getTranscript(Request $request)
     {
-        // $videoId = 'moNnVg-BQyE'; // 字幕ありサンプル
-        // $videoId = '8DvywoWv6fI'; // 字幕なしサンプル
         $videoId = $request->get('videoId');
-        $lang = $request->get('language');
+        $lang    = $request->get('lang');
         
-        $url = "https://www.youtube.com/watch?v={$videoId}";
-
-        $client = new Client();
+        $res = $this->getUrlContent("https://www.youtube.com/watch?v={$videoId}");
         
-        // 動画情報取得。
-        $res = $client->requestAsync('GET', $url)
-                      ->wait()
-                      ->getBody()
-                      ->getContents();
-                      
-        // レスポンスからcaptionTracksの項目だけ抽出する。
-        $regex = '/({"captionTracks":.*isTranslatable":(true|false)}])/';
-        preg_match($regex, $res, $matches);
-        dd($matches);
-        $captionTracks = json_decode("{$matches[0]}}")->captionTracks;
+        $captionTracks = $this->extractCaptionTrack($res);
 
         // captionTracksから選択した言語のcaptionTrackだけを抽出する。
         $captionTrack = array_filter($captionTracks, function ($captionTrack) use ($lang) {
             switch ($captionTrack->vssId) {
-                case ".{$lang}" : return true; break;
                 case "a.{$lang}": return true; break;
+                case ".{$lang}" : return true; break;
                 default         : return false;
             }
         });
         $captionTrack = current($captionTrack);
 
         // baseUrlからtranscriptを取得する。
-        $res = $client->requestAsync('GET', $captionTrack->baseUrl)
-                      ->wait()
-                      ->getBody()
-                      ->getContents();
+        $res = $this->getUrlContent($captionTrack->baseUrl);
         
-        // レスポンスから必要な情報以外を切り取る。
+        // レスポンスから不必要な情報を切り取る。
         $res = str_replace('<?xml version="1.0" encoding="utf-8" ?><transcript>', '', $res);
         $res = str_replace('</transcript>', '', $res);
         $transcripts = explode('</text>', $res);
@@ -77,10 +79,30 @@ class YoutubeController extends Controller
             $transcript = preg_replace('/&amp;/i', '&', $transcript);
             $transcript = preg_replace('/&#39;/i', "'", $transcript);
             $transcript = preg_replace('/<\/?[^>]+(>|$)/', '', $transcript);
+            
             $transcripts = array_replace($transcripts, [$transcriptsIndex => $transcript]);
+            
             $transcriptsIndex++;
         }
 
-        return ['transcripts' => $transcripts];
+        return $transcripts;
+    }
+
+    private function getUrlContent($url)
+    {
+        $client = new Client();
+        
+        return  $client->requestAsync('GET', $url)
+                        ->wait()
+                        ->getBody()
+                        ->getContents();
+    }
+
+    private function extractCaptionTrack($content)
+    {
+        $regex = '/({"captionTracks":.*isTranslatable":(true|false)}])/';
+        preg_match($regex, $content, $matches);
+        
+        return json_decode("{$matches[0]}}")->captionTracks;
     }
 }
