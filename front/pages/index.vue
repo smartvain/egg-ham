@@ -22,7 +22,7 @@
           no-data-text="URLが入力されていません"
           dense solo
         >
-          <template v-slot:no-data>
+          <template #no-data>
             <div v-if="loading.getLangList" class="text-center">
               <v-progress-circular indeterminate color="primary" />
             </div>
