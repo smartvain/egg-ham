@@ -3,22 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Google_Client;
-use Google_Service_YouTube;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 class YoutubeController extends Controller
 {
-    public function __construct()
-    {
-        $client = new Google_Client();
-        $client->setScopes('https://www.googleapis.com/auth/youtubepartner');
-        $client->setDeveloperKey(config('google_api_key'));
-
-        $this->youtube = new Google_Service_YouTube($client);
-    }
-
     public function getLangList(Request $request)
     {
         $videoId = $request->get('videoId');
