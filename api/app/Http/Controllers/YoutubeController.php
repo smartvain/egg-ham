@@ -12,13 +12,10 @@ class YoutubeController extends Controller
 {
     public function __construct()
     {
-        // Googleへの接続情報のインスタンスを作成と設定
         $client = new Google_Client();
         $client->setScopes('https://www.googleapis.com/auth/youtubepartner');
-        // $client->setAccessToken(env('OAUTH2_TOKEN'));
         $client->setDeveloperKey(env('GOOGLE_API_KEY'));
 
-        // 接続情報のインスタンスを用いてYoutubeのデータへアクセス可能なインスタンスを生成
         $this->youtube = new Google_Service_YouTube($client);
     }
 
