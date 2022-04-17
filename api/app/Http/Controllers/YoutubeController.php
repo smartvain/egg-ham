@@ -39,8 +39,8 @@ class YoutubeController extends Controller
         // captionTracksから選択した言語のcaptionTrackだけを抽出する。
         $captionTrack = array_filter($captionTracks, function ($captionTrack) use ($lang) {
             switch ($captionTrack->vssId) {
-                case "a.{$lang}": return true; break;
                 case ".{$lang}" : return true; break;
+                case "a.{$lang}": return true; break;
                 default         : return false;
             }
         });
