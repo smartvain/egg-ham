@@ -28,7 +28,7 @@
         >
           <template #no-data>
             <div v-if="loading.getLangList" class="text-center">
-              <v-progress-circular indeterminate color="primary" />
+              <v-progress-circular color="primary" indeterminate/>
             </div>
             <div v-else class="text-center">
               <span class="grey--text">URLが入力されていません</span>
@@ -62,17 +62,15 @@
     <v-col cols="12" sm="8" md="6">
       <v-select
         v-model="transLang"
-        :loading="loading.getLangList"
         :items="transLangList"
         item-text="text"
         item-value="value"
-        label="言語を選択"
-        no-data-text="URLが入力されていません"
+        label="翻訳先を選択"
         dense solo
       >
         <template #no-data>
           <div v-if="loading.getLangList" class="text-center">
-            <v-progress-circular indeterminate color="primary" />
+            <v-progress-circular color="primary" indeterminate/>
           </div>
           <div v-else class="text-center">
             <span class="grey--text">URLが入力されていません</span>
