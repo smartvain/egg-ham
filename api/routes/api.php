@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DeepLController;
 use App\Http\Controllers\YoutubeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,3 +23,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('transcript', [YoutubeController::class, 'getTranscript']);
 Route::get('langList', [YoutubeController::class, 'getLangList']);
+Route::post('translate', [DeepLController::class, 'translate']);
