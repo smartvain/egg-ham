@@ -25,6 +25,7 @@
           label="言語を選択"
           no-data-text="URLが入力されていません"
           dense solo
+          @change="validate().then(passes(getTranscript))"
         >
           <template #no-data>
             <div v-if="loading.getLangList" class="text-center">
@@ -36,26 +37,12 @@
           </template>
         </v-select>
 
-        <v-card>
-          <v-row class="ml-0">
-            <v-col cols="3">
-              <v-btn
-                :loading="loading.getTranscript"
-                :disabled="isSelectLang"
-                color="primary"
-                block
-                @click="validate().then(passes(getTranscript))"
-              >
-                fetch
-              </v-btn>
-            </v-col>
-          </v-row>
-
-          <v-card-text>
-            <p v-for="(line, index) in transcript" :key="index">
-              {{ line }}
-            </p>
-          </v-card-text>
+        <v-card
+          :loading="loading.getTranscript"
+          class="overflow-y-auto overflow-x-hidden"
+          height="500"
+        >
+          <v-card-text>{{ transcript }}</v-card-text>
         </v-card>
       </v-col>
 
@@ -78,25 +65,27 @@
         </template>
       </v-select>
       
-      <v-card>
-          <v-row class="ml-0">
-            <v-col cols="3">
-              <v-btn
-                :loading="loading.translate"
-                :disabled="isTranscript"
-                color="primary"
-                block
-                @click="translate"
-              >
-                translate
-              </v-btn>
-            </v-col>
-          </v-row>
+      <v-card
+        height="500"
+        class="overflow-y-auto overflow-x-hidden"
+      >
+        <v-row class="ml-0">
+          <v-col cols="3">
+            <v-btn
+              :loading="loading.translate"
+              :disabled="isTranscript"
+              class="mt-3"
+              color="primary"
+              block
+              @click="translate"
+            >
+              translate
+            </v-btn>
+          </v-col>
+        </v-row>
 
-          <v-card-text>
-            {{ translatedScript }}
-          </v-card-text>
-        </v-card>
+        <v-card-text>{{ translatedScript }}</v-card-text>
+      </v-card>
     </v-col>
   </v-row>
   </ValidationObserver>
@@ -159,10 +148,12 @@ export default {
 
       try {
         const url = new URL(this.videoUrl)
-        this.transcript = await this.$axios.$get('transcript', {params: {
+        const res = await this.$axios.$get('transcript', {params: {
           videoId: url.searchParams.get('v'),
           lang: this.selectLang
         }})
+        
+        this.transcript = res.join('').replace(/\r?\n/g, '').replace(/\s+/g, ' ')
       } catch(e) {
         console.log('字幕が存在しません。')
       }
