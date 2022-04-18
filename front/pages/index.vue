@@ -1,7 +1,7 @@
 <template>
-  <v-row justify="center" align="center">
-    <v-col cols="12" sm="8" md="6">
-      <ValidationObserver v-slot="{ passes, validate }">
+  <ValidationObserver v-slot="{ passes, validate }">
+    <v-row justify="center">
+      <v-col cols="12" sm="8" md="6">
         <ValidationProvider v-slot="{ errors }" rules="required" name="URL">
           <v-text-field
             v-model="videoUrl"
@@ -11,7 +11,11 @@
             @blur="langList = []; getLangList()"
           />
         </ValidationProvider>
+      </v-col>
+    </v-row>
 
+    <v-row justify="center" class="mt-0">
+      <v-col cols="12" sm="8" md="6">
         <v-select
           v-model="selectLang"
           :loading="loading.getLangList"
@@ -34,26 +38,70 @@
 
         <v-card>
           <v-row class="ml-0">
-            <v-col cols="2">
+            <v-col cols="3">
               <v-btn
                 :loading="loading.getTranscript"
                 :disabled="isSelectLang"
                 color="primary"
+                block
                 @click="validate().then(passes(getTranscript))"
               >
                 fetch
               </v-btn>
             </v-col>
           </v-row>
+
           <v-card-text>
             <p v-for="(line, index) in transcript" :key="index">
               {{ line }}
             </p>
           </v-card-text>
         </v-card>
-      </ValidationObserver>
+      </v-col>
+
+    <v-col cols="12" sm="8" md="6">
+      <v-select
+        v-model="transLang"
+        :loading="loading.getLangList"
+        :items="transLangList"
+        item-text="text"
+        item-value="value"
+        label="言語を選択"
+        no-data-text="URLが入力されていません"
+        dense solo
+      >
+        <template #no-data>
+          <div v-if="loading.getLangList" class="text-center">
+            <v-progress-circular indeterminate color="primary" />
+          </div>
+          <div v-else class="text-center">
+            <span class="grey--text">URLが入力されていません</span>
+          </div>
+        </template>
+      </v-select>
+      
+      <v-card>
+          <v-row class="ml-0">
+            <v-col cols="3">
+              <v-btn
+                :loading="loading.translate"
+                :disabled="isTranscript"
+                color="primary"
+                block
+                @click="translate"
+              >
+                translate
+              </v-btn>
+            </v-col>
+          </v-row>
+
+          <v-card-text>
+            {{ translatedScript }}
+          </v-card-text>
+        </v-card>
     </v-col>
   </v-row>
+  </ValidationObserver>
 </template>
 
 <script>
@@ -65,17 +113,32 @@ export default {
       {text: 'name', value: 'name'}
     ],
     langList: [],
+    transLangList: [
+      {text: '日本語', value: 'JA'},
+      {text: '英語', value: 'EN'}
+    ],
     loading: {
       getLangList: false,
-      getTranscript: false
+      getTranscript: false,
+      translate: false
     },
     selectLang: null,
+    transLang: null,
     transcript: null,
+    translatedScript: '',
     videoUrl: ''
   }),
   computed: {
     isSelectLang() {
       return !this.selectLang
+    },
+    isTranscript() {
+      return !this.transcript
+    }
+  },
+  watch: {
+    selectLang(newVal) {
+      this.transLang = newVal === 'ja' ? 'EN' : 'JA'
     }
   },
   methods: {
@@ -98,7 +161,6 @@ export default {
 
       try {
         const url = new URL(this.videoUrl)
-        console.log(this.selectLang)
         this.transcript = await this.$axios.$get('transcript', {params: {
           videoId: url.searchParams.get('v'),
           lang: this.selectLang
@@ -108,6 +170,22 @@ export default {
       }
 
       this.loading.getTranscript = false
+    },
+    async translate() {
+      this.loading.translate = true
+
+      try {
+        const res = await this.$axios.$post('translate', {
+          transcript: this.transcript,
+          lang: this.transLang
+        })
+        console.log(res.translations[0].text)
+        this.translatedScript = res.translations[0].text
+      } catch(e) {
+        console.log('翻訳に失敗しました。')
+      }
+      
+      this.loading.translate = false
     }
   }
 }
