@@ -138,7 +138,7 @@ export default {
           videoId: url.searchParams.get('v'),
         }})
       } catch(e) {
-        console.log('動画が存在しません。')
+        this.$toast.error('動画が存在しません。')
       }
 
       this.loading.getLangList = false
@@ -152,10 +152,10 @@ export default {
           videoId: url.searchParams.get('v'),
           lang: this.selectLang
         }})
-        
+
         this.transcript = res.join('').replace(/\r?\n/g, '').replace(/\s+/g, ' ')
       } catch(e) {
-        console.log('字幕が存在しません。')
+        this.$toast.error('字幕が存在しません。')
       }
 
       this.loading.getTranscript = false
@@ -168,10 +168,9 @@ export default {
           transcript: this.transcript,
           lang: this.transLang
         })
-        console.log(res.translations[0].text)
         this.translatedScript = res.translations[0].text
       } catch(e) {
-        console.log('翻訳に失敗しました。')
+        this.$toast.error('翻訳に失敗しました。')
       }
       
       this.loading.translate = false
