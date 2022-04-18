@@ -36,7 +36,6 @@ class YoutubeController extends Controller
         
         $captionTracks = $this->extractCaptionTrack($res);
 
-        // captionTracksから選択した言語のcaptionTrackだけを抽出する。
         $captionTrack = array_filter($captionTracks, function ($captionTrack) use ($lang) {
             switch ($captionTrack->vssId) {
                 case ".{$lang}" : return true; break;
@@ -46,10 +45,8 @@ class YoutubeController extends Controller
         });
         $captionTrack = current($captionTrack);
 
-        // baseUrlからtranscriptを取得する。
         $res = $this->getUrlContent($captionTrack->baseUrl);
         
-        // レスポンスから不必要な情報を切り取る。
         $res = str_replace('<?xml version="1.0" encoding="utf-8" ?><transcript>', '', $res);
         $res = str_replace('</transcript>', '', $res);
         $transcripts = explode('</text>', $res);
@@ -57,13 +54,6 @@ class YoutubeController extends Controller
         $transcriptsIndex = 0;
         foreach ($transcripts as $transcript) {
             $transcript = trim($transcript);
-
-            // 字幕の開始時間を取得。
-            // $startRegex = '/start="([\d.]+)"/';
-            // $durRegex = '/dur="([\d.]+)"/';
-            // preg_match($startRegex, $transcript, $start);
-            // preg_match($durRegex, $transcript, $dur);
-
             $transcript = preg_replace('/<text.+>/', '', $transcript);
             $transcript = preg_replace('/&amp;/i', '&', $transcript);
             $transcript = preg_replace('/&#39;/i', "'", $transcript);
