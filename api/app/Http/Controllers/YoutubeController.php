@@ -19,7 +19,7 @@ class YoutubeController extends Controller
         $langList = collect();
         foreach ($captionTracks as $captionTrack) {
             $langList->push([
-                'text' => $captionTrack->name->simpleText,
+                'text'  => $captionTrack->name->simpleText,
                 'value' => substr($captionTrack->vssId, (strpos($captionTrack->vssId, '.') + strlen('.')))
             ]);
         }
