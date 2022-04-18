@@ -81,10 +81,9 @@ class YoutubeController extends Controller
     {
         $client = new Client();
         
-        return  $client->requestAsync('GET', $url)
-                        ->wait()
-                        ->getBody()
-                        ->getContents();
+        return $client->requestAsync('GET', $url)
+                      ->wait()
+                      ->getBody();
     }
 
     private function extractCaptionTrack($content)

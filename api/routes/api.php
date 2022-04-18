@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\DeepLController;
 use App\Http\Controllers\YoutubeController;
 use Illuminate\Http\Request;
