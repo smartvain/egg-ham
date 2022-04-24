@@ -63,15 +63,15 @@
 export default {
   name: 'IndexPage',
   data: () => ({
-    langList: [],
     loading: {
       getLangList: false,
       getTranscript: false,
     },
+    langList: [],
+    videoUrl: '',
     currentLine: '',
     selectLang: null,
     transcript: null,
-    videoUrl: ''
     activeTypingMode: false
   }),
   computed: {
