@@ -43,6 +43,16 @@
           </v-card-text>
         </v-card>
 
+        <v-btn
+          :disabled="isSelectLang"
+          color="primary"
+          class="my-4"
+          @click="
+            activeTypingMode = !activeTypingMode
+            currentLine = transcript[0]"
+        >
+          start
+        </v-btn>
 
       </v-col>
     </v-row>
@@ -58,9 +68,11 @@ export default {
       getLangList: false,
       getTranscript: false,
     },
+    currentLine: '',
     selectLang: null,
     transcript: null,
     videoUrl: ''
+    activeTypingMode: false
   }),
   computed: {
     isSelectLang() {
