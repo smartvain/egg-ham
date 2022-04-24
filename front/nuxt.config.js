@@ -47,7 +47,6 @@ export default {
   ],
 
   toast: {
-    position: 'top-right',
     duration: 3000
   },
 
