@@ -42,7 +42,9 @@
           class="overflow-y-auto overflow-x-hidden"
           height="200"
         >
-          <v-card-text>{{ transcript }}</v-card-text>
+          <v-card-text v-for="(line, index) in transcript" :key="index">
+            {{ line }}
+          </v-card-text>
         </v-card>
       </v-col>
 
@@ -101,12 +103,10 @@ export default {
 
       try {
         const url = new URL(this.videoUrl)
-        const res = await this.$axios.$get('transcript', {params: {
+        this.transcript = await this.$axios.$get('transcript', {params: {
           videoId: url.searchParams.get('v'),
           lang: this.selectLang
         }})
-
-        this.transcript = res.join('').replace(/\r?\n/g, '').replace(/\s+/g, ' ')
       } catch(e) {
         this.$toast.error('字幕が存在しません。')
       }
