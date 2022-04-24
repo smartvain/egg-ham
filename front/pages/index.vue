@@ -53,10 +53,6 @@
 export default {
   name: 'IndexPage',
   data: () => ({
-    headers: [
-      {text: 'id', value: 'id'},
-      {text: 'name', value: 'name'}
-    ],
     langList: [],
     loading: {
       getLangList: false,
@@ -69,11 +65,6 @@ export default {
   computed: {
     isSelectLang() {
       return !this.selectLang
-    }
-  },
-  watch: {
-    selectLang(newVal) {
-      this.transLang = newVal === 'ja' ? 'EN' : 'JA'
     }
   },
   methods: {
