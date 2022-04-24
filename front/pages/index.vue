@@ -11,11 +11,7 @@
             @blur="langList = []; getLangList()"
           />
         </ValidationProvider>
-      </v-col>
-    </v-row>
 
-    <v-row justify="center" class="mt-0">
-      <v-col cols="12" sm="8" md="6">
         <v-select
           v-model="selectLang"
           :loading="loading.getLangList"
@@ -46,11 +42,8 @@
             {{ line }}
           </v-card-text>
         </v-card>
-      </v-col>
 
 
-      <v-col cols="12" sm="8" md="6">
-        
       </v-col>
     </v-row>
   </ValidationObserver>
