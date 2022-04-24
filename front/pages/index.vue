@@ -46,48 +46,11 @@
         </v-card>
       </v-col>
 
-    <v-col cols="12" sm="8" md="6">
-      <v-select
-        v-model="transLang"
-        :items="transLangList"
-        item-text="text"
-        item-value="value"
-        label="翻訳先を選択"
-        dense solo
-      >
-        <template #no-data>
-          <div v-if="loading.getLangList" class="text-center">
-            <v-progress-circular color="primary" indeterminate/>
-          </div>
-          <div v-else class="text-center">
-            <span class="grey--text">URLが入力されていません</span>
-          </div>
-        </template>
-      </v-select>
-      
-      <v-card
-        height="500"
-        class="overflow-y-auto overflow-x-hidden"
-      >
-        <v-row class="ml-0">
-          <v-col cols="3">
-            <v-btn
-              :loading="loading.translate"
-              :disabled="isTranscript"
-              class="mt-3"
-              color="primary"
-              block
-              @click="translate"
-            >
-              translate
-            </v-btn>
-          </v-col>
-        </v-row>
 
-        <v-card-text>{{ translatedScript }}</v-card-text>
-      </v-card>
-    </v-col>
-  </v-row>
+      <v-col cols="12" sm="8" md="6">
+        
+      </v-col>
+    </v-row>
   </ValidationObserver>
 </template>
 
@@ -100,27 +63,17 @@ export default {
       {text: 'name', value: 'name'}
     ],
     langList: [],
-    transLangList: [
-      {text: '日本語', value: 'JA'},
-      {text: '英語', value: 'EN'}
-    ],
     loading: {
       getLangList: false,
       getTranscript: false,
-      translate: false
     },
     selectLang: null,
-    transLang: null,
     transcript: null,
-    translatedScript: '',
     videoUrl: ''
   }),
   computed: {
     isSelectLang() {
       return !this.selectLang
-    },
-    isTranscript() {
-      return !this.transcript
     }
   },
   watch: {
@@ -159,21 +112,6 @@ export default {
       }
 
       this.loading.getTranscript = false
-    },
-    async translate() {
-      this.loading.translate = true
-
-      try {
-        const res = await this.$axios.$post('translate', {
-          transcript: this.transcript,
-          lang: this.transLang
-        })
-        this.translatedScript = res.translations[0].text
-      } catch(e) {
-        this.$toast.error('翻訳に失敗しました。')
-      }
-      
-      this.loading.translate = false
     }
   }
 }
