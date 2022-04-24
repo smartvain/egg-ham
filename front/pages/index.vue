@@ -54,6 +54,11 @@
           start
         </v-btn>
 
+        <v-text-field
+          v-model="currentLine"
+          :disabled="true"
+        />
+
       </v-col>
     </v-row>
   </ValidationObserver>
