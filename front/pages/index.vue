@@ -59,6 +59,16 @@
           :disabled="true"
         />
 
+        <!-- tmp -->
+        <span class="ml-2">
+          タイピングモード: {{ !!activeTypingMode ? 'ON' : 'OFF' }}
+        </span>
+        <span class="ml-2">
+          判定回数: {{ judgeCount }}回
+        </span>
+        <br>
+        <span>{{ inputText }}</span>
+        <!-- tmp -->
 
         <v-text-field
           v-model="inputText"
