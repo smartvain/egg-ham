@@ -40,7 +40,7 @@
         <v-card
           :loading="loading.getTranscript"
           class="overflow-y-auto overflow-x-hidden"
-          height="500"
+          height="200"
         >
           <v-card-text>{{ transcript }}</v-card-text>
         </v-card>
