@@ -59,6 +59,13 @@
           :disabled="true"
         />
 
+
+        <v-text-field
+          v-model="inputText"
+          :disabled="!activeTypingMode"
+          dense solo
+          @change="judge"
+        ></v-text-field>
       </v-col>
     </v-row>
   </ValidationObserver>
@@ -75,8 +82,10 @@ export default {
     langList: [],
     videoUrl: '',
     currentLine: '',
+    judgeCount: 0,
     selectLang: null,
     transcript: null,
+    inputText: null,
     activeTypingMode: false
   }),
   computed: {
@@ -113,6 +122,13 @@ export default {
       }
 
       this.loading.getTranscript = false
+    },
+    judge() {
+      if (this.transcript[this.judgeCount] === this.inputText) {
+        this.judgeCount++
+        this.currentLine = this.transcript[this.judgeCount]
+        this.inputText = null
+      }
     }
   }
 }
