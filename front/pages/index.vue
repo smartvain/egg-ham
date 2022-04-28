@@ -82,6 +82,8 @@
 </template>
 
 <script>
+import TypingScreen from '~/components/TypingScreen.vue'
+
 export default {
   name: 'IndexPage',
   data: () => ({
@@ -99,6 +101,9 @@ export default {
     inputText: null,
     activeTypingMode: false
   }),
+  components: {
+    TypingScreen
+  },
   computed: {
     isSelectLang() {
       return !this.selectLang
