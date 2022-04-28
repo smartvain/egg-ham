@@ -92,6 +92,13 @@ export default {
       getTranscript: false,
     },
     langList: [],
+    typingScreen: {
+      step1: true,
+      step2: false,
+      step3: false,
+      step4: false,
+      inputAria: false
+    },
     videoUrl: '',
     currentLine: '',
     judgeCount: 0,
