@@ -91,7 +91,6 @@ export default {
       getLangList: false,
       getTranscript: false,
     },
-    langList: [],
     typingScreen: {
       step1: true,
       step2: false,
@@ -101,6 +100,7 @@ export default {
     },
     videoUrl: '',
     videoId: '',
+    langList: [],
     selectLang: null,
     transcript: [],
   }),
