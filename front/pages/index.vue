@@ -1,83 +1,164 @@
 <template>
   <ValidationObserver v-slot="{ passes, validate }">
-    <v-row justify="center">
-      <v-col cols="12" sm="8" md="6">
-        <ValidationProvider v-slot="{ errors }" rules="required" name="URL">
-          <v-text-field
-            v-model="videoUrl"
-            :error-messages="errors"
-            label="URLを入力"
-            dense solo
-            @blur="langList = []; getLangList()"
-          />
-        </ValidationProvider>
+    <v-container fluid>
+      <v-row>
+        <v-col cols="9">
+          <v-row justify="center" class="my-4">
+            <v-col cols="8">
+              <ValidationProvider v-slot="{ errors }" rules="required" name="URL">
+                <v-text-field
+                  v-model="videoUrl"
+                  :error-messages="errors"
+                  :background-color="inputUrlAria"
+                  :flat="!isFocus"
+                  placeholder="URLを入力"
+                  dense solo
+                  @focus="
+                    isFocus = true
+                    inputUrlAria = 'white'"
+                  @blur="
+                    isFocus = false
+                    inputUrlAria = '#EEEEEE'
+                    if (!!videoUrl) { langList = []; getLangList() }"
+                />
+              </ValidationProvider>
+            </v-col>
 
-        <v-select
-          v-model="selectLang"
-          :loading="loading.getLangList"
-          :items="langList"
-          item-text="text"
-          item-value="value"
-          label="言語を選択"
-          no-data-text="URLが入力されていません"
-          dense solo
-          @change="validate().then(passes(getTranscript))"
-        >
-          <template #no-data>
-            <div v-if="loading.getLangList" class="text-center">
-              <v-progress-circular color="primary" indeterminate/>
-            </div>
-            <div v-else class="text-center">
-              <span class="grey--text">URLが入力されていません</span>
-            </div>
-          </template>
-        </v-select>
+            <v-col cols="3">
+              <v-select
+                v-model="selectLang"
+                :loading="loading.getLangList"
+                :items="langList"
+                item-text="text"
+                item-value="value"
+                placeholder="言語を選択"
+                no-data-text="URLが入力されていません"
+                dense
+                @change="validate().then(passes(getTranscript))"
+              >
+                <template #no-data>
+                  <div v-if="loading.getLangList" class="text-center">
+                    <v-progress-circular color="primary" indeterminate/>
+                  </div>
+                  <div v-else class="text-center">
+                    <span class="grey--text">URLが入力されていません</span>
+                  </div>
+                </template>
+              </v-select>
+            </v-col>
+          </v-row>
 
-        <v-card
-          :loading="loading.getTranscript"
-          class="overflow-y-auto overflow-x-hidden"
-          height="200"
-        >
-          <v-card-text v-for="(line, index) in transcript" :key="index">
-            {{ line }}
-          </v-card-text>
-        </v-card>
+          <div v-if="!!typingScreen.step1">
+            <v-row justify="center">
+              <v-img
+                max-width="800"
+                lazy-src="'https://cdn.vuetifyjs.com/images/parallax/material.jpg'"
+                :src="`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`"
+                :aspect-ratio="16/9"
+              />
+            </v-row>
 
-        <v-btn
-          :disabled="isSelectLang"
-          color="primary"
-          class="my-4"
-          @click="
-            activeTypingMode = !activeTypingMode
-            currentLine = transcript[0]"
-        >
-          start
-        </v-btn>
+            <v-row justify="center">
+              <v-btn
+                :disabled="isSelectLang"
+                color="primary"
+                class="my-4"
+                @click="
+                  typingScreen.step1 = false
+                  typingScreen.step2 = true
+                  typingScreen.inputAria = true"
+              >
+                start
+              </v-btn>
+            </v-row>
+          </div>
 
-        <v-text-field
-          v-model="currentLine"
-          :disabled="true"
-        />
+          <div v-if="!!typingScreen.step2">
+            <TypingScreen>
+              <v-card-text class="text-center">日本語入力モードをオフにしてください</v-card-text>
+              <v-card-text class="text-center orange--text text-h5">スペースキーで開始</v-card-text>
+              <v-card-text class="text-center">(終了はescキーです)</v-card-text>
+            </TypingScreen>
+          </div>
+            
+          <div v-if="!!typingScreen.step3">
+            <TypingScreen>
+              <v-card-text class="text-center orange--text text-h3">{{ countDown }}</v-card-text>
+            </TypingScreen>
+          </div>
 
-        <!-- tmp -->
-        <span class="ml-2">
-          タイピングモード: {{ !!activeTypingMode ? 'ON' : 'OFF' }}
-        </span>
-        <span class="ml-2">
-          判定回数: {{ judgeCount }}回
-        </span>
-        <br>
-        <span>{{ inputText }}</span>
-        <!-- tmp -->
+          <div v-if="!!typingScreen.step4">
+            <TypingScreen>
+              <v-card-text class="text-center">Game Start1</v-card-text>
+            </TypingScreen>
+          </div>
 
-        <v-text-field
-          v-model="inputText"
-          :disabled="!activeTypingMode"
-          dense solo
-          @change="judge"
-        ></v-text-field>
-      </v-col>
-    </v-row>
+          <div v-if="!!typingScreen.inputAria">
+            <v-row justify="center">
+              <v-col cols="8">
+                <v-text-field
+                  height="120"
+                  dense solo autofocus outlined
+                  @keydown.space="
+                    typingScreen.step2 = false
+                    typingScreen.step3 = true
+                    displayStep4()"
+                />
+              </v-col>
+            </v-row>
+          </div>
+
+          <!-- <v-card
+            :loading="loading.getTranscript"
+            class="overflow-y-auto overflow-x-hidden"
+            height="200"
+          >
+            <v-card-text v-for="(line, index) in transcript" :key="index">
+              {{ line }}
+            </v-card-text>
+          </v-card> -->
+        </v-col>
+
+        <v-divider vertical />
+
+        <v-col cols="3">
+          <v-row justify="center">
+            <img
+              style="width: 90%"
+              src="~/assets/img/example.png"
+              class="my-4"
+            >
+          </v-row>
+
+          <v-row justify="center">
+            <v-card color="#F6F9F9" width="90%" outlined>
+              <v-list color="#F6F9F9">
+                <v-subheader class="font-weight-bold">今週のプレイ動画ランキング！</v-subheader>
+
+                <v-list-item-group>
+                  <v-list-item v-for="n of 3" :key="n">
+                    <v-row class="my-4">
+                      <v-col cols="4">
+                        <v-img
+                          lazy-src="'https://cdn.vuetifyjs.com/images/parallax/material.jpg'"
+                          :src="'https://img.youtube.com/vi/ouf7rXDlkDk/maxresdefault.jpg'"
+                          :aspect-ratio="16/9"
+                        />
+                      </v-col>
+
+                      <v-col cols="8" class="text-truncate">
+                        <span class="text-caption text-no-wrap">Nissy(⻄島隆弘) / 「君に触れた時から」Music Video</span><br>
+                        <span class="text-caption">プレイ回数: 2000回</span><br>
+                      </v-col>
+                    </v-row>
+                  </v-list-item>
+                </v-list-item-group>
+              </v-list>
+            </v-card>
+          </v-row>
+        </v-col>
+      </v-row>
+    </v-container>
   </ValidationObserver>
 </template>
 
@@ -103,6 +184,8 @@ export default {
     langList: [],
     selectLang: null,
     transcript: [],
+    inputUrlAria: '#EEEEEE', // search aria
+    isFocus: false, // search aria
     countDown: 3
   }),
   components: {
