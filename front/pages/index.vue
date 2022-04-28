@@ -122,16 +122,6 @@
               </v-col>
             </v-row>
           </div>
-
-          <!-- <v-card
-            :loading="loading.getTranscript"
-            class="overflow-y-auto overflow-x-hidden"
-            height="200"
-          >
-            <v-card-text v-for="(line, index) in transcript" :key="index">
-              {{ line }}
-            </v-card-text>
-          </v-card> -->
         </v-col>
 
         <v-divider vertical />
