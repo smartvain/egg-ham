@@ -25,7 +25,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar :clipped-left="clipped" fixed app height="50">
+    <v-app-bar :clipped-left="clipped" fixed app elevation="2" height="50">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
 
       <v-btn icon @click.stop="miniVariant = !miniVariant">
