@@ -93,6 +93,7 @@ export default {
     videoUrl: '',
     currentLine: '',
     judgeCount: 0,
+    videoId: '',
     selectLang: null,
     transcript: null,
     inputText: null,
@@ -109,8 +110,9 @@ export default {
 
       try {
         const url = new URL(this.videoUrl)
+        this.videoId = url.searchParams.get('v')
         this.langList = await this.$axios.$get('langList', {params: {
-          videoId: url.searchParams.get('v'),
+          videoId: this.videoId,
         }})
       } catch(e) {
         this.$toast.error('動画が存在しません。')
