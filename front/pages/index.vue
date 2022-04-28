@@ -100,12 +100,8 @@ export default {
       inputAria: false
     },
     videoUrl: '',
-    currentLine: '',
-    judgeCount: 0,
     videoId: '',
     selectLang: null,
-    inputText: null,
-    activeTypingMode: false
     transcript: [],
   }),
   components: {
