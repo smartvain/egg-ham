@@ -222,10 +222,12 @@ export default {
 
       try {
         const url = new URL(this.videoUrl)
-        this.transcript = await this.$axios.$get('transcript', {params: {
+        const res = await this.$axios.$get('transcript', {params: {
           videoId: url.searchParams.get('v'),
           lang: this.selectLang
         }})
+        this.transcript = res.join('').replace(/\r?\n/g, '').replace(/\s+/g, ' ')
+
       } catch(e) {
         this.$toast.error('字幕が存在しません。')
       }
