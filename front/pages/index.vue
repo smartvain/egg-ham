@@ -114,7 +114,7 @@
                 <v-text-field
                   height="120"
                   dense solo autofocus outlined
-                  @keydown.space="
+                  @keydown.space.once="
                     typingScreen.step2 = false
                     typingScreen.step3 = true
                     displayStep4()"
