@@ -104,9 +104,9 @@ export default {
     judgeCount: 0,
     videoId: '',
     selectLang: null,
-    transcript: null,
     inputText: null,
     activeTypingMode: false
+    transcript: [],
   }),
   components: {
     TypingScreen
