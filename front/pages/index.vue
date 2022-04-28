@@ -103,6 +103,7 @@ export default {
     langList: [],
     selectLang: null,
     transcript: [],
+    countDown: 3
   }),
   components: {
     TypingScreen
@@ -143,12 +144,16 @@ export default {
 
       this.loading.getTranscript = false
     },
-    judge() {
-      if (this.transcript[this.judgeCount] === this.inputText) {
-        this.judgeCount++
-        this.currentLine = this.transcript[this.judgeCount]
-        this.inputText = null
-      }
+    displayStep4() {
+      const countDown = setInterval(() => {
+        this.countDown = this.countDown - 1
+
+        if (this.countDown === 0 ) {
+          this.typingScreen.step3 = false
+          this.typingScreen.step4 = true
+          clearInterval(countDown);
+        }
+      }, 1000)
     }
   }
 }
