@@ -75,21 +75,36 @@
 
           <div v-if="!!typingScreen.step2">
             <TypingScreen>
-              <v-card-text class="text-center">日本語入力モードをオフにしてください</v-card-text>
-              <v-card-text class="text-center orange--text text-h5">スペースキーで開始</v-card-text>
-              <v-card-text class="text-center">(終了はescキーです)</v-card-text>
+              <v-row align-content="center" style="height: 100%">
+                <v-col>
+                  <v-card-text class="text-center">日本語入力モードをオフにしてください</v-card-text>
+                  <v-card-text class="text-center orange--text text-h5">スペースキーで開始</v-card-text>
+                  <v-card-text class="text-center">(終了はescキーです)</v-card-text>
+                </v-col>
+              </v-row>
             </TypingScreen>
           </div>
             
           <div v-if="!!typingScreen.step3">
             <TypingScreen>
-              <v-card-text class="text-center orange--text text-h3">{{ countDown }}</v-card-text>
+              <v-row align-content="center" style="height: 100%">
+                <v-col>
+                  <v-card-text class="text-center orange--text text-h3">{{ countDown }}</v-card-text>
+                </v-col>
+              </v-row>
             </TypingScreen>
           </div>
 
           <div v-if="!!typingScreen.step4">
             <TypingScreen>
-              <v-card-text class="text-center">Game Start1</v-card-text>
+              <v-row style="height: 100%">
+                <v-col>
+                  <v-card-text class="text-center">{{ transcript }}</v-card-text>
+                  <!-- <v-card-text v-for="(line, index) in transcript" :key="index">
+                    {{ line }}
+                  </v-card-text> -->
+                </v-col>
+              </v-row>
             </TypingScreen>
           </div>
 

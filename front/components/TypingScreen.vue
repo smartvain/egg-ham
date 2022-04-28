@@ -1,12 +1,12 @@
 <template>
   <v-row justify="center">
     <v-col cols="8">
-      <v-card height="400" outlined>
-        <v-row align-content="center" style="height: 100%">
-          <v-col>
-            <slot />
-          </v-col>
-        </v-row>
+      <v-card
+        class="overflow-y-auto overflow-x-hidden"
+        height="400"
+        outlined
+      >
+        <slot />
       </v-card>
     </v-col>
   </v-row>
