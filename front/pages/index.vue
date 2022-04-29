@@ -107,6 +107,18 @@
             </TypingScreen>
           </div>
 
+          <div v-if="typingScreen.step5">
+            <TypingScreen>
+              <v-row align-content="center" style="height: 100%">
+                <v-col>
+                  <v-card-text class="text-center">
+                    Game Finish!
+                  </v-card-text>
+                </v-col>
+              </v-row>
+            </TypingScreen>
+          </div>
+
           <div v-if="typingScreen.inputAria">
             <v-row justify="center">
               <v-col cols="8">
