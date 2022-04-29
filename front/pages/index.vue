@@ -19,7 +19,7 @@
                   @blur="
                     isFocus = false
                     inputUrlAria = '#EEEEEE'
-                    if (!!videoUrl) { langList = []; getLangList() }"
+                    if (videoUrl) { langList = []; getLangList() }"
                 />
               </ValidationProvider>
             </v-col>
@@ -48,7 +48,7 @@
             </v-col>
           </v-row>
 
-          <div v-if="!!typingScreen.step1">
+          <div v-if="typingScreen.step1">
             <v-row justify="center">
               <v-img
                 max-width="800"
@@ -73,7 +73,7 @@
             </v-row>
           </div>
 
-          <div v-if="!!typingScreen.step2">
+          <div v-if="typingScreen.step2">
             <TypingScreen>
               <v-row align-content="center" style="height: 100%">
                 <v-col>
@@ -85,7 +85,7 @@
             </TypingScreen>
           </div>
             
-          <div v-if="!!typingScreen.step3">
+          <div v-if="typingScreen.step3">
             <TypingScreen>
               <v-row align-content="center" style="height: 100%">
                 <v-col>
@@ -95,7 +95,7 @@
             </TypingScreen>
           </div>
 
-          <div v-if="!!typingScreen.step4">
+          <div v-if="typingScreen.step4">
             <TypingScreen>
               <v-row style="height: 100%">
                 <v-col>
@@ -108,7 +108,7 @@
             </TypingScreen>
           </div>
 
-          <div v-if="!!typingScreen.inputAria">
+          <div v-if="typingScreen.inputAria">
             <v-row justify="center">
               <v-col cols="8">
                 <v-text-field
