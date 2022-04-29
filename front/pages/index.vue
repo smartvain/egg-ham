@@ -210,6 +210,12 @@ export default {
         this.typed += this.untyped.substring(0, 1)
         this.untyped = this.untyped.substring(1)
       }
+
+      if (this.typingScreen.step2 && e.code === 'Space') {
+        this.typingScreen.step2 = false
+        this.typingScreen.step3 = true
+        this.displayStep4()
+      }
     })
   },
   methods: {
