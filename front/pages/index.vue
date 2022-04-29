@@ -220,6 +220,7 @@ export default {
   mounted() {
     document.addEventListener('keydown', (e) => {
       if (this.typingScreen.step4) {
+        if (e.key !== this.untyped.substring(0, 1)) { return }
         this.typed += this.untyped.substring(0, 1)
         this.untyped = this.untyped.substring(1)
       }
