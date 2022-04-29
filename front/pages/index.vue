@@ -195,6 +195,7 @@ export default {
       step2: false,
       step3: false,
       step4: false,
+      step5: false,
       inputAria: false
     },
     videoUrl: '',
