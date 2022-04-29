@@ -89,7 +89,7 @@
             <TypingScreen>
               <v-row align-content="center" style="height: 100%">
                 <v-col>
-                  <v-card-text class="text-center orange--text text-h3">{{ countDown }}</v-card-text>
+                  <v-card-text class="text-center orange--text text-h3">{{ countDownTime }}</v-card-text>
                 </v-col>
               </v-row>
             </TypingScreen>
@@ -205,7 +205,7 @@ export default {
     transcript: [],
     inputUrlAria: '#EEEEEE', // search aria
     isFocus: false, // search aria
-    countDown: 3,
+    countDownTime: 3,
     typed: '',
     untyped: ''
   }),
@@ -273,9 +273,9 @@ export default {
     },
     countDown() {
       const countDown = setInterval(() => {
-        this.countDown = this.countDown - 1
+        this.countDownTime = this.countDownTime - 1
 
-        if (this.countDown === 0 ) {
+        if (this.countDownTime === 0 ) {
           this.typingScreen.step3 = false
           this.typingScreen.step4 = true
           clearInterval(countDown);
