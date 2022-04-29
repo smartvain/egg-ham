@@ -204,6 +204,14 @@ export default {
       return !this.selectLang
     }
   },
+  mounted() {
+    document.addEventListener('keydown', (e) => {
+      if (this.typingScreen.step4) {
+        this.typed += this.untyped.substring(0, 1)
+        this.untyped = this.untyped.substring(1)
+      }
+    })
+  },
   methods: {
     async getLangList() {
       this.loading.getLangList = true
