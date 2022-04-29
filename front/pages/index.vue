@@ -99,10 +99,9 @@
             <TypingScreen>
               <v-row style="height: 100%">
                 <v-col>
-                  <v-card-text class="text-center">{{ transcript }}</v-card-text>
-                  <!-- <v-card-text v-for="(line, index) in transcript" :key="index">
-                    {{ line }}
-                  </v-card-text> -->
+                  <v-card-text class="text-center">
+                    <span class="red--text">{{ typed }}</span><span>{{ untyped }}</span>
+                  </v-card-text>
                 </v-col>
               </v-row>
             </TypingScreen>
@@ -111,14 +110,16 @@
           <div v-if="typingScreen.inputAria">
             <v-row justify="center">
               <v-col cols="8">
-                <v-text-field
-                  height="120"
-                  dense solo autofocus outlined
-                  @keydown.space.once="
-                    typingScreen.step2 = false
-                    typingScreen.step3 = true
-                    displayStep4()"
-                />
+                <v-card height="100" outlined>
+                  <v-card-text
+                    class="mx-auto px-0 text-no-wrap overflow-x-hidden"
+                    style="width: 95%"
+                  >
+                    <div v-if="typingScreen.step4">
+                      <span class="red--text">{{ typed }}</span><span>{{ untyped }}</span>
+                    </div>
+                  </v-card-text>
+                </v-card>
               </v-col>
             </v-row>
           </div>
@@ -191,7 +192,9 @@ export default {
     transcript: [],
     inputUrlAria: '#EEEEEE', // search aria
     isFocus: false, // search aria
-    countDown: 3
+    countDown: 3,
+    typed: '',
+    untyped: ''
   }),
   components: {
     TypingScreen
@@ -227,6 +230,7 @@ export default {
           lang: this.selectLang
         }})
         this.transcript = res.join('').replace(/\r?\n/g, '').replace(/\s+/g, ' ')
+        this.untyped = this.transcript
 
       } catch(e) {
         this.$toast.error('字幕が存在しません。')
