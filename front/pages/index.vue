@@ -223,6 +223,11 @@ export default {
         if (e.key !== this.untyped.substring(0, 1)) { return }
         this.typed += this.untyped.substring(0, 1)
         this.untyped = this.untyped.substring(1)
+
+        if (this.untyped === '') {
+          this.typingScreen.step4 = false
+          this.typingScreen.step5 = true
+        }
       }
 
       if (this.typingScreen.step2 && e.code === 'Space') {
