@@ -233,7 +233,7 @@ export default {
       if (this.typingScreen.step2 && e.code === 'Space') {
         this.typingScreen.step2 = false
         this.typingScreen.step3 = true
-        this.displayStep4()
+        this.countDown()
       }
     })
   },
@@ -271,7 +271,7 @@ export default {
 
       this.loading.getTranscript = false
     },
-    displayStep4() {
+    countDown() {
       const countDown = setInterval(() => {
         this.countDown = this.countDown - 1
 
