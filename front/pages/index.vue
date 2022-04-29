@@ -100,7 +100,7 @@
               <v-row style="height: 100%">
                 <v-col>
                   <v-card-text class="text-center">
-                    <span class="red--text">{{ typed }}</span><span>{{ untyped }}</span>
+                    <span class="orange--text">{{ typed }}</span><span>{{ untyped }}</span>
                   </v-card-text>
                 </v-col>
               </v-row>
@@ -116,7 +116,7 @@
                     style="width: 95%"
                   >
                     <div v-if="typingScreen.step4">
-                      <span class="red--text">{{ typed }}</span><span>{{ untyped }}</span>
+                      <span class="orange--text">{{ typed }}</span><span>{{ untyped }}</span>
                     </div>
                   </v-card-text>
                 </v-card>
