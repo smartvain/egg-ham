@@ -185,6 +185,9 @@ import TypingScreen from '~/components/TypingScreen.vue'
 
 export default {
   name: 'IndexPage',
+  components: {
+    TypingScreen
+  },
   data: () => ({
     loading: {
       getLangList: false,
@@ -209,9 +212,6 @@ export default {
     typed: '',
     untyped: ''
   }),
-  components: {
-    TypingScreen
-  },
   computed: {
     isSelectLang() {
       return !this.selectLang
