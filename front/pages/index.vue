@@ -100,7 +100,7 @@
               <v-row style="height: 100%">
                 <v-col>
                   <v-card-text class="text-center">
-                    <span class="orange--text">{{ typed }}</span><span>{{ untyped }}</span>
+                    <span class="orange--text">{{ transcript.typed }}</span><span>{{ transcript.untyped }}</span>
                   </v-card-text>
                 </v-col>
               </v-row>
@@ -128,9 +128,10 @@
                     style="width: 95%"
                   >
                     <div v-if="typingScreen.step4">
-                      <span class="orange--text">{{ typed }}</span><span>{{ untyped }}</span>
                     </div>
                   </v-card-text>
+                          <span class="orange--text">{{ hiraText.typed }}</span><span>{{ hiraText.untyped }}</span><br>
+                          <span class="orange--text">{{ roman.typed }}</span><span>{{ roman.untyped }}</span>
                 </v-card>
               </v-col>
             </v-row>
@@ -201,11 +202,22 @@ export default {
       step5: false,
       inputAria: false
     },
+    transcript: {
+      typed: '',
+      untyped: ''
+    },
+    roman: {
+      typed: '',
+      untyped: ''
+    },
+    hiraText: {
+      typed: '',
+      untyped: ''
+    },
     videoUrl: '',
     videoId: '',
     langList: [],
     selectLang: null,
-    transcript: [],
     inputUrlAria: '#EEEEEE', // search aria
     isFocus: false, // search aria
     countDownTime: 3,
@@ -220,11 +232,11 @@ export default {
   mounted() {
     document.addEventListener('keydown', (e) => {
       if (this.typingScreen.step4) {
-        if (e.key !== this.untyped.substring(0, 1)) { return }
-        this.typed += this.untyped.substring(0, 1)
-        this.untyped = this.untyped.substring(1)
+        if (e.key !== this.roman.untyped.substring(0, 1)) { return }
+        this.roman.typed += this.roman.untyped.substring(0, 1)
+        this.roman.untyped = this.roman.untyped.substring(1)
 
-        if (this.untyped === '') {
+        if (this.roman.untyped === '') {
           this.typingScreen.step4 = false
           this.typingScreen.step5 = true
         }
@@ -262,9 +274,9 @@ export default {
           videoId: url.searchParams.get('v'),
           lang: this.selectLang
         }})
-        this.transcript = res.join('').replace(/\r?\n/g, '').replace(/\s+/g, ' ')
-        this.untyped = this.transcript
-
+        this.transcript.untyped = res.transcript.join('').replace(/\r?\n/g, '').replace(/\s+/g, ' ')
+        this.hiraText.untyped = res.hiraText
+        this.roman.untyped = this.$kanaToRoman(res.hiraText, 'hepburn', {bmp: true, longSound: 'hyphen'})
       } catch(e) {
         this.$toast.error('字幕が存在しません。')
       }
