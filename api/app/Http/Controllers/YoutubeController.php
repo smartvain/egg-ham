@@ -64,7 +64,9 @@ class YoutubeController extends Controller
             $transcriptsIndex++;
         }
 
-        return $transcripts;
+        $hiraText = $this->convertToHira(implode($transcripts));
+
+        return ['transcript' => $transcripts, 'hiraText' => $hiraText];
     }
 
     private function getUrlContent($url)
@@ -82,5 +84,28 @@ class YoutubeController extends Controller
         preg_match($regex, $content, $matches);
         
         return json_decode("{$matches[0]}}")->captionTracks;
+    }
+
+    public function convertToHira($sentence)
+    {
+        $options = [
+            'form_params' => [
+                'appid'    => config('yahoo.yahoo_app_id'),
+                'sentence' => $sentence,
+                'results'  => 'ma'
+            ]
+        ];
+        
+        $client = new Client();
+
+        $xml = $client->requestAsync('POST', 'https://jlp.yahooapis.jp/MAService/V1/parse', $options)
+                        ->wait()
+                        ->getBody()
+                        ->getContents();
+
+        $regex = '|<reading>(.*?)</reading>|is';
+        preg_match_all($regex, $xml, $matches);
+
+        return implode($matches[1]);
     }
 }
