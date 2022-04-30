@@ -251,6 +251,13 @@ export default {
       return !this.selectLang
     }
   },
+  created() {
+    this.videoUrl = 'https://www.youtube.com/watch?v=ouf7rXDlkDk'
+    this.videoId = 'ouf7rXDlkDk'
+    this.selectLang = 'ja'
+
+    this.getTranscript()
+  },
   mounted() {
     document.addEventListener('keydown', (e) => {
       if (this.typingScreen.step4) {
