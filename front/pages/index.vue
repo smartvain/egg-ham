@@ -5,7 +5,11 @@
         <v-col cols="9">
           <v-row justify="center" class="my-4">
             <v-col cols="8">
-              <ValidationProvider v-slot="{ errors }" rules="required" name="URL">
+              <ValidationProvider
+                v-slot="{ errors }"
+                rules="required"
+                name="URL"
+              >
                 <v-text-field
                   v-model="videoUrl"
                   :error-messages="errors"
@@ -75,7 +79,10 @@
 
           <div v-if="typingScreen.step2">
             <TypingScreen>
-              <v-row align-content="center" style="height: 100%">
+              <v-row
+                align-content="center"
+                style="height: 100%"
+              >
                 <v-col>
                   <v-card-text class="text-center">日本語入力モードをオフにしてください</v-card-text>
                   <v-card-text class="text-center orange--text text-h5">スペースキーで開始</v-card-text>
@@ -87,7 +94,11 @@
             
           <div v-if="typingScreen.step3">
             <TypingScreen>
-              <v-row align-content="center" style="height: 100%">
+              <v-row
+                align-content="center"
+                class="mt-0"
+                style="height: 100%"
+              >
                 <v-col>
                   <v-card-text class="text-center orange--text text-h3">{{ countDownTime }}</v-card-text>
                 </v-col>
@@ -97,7 +108,10 @@
 
           <div v-if="typingScreen.step4">
             <TypingScreen>
-              <v-row style="height: 100%">
+              <v-row
+                class="mt-0"
+                style="height: 100%"
+              >
                 <v-col>
                   <v-card-text class="text-center">
                     <span class="orange--text">{{ transcript.typed }}</span><span>{{ transcript.untyped }}</span>
@@ -109,7 +123,11 @@
 
           <div v-if="typingScreen.step5">
             <TypingScreen>
-              <v-row align-content="center" style="height: 100%">
+              <v-row
+                align-content="center"
+                class="mt-0"
+                style="height: 100%"
+              >
                 <v-col>
                   <v-card-text class="text-center">
                     Game Finish!
@@ -123,15 +141,19 @@
             <v-row justify="center">
               <v-col cols="8">
                 <v-card height="100" outlined>
-                  <v-card-text
-                    class="mx-auto px-0 text-no-wrap overflow-x-hidden"
-                    style="width: 95%"
-                  >
-                    <div v-if="typingScreen.step4">
-                    </div>
-                  </v-card-text>
+                  <v-row align-content="center" class="mt-0" style="height: 100%">
+                    <v-col>
+                      <div v-if="typingScreen.step4">
+                        <v-card-text
+                          class="mx-auto px-0 text-no-wrap overflow-x-hidden"
+                          style="width: 95%"
+                        >
                           <span class="orange--text">{{ hiraText.typed }}</span><span>{{ hiraText.untyped }}</span><br>
                           <span class="orange--text">{{ roman.typed }}</span><span>{{ roman.untyped }}</span>
+                        </v-card-text>
+                      </div>
+                    </v-col>
+                  </v-row>
                 </v-card>
               </v-col>
             </v-row>
