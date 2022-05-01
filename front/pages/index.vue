@@ -277,8 +277,8 @@ export default {
     untyped: '',
   }),
   created() {
-    this.videoUrl = 'https://www.youtube.com/watch?v=ouf7rXDlkDk'
-    this.videoId = 'ouf7rXDlkDk'
+    this.videoInfo.url = 'https://www.youtube.com/watch?v=ouf7rXDlkDk'
+    this.videoInfo.id = 'ouf7rXDlkDk'
     this.selectLang = 'ja'
 
     this.getTranscript()
