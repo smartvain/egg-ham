@@ -11,19 +11,19 @@
                 name="URL"
               >
                 <v-text-field
-                  v-model="videoUrl"
+                  v-model="videoInfo.url"
                   :error-messages="errors"
-                  :background-color="inputUrlAria"
-                  :flat="!isFocus"
+                  :background-color="inputUrlAria.bgColor"
+                  :flat="!inputUrlAria.isFocus"
                   placeholder="URLを入力"
                   dense solo
                   @focus="
-                    isFocus = true
-                    inputUrlAria = 'white'"
+                    inputUrlAria.isFocus = true
+                    inputUrlAria.bgColor = 'white'"
                   @blur="
-                    isFocus = false
-                    inputUrlAria = '#EEEEEE'
-                    if (videoUrl) { langList = []; getLangList() }"
+                    inputUrlAria.isFocus = false
+                    inputUrlAria.bgColor = '#EEEEEE'
+                    if (videoInfo.url) { langList = []; getLangList() }"
                 />
               </ValidationProvider>
             </v-col>
@@ -57,7 +57,7 @@
               <v-img
                 max-width="800"
                 lazy-src="'https://cdn.vuetifyjs.com/images/parallax/material.jpg'"
-                :src="`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`"
+                :src="`https://img.youtube.com/vi/${videoInfo.id}/maxresdefault.jpg`"
                 :aspect-ratio="16/9"
               />
             </v-row>
@@ -261,13 +261,17 @@ export default {
       next: 0,
       halfDisplayBox: 0
     },
+    inputUrlAria: {
+      bgColor: '#EEEEEE',
+      isFocus: false
+    },
+    videoInfo: {
+      url: '',
+      id: ''
+    },
     subtractWidth: 0,
-    videoUrl: '',
-    videoId: '',
     langList: [],
     selectLang: null,
-    inputUrlAria: '#EEEEEE', // search aria
-    isFocus: false, // search aria
     countDownTime: 3,
     typed: '',
     untyped: '',
@@ -304,10 +308,10 @@ export default {
       this.loading.getLangList = true
 
       try {
-        const url = new URL(this.videoUrl)
-        this.videoId = url.searchParams.get('v')
+        const url = new URL(this.videoInfo.url)
+        this.videoInfo.id = url.searchParams.get('v')
         this.langList = await this.$axios.$get('langList', {params: {
-          videoId: this.videoId,
+          videoId: this.videoInfo.id
         }})
       } catch(e) {
         this.$toast.error('動画が存在しません。')
@@ -319,9 +323,8 @@ export default {
       this.loading.getTranscript = true
 
       try {
-        const url = new URL(this.videoUrl)
         const res = await this.$axios.$get('transcript', {params: {
-          videoId: url.searchParams.get('v'),
+          videoId: this.videoInfo.id,
           lang: this.selectLang
         }})
         const roman = this.reviseText(res.hiraText)
