@@ -145,11 +145,30 @@
                     <v-col>
                       <div v-if="typingScreen.step4">
                         <v-card-text
-                          class="mx-auto px-0 text-no-wrap overflow-x-hidden"
-                          style="width: 95%"
+                          class="mx-auto px-0 py-10 text-no-wrap overflow-x-hidden"
+                          style="width: 95%; position: relative;"
+                          ref="textBox"
                         >
-                          <span class="orange--text">{{ hiraText.typed }}</span><span>{{ hiraText.untyped }}</span><br>
-                          <span class="orange--text">{{ roman.typed }}</span><span>{{ roman.untyped }}</span>
+                          <div :style="`left: ${subtractWidth}px; position: absolute` ">
+                            <span
+                              class="orange--text"
+                            >
+                              {{ hiraText.typed }}</span><span>{{ hiraText.untyped }}
+                            </span>
+                          </div>
+
+                          <br>
+
+                          <div :style="`left: ${subtractWidth}px; position: absolute`" class="text-h5">
+                            <span
+                              class="orange--text"
+                              ref="typedRoman"
+                            >
+                              {{ roman.typed }}
+                            </span>
+                            <span ref="next">{{ roman.next }}</span>
+                            <span>{{ roman.untyped }}</span>
+                          </div>
                         </v-card-text>
                       </div>
                     </v-col>
@@ -230,12 +249,19 @@ export default {
     },
     roman: {
       typed: '',
-      untyped: ''
+      untyped: '',
+      next: ''
     },
     hiraText: {
       typed: '',
       untyped: ''
     },
+    elWidth: {
+      typedRoman: 0,
+      next: 0,
+      halfDisplayBox: 0
+    },
+    subtractWidth: 0,
     videoUrl: '',
     videoId: '',
     langList: [],
@@ -244,12 +270,13 @@ export default {
     isFocus: false, // search aria
     countDownTime: 3,
     typed: '',
-    untyped: ''
+    untyped: '',
   }),
   computed: {
     isSelectLang() {
       return !this.selectLang
-    }
+    },
+
   },
   created() {
     this.videoUrl = 'https://www.youtube.com/watch?v=ouf7rXDlkDk'
@@ -259,11 +286,16 @@ export default {
     this.getTranscript()
   },
   mounted() {
-    document.addEventListener('keydown', (e) => {
+    document.addEventListener('keydown', e => {
       if (this.typingScreen.step4) {
-        if (e.key !== this.roman.untyped.substring(0, 1)) { return }
-        this.roman.typed += this.roman.untyped.substring(0, 1)
+        if (e.key.toUpperCase() !== this.roman.next) { return }
+        this.roman.typed += this.roman.next
+        this.roman.next = this.roman.untyped.substring(0, 1)
         this.roman.untyped = this.roman.untyped.substring(1)
+
+        this.elWidth.halfDisplayBox = this.getWidth(this.$refs.textBox) / 2
+        this.elWidth.typedRoman     = this.getWidth(this.$refs.typedRoman)
+        this.elWidth.next           = this.getWidth(this.$refs.next)
 
         if (this.roman.untyped === '') {
           this.typingScreen.step4 = false
@@ -277,6 +309,13 @@ export default {
         this.countDown()
       }
     })
+  },
+  watch: {
+    'elWidth.typedRoman'() {
+      if (this.elWidth.typedRoman > this.elWidth.halfDisplayBox) {
+        this.subtractWidth -= this.elWidth.next
+      }
+    }
   },
   methods: {
     async getLangList() {
@@ -303,9 +342,14 @@ export default {
           videoId: url.searchParams.get('v'),
           lang: this.selectLang
         }})
-        this.transcript.untyped = res.transcript.join('').replace(/\r?\n/g, '').replace(/\s+/g, ' ')
+        
+        this.transcript.untyped = res.transcript.join('').replace(/\r?\n/g, '').replace(/\s+/g, ' ')// 改行と空行削除
+
         this.hiraText.untyped = res.hiraText
-        this.roman.untyped = this.$kanaToRoman(res.hiraText, 'hepburn', {bmp: true, longSound: 'hyphen'})
+
+        const roman = this.reviseText(res.hiraText)
+        this.roman.next = roman.substring(0, 1)
+        this.roman.untyped = roman.substring(1)
       } catch(e) {
         this.$toast.error('字幕が存在しません。')
       }
@@ -322,6 +366,22 @@ export default {
           clearInterval(countDown);
         }
       }, 1000)
+    },
+    getWidth(el) {
+      const dom = el
+      const rect = dom.getBoundingClientRect();
+      return rect.width
+    },
+    reviseText (text) {
+      return this.$kanaToRoman(text, 'hepburn', {bmp: true}).toUpperCase()
+                  .replace(/\s+/g, "")
+                  .replaceAll('（', "")
+                  .replaceAll('(', "")
+                  .replaceAll('）', "")
+                  .replaceAll(')', "")
+                  .replaceAll('「', "")
+                  .replaceAll('」', "")
+                  .replaceAll('’', "")
     }
   }
 }
