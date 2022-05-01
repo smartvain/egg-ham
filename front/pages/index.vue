@@ -247,14 +247,14 @@ export default {
       typed: '',
       untyped: ''
     },
+    hiraText: {
+      typed: '',
+      untyped: ''
+    },
     roman: {
       typed: '',
       untyped: '',
       next: ''
-    },
-    hiraText: {
-      typed: '',
-      untyped: ''
     },
     elWidth: {
       typedRoman: 0,
