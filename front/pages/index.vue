@@ -287,26 +287,14 @@ export default {
   },
   mounted() {
     document.addEventListener('keydown', e => {
-      if (this.typingScreen.step4) {
-        if (e.key.toUpperCase() !== this.roman.next) { return }
-        this.roman.typed += this.roman.next
-        this.roman.next = this.roman.untyped.substring(0, 1)
-        this.roman.untyped = this.roman.untyped.substring(1)
-
-        this.elWidth.halfDisplayBox = this.getWidth(this.$refs.textBox) / 2
-        this.elWidth.typedRoman     = this.getWidth(this.$refs.typedRoman)
-        this.elWidth.next           = this.getWidth(this.$refs.next)
-
-        if (this.roman.untyped === '') {
-          this.typingScreen.step4 = false
-          this.typingScreen.step5 = true
-        }
-      }
-
       if (this.typingScreen.step2 && e.code === 'Space') {
         this.typingScreen.step2 = false
         this.typingScreen.step3 = true
         this.countDown()
+      }
+
+      if (this.typingScreen.step4) {
+        this.typingLogic(e.key)
       }
     })
   },
@@ -382,6 +370,22 @@ export default {
                   .replaceAll('「', "")
                   .replaceAll('」', "")
                   .replaceAll('’', "")
+    },
+    typingLogic(key) {
+      if (key.toUpperCase() !== this.roman.next) { return }
+        
+      this.roman.typed   += this.roman.next
+      this.roman.next    = this.roman.untyped.substring(0, 1)
+      this.roman.untyped = this.roman.untyped.substring(1)
+
+      this.elWidth.halfDisplayBox = this.getWidth(this.$refs.textBox) / 2
+      this.elWidth.typedRoman     = this.getWidth(this.$refs.typedRoman)
+      this.elWidth.next           = this.getWidth(this.$refs.next)
+
+      if (this.roman.untyped === '') {
+        this.typingScreen.step4 = false
+        this.typingScreen.step5 = true
+      }
     }
   }
 }
