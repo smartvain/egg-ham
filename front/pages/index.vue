@@ -324,14 +324,12 @@ export default {
           videoId: url.searchParams.get('v'),
           lang: this.selectLang
         }})
+        const roman = this.reviseText(res.hiraText)
         
         this.transcript.untyped = res.transcript.join('').replace(/\r?\n/g, '').replace(/\s+/g, ' ')// 改行と空行削除
-
         this.hiraText.untyped = res.hiraText
-
-        const roman = this.reviseText(res.hiraText)
-        this.roman.next = roman.substring(0, 1)
         this.roman.untyped = roman.substring(1)
+        this.roman.next = roman.substring(0, 1)
       } catch(e) {
         this.$toast.error('字幕が存在しません。')
       }
