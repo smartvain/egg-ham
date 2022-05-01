@@ -64,7 +64,7 @@
 
             <v-row justify="center">
               <v-btn
-                :disabled="isSelectLang"
+                :disabled="!selectLang"
                 color="primary"
                 class="my-4"
                 @click="
@@ -272,12 +272,6 @@ export default {
     typed: '',
     untyped: '',
   }),
-  computed: {
-    isSelectLang() {
-      return !this.selectLang
-    },
-
-  },
   created() {
     this.videoUrl = 'https://www.youtube.com/watch?v=ouf7rXDlkDk'
     this.videoId = 'ouf7rXDlkDk'
