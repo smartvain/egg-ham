@@ -25,6 +25,8 @@
                     inputUrlAria.isFocus = false
                     inputUrlAria.bgColor = '#EEEEEE'
                     if (videoInfo.url) { langList = []; getLangList() }"
+                  @change="initCaption()"
+                  @click:clear="initCaption()"
                 />
               </ValidationProvider>
             </v-col>
@@ -188,17 +190,12 @@ export default {
 
     // this.getCaption()
   },
-  watch: {
-    'videoInfo.url'(val) {
-      if(!val) {
-        this.videoInfo.url = ''
-        this.videoInfo.id = ''
-        this.selectLang.caption = null
-        this.captions = []
-      }
-    }
-  },
   methods: {
+    initCaption() {
+      this.videoInfo.id = ''
+      this.selectLang.caption = null
+      this.captions = []
+    },
     async getLangList() {
       this.loading.getLangList = true
 
