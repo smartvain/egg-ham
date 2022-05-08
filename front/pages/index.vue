@@ -185,6 +185,8 @@
             <v-col cols="4">
               <v-btn
                 color="primary"
+                :loading="loading.translate"
+                @click="validate().then(passes(translate))"
               >
                 DeepLで翻訳する
               </v-btn>
@@ -193,11 +195,35 @@
 
           <v-row justify="center" class="mt-1">
             <v-col cols="11">
-              <v-card
-                class="overflow-y-auto overflow-x-hidden"
-                height="300"
-                outlined
+              <ValidationProvider
+                v-slot="{ errors }"
+                rules="max:1000"
+                name="テキスト"
               >
+                <v-textarea
+                  v-model="text"
+                  :error-messages="errors"
+                  :background-color="inputTextArea.bgColor"
+                  :flat="!inputTextArea.isFocus"
+                  placeholder="翻訳したい文を入力"
+                  dense solo clearable
+                  @focus="
+                    inputTextArea.isFocus = true
+                    inputTextArea.bgColor = 'white'"
+                  @blur="
+                    inputTextArea.isFocus = false
+                    inputTextArea.bgColor = '#EEEEEE'"
+                />
+              </ValidationProvider>
+            </v-col>
+          </v-row>
+
+          <v-row justify="center" class="mt-1">
+            <v-col cols="11">
+              <v-card height="415" outlined>
+                <v-card-text height="300">
+                  {{ translatedText }}
+                </v-card-text>
               </v-card>
             </v-col>
           </v-row>
@@ -216,17 +242,23 @@ export default {
     loading: {
       getLangList: false,
       getCaption: false,
+      translate: false
     },
     videoInfo: {
       url: '',
       id: ''
     },
-    inputUrlAria: {
+    inputUrlArea: {
+      bgColor: '#EEEEEE',// 薄いグレー
+      isFocus: false
+    },
+    inputTextArea: {
       bgColor: '#EEEEEE',// 薄いグレー
       isFocus: false
     },
     translateLang: [
-      { text: '日本語', value: 'JA' }
+      { text: '日本語', value: 'JA' },
+      { text: '英語', value: 'EN' }
     ],
     headers: [
       { text: 'time', value: 'start', width: 75 },
@@ -242,8 +274,14 @@ export default {
     // -----------
     captions: [],
     langList: [],
-    searchCaption: null
+    searchCaption: null,
+    text: '',
+    translatedText: '',
+    characterCount: 500000
   }),
+  async fetch() {
+    await this.getCharacterCount()
+  },
   created() {
     this.videoInfo.url = 'https://www.youtube.com/watch?v=NoJXn-Fh6CU&t=19s'
     // this.videoInfo.id = 'NoJXn-Fh6CU'
@@ -263,6 +301,11 @@ export default {
 
       return Math.ceil(sum / length)
     },
+  },
+  watch: {
+    'selectLang.caption'(value) {
+      this.selectLang.translate = value.match(/(en)/) ? 'JA' : 'EN'
+    }
   },
   methods: {
     initCaption() {
@@ -324,6 +367,31 @@ export default {
 
       this.checking = false
     },
+    async translate() {
+      this.loading.translate = true
+      console.log(this.text)
+
+      try {
+        const res = await this.$axios.$post('translate', {
+          text: this.text,
+          lang: this.selectLang.translate
+        })
+        console.log(res)
+        this.translatedText = res.translations[0].text
+
+      } catch(e) {
+        this.$toast.error('翻訳に失敗しました。')
+      }
+      
+      this.loading.translate = false
+    },
+    async getCharacterCount() {
+      try {
+        const res = await this.$axios.$post('character_count')
+        console.log(res)
+      } catch(e) {
+        this.$toast.error('文字数カウントの取得に失敗しました。')
+      }
     }
   }
 }
