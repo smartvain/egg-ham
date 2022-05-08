@@ -13,6 +13,6 @@ module.exports = {
   // add your custom rules here
   rules: {
     'no-unmodified-loop-condition': 'off',
-    // 'no-return-assign': 'off'
+    'no-var': 'off'
   },
 }
