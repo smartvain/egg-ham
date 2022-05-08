@@ -22,4 +22,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('caption', [YoutubeController::class, 'getCaption']);
 Route::get('langList', [YoutubeController::class, 'getLangList']);
+
 Route::post('translate', [DeepLController::class, 'translate']);
+Route::post('character_count', [DeepLController::class, 'getCharacterCount']);

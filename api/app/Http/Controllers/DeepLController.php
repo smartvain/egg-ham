@@ -13,7 +13,7 @@ class DeepLController extends Controller
         $options = [
             'form_params' => [
                 'auth_key'    => config('deepl.deepl_auth_key'),
-                'text'        => implode('', $request->get('transcript')),
+                'text'        => $request->get('text'),
                 'target_lang' => $request->get('lang')
             ]
         ];
@@ -21,6 +21,21 @@ class DeepLController extends Controller
         $client = new Client();
         
         return json_decode($client->requestAsync('POST', 'https://api-free.deepl.com/v2/translate', $options)
+                                  ->wait()
+                                  ->getBody());
+    }
+
+    public function getCharacterCount()
+    {
+        $options = [
+            'form_params' => [
+                'auth_key' => config('deepl.deepl_auth_key'),
+            ]
+        ];
+
+        $client = new Client();
+        
+        return json_decode($client->requestAsync('POST', 'https://api-free.deepl.com/v2/usage', $options)
                                   ->wait()
                                   ->getBody());
     }
