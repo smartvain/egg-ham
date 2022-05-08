@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DeepLController;
 use App\Http\Controllers\YoutubeController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,4 +15,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [YoutubeController::class, 'getCaption']);
+Route::get('/', [DeepLController::class, 'getCharacterCount']);
