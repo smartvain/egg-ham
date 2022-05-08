@@ -53,6 +53,11 @@ class YoutubeController extends Controller
         
         $captionsIndex = 0;
         foreach ($captions as $caption) {
+            if (!$caption) {
+                unset($captions[$captionsIndex]);
+                continue;
+            }
+
             $caption = trim($caption);
 
             $startRegex = '/start="([\d.]+)"/';
