@@ -292,7 +292,12 @@ export default {
       }
 
       if (this.typingScreen.step4) {
-        this.typingLogic(e.key)
+        if (e.key.toUpperCase() === this.roman.next) {
+          this.typingLogic()
+        } else if (e.shiftKey && e.key) {
+          // this.typingLogic()
+          console.log(e.key)
+        }
       }
     })
   },
@@ -356,19 +361,24 @@ export default {
       return rect.width
     },
     reviseText (text) {
-      return this.$kanaToRoman(text, 'hepburn', {bmp: true}).toUpperCase()
-                  .replace(/\s+/g, "")
-                  .replaceAll('（', "")
-                  .replaceAll('(', "")
-                  .replaceAll('）', "")
-                  .replaceAll(')', "")
-                  .replaceAll('「', "")
-                  .replaceAll('」', "")
-                  .replaceAll('’', "")
+      return this.replaceFullToHalf(this.$kanaToRoman(text, 'hepburn', {bmp: true}).toUpperCase().replace(/\s+/g, ""))
+      // return this.$kanaToRoman(text, 'hepburn', {bmp: true}).toUpperCase()
+      //             .replace(/\s+/g, "")
+                  // .replaceAll('（', "")
+                  // .replaceAll('(', "")
+                  // .replaceAll('）', "")
+                  // .replaceAll(')', "")
+                  // .replaceAll('「', "")
+                  // .replaceAll('」', "")
+                  // .replaceAll('’', "")
+
     },
-    typingLogic(key) {
-      if (key.toUpperCase() !== this.roman.next) { return }
-        
+    replaceFullToHalf(str){
+      return str.replace(/[！-～]/g, s => {
+        return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
+      });
+    },
+    typingLogic() {
       this.roman.typed   += this.roman.next
       this.roman.next    = this.roman.untyped.substring(0, 1)
       this.roman.untyped = this.roman.untyped.substring(1)
