@@ -14,16 +14,16 @@
                 <v-text-field
                   v-model="videoInfo.url"
                   :error-messages="errors"
-                  :background-color="inputUrlAria.bgColor"
-                  :flat="!inputUrlAria.isFocus"
+                  :background-color="inputUrlArea.bgColor"
+                  :flat="!inputUrlArea.isFocus"
                   placeholder="URLを入力"
                   dense solo clearable
                   @focus="
-                    inputUrlAria.isFocus = true
-                    inputUrlAria.bgColor = 'white'"
+                    inputUrlArea.isFocus = true
+                    inputUrlArea.bgColor = 'white'"
                   @blur="
-                    inputUrlAria.isFocus = false
-                    inputUrlAria.bgColor = '#EEEEEE'
+                    inputUrlArea.isFocus = false
+                    inputUrlArea.bgColor = '#EEEEEE'
                     if (videoInfo.url) { langList = []; getLangList() }"
                   @change="initCaption()"
                   @click:clear="initCaption()"
