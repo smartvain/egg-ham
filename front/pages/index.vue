@@ -184,8 +184,9 @@
 
             <v-col cols="4">
               <v-btn
-                color="primary"
+                :disabled="!selectLang.translate || !text"
                 :loading="loading.translate"
+                color="primary"
                 @click="validate().then(passes(translate))"
               >
                 DeepLで翻訳する
