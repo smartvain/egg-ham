@@ -1,9 +1,9 @@
 <template>
   <ValidationObserver v-slot="{ passes, validate }">
     <v-container fluid>
-      <v-row>
+      <v-row class="mt-4">
         <v-col cols="8">
-          <v-row justify="center" class="my-4">
+          <v-row justify="center">
             <!-- URL入力欄 -->
             <v-col cols="8">
               <ValidationProvider
@@ -53,32 +53,47 @@
             </v-col>
           </v-row>
 
-          <div v-if="!caption">
-            <!-- サムネイル表示欄 -->
-            <v-row justify="center">
-              <v-col cols="9">
-                <v-img
-                  :src="`https://img.youtube.com/vi/${videoInfo.id}/maxresdefault.jpg`"
-                  :aspect-ratio="16/9"
-                />
+          <v-row justify="center" class="mt-4">
+            <v-col cols="9" v-if="!caption">
+              <!-- サムネイル表示欄 -->
+              <v-img
+                :src="`https://img.youtube.com/vi/${videoInfo.id}/maxresdefault.jpg`"
+                :aspect-ratio="16/9"
+              />
 
-              </v-col>
-            </v-row>
+              <!-- 字幕取得ボタン -->
+              <v-row justify="center" class="mt-4">
+                <v-btn
+                  :disabled="!selectLang"
+                  color="primary"
+                  class="my-4"
+                  @click="validate().then(passes(getCaption))"
+                >
+                  字幕を取得する
+                </v-btn>
+              </v-row>
+            </v-col>
 
-            <!-- 字幕取得ボタン -->
-            <v-row justify="center">
-              <v-btn
-                :disabled="!selectLang"
-                color="primary"
-                class="my-4"
-                @click="validate().then(passes(getCaption))"
+            <v-col cols="10" v-else>
+              <!-- 字幕表示エリア -->
+              <v-card
+                class="overflow-y-auto overflow-x-hidden"
+                height="500"
+                outlined
               >
-                字幕を取得する
-              </v-btn>
-            </v-row>
-          </div>
+                <v-card-text>
+                  {{ caption }}
+                </v-card-text>
+              </v-card>
+            </v-col>
+            
+          </v-row>
+        </v-col>
 
-          <div v-else>
+        <v-divider vertical />
+
+        <v-col cols="4">
+          <v-row justify="center">
             <v-row justify="center">
               <v-col cols="10">
                 <v-card
@@ -92,18 +107,6 @@
                 </v-card>
               </v-col>
             </v-row>
-          </div>
-        </v-col>
-
-        <v-divider vertical />
-
-        <v-col cols="4">
-          <v-row justify="center">
-            <img
-              style="width: 90%"
-              src="~/assets/img/example.png"
-              class="my-4"
-            >
           </v-row>
 
           <v-row justify="center">
