@@ -31,6 +31,8 @@ class YoutubeController extends Controller
     {
         $videoId = $request->get('videoId');
         $lang    = $request->get('lang');
+        // $videoId = 'NoJXn-Fh6CU';
+        // $lang    = 'en-US';
         
         $res = $this->getUrlContent("https://www.youtube.com/watch?v={$videoId}");
         
