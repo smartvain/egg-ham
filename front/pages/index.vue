@@ -2,13 +2,13 @@
   <ValidationObserver v-slot="{ passes, validate }">
     <v-container fluid>
       <v-row class="mt-0">
-        <v-col cols="8">
+        <v-col cols="7">
           <v-row justify="center">
             <!-- URL入力欄 -->
             <v-col cols="8">
               <ValidationProvider
                 v-slot="{ errors }"
-                rules="required"
+                rules="is_youtube_url"
                 name="URL"
               >
                 <v-text-field
@@ -17,7 +17,7 @@
                   :background-color="inputUrlAria.bgColor"
                   :flat="!inputUrlAria.isFocus"
                   placeholder="URLを入力"
-                  dense solo
+                  dense solo clearable
                   @focus="
                     inputUrlAria.isFocus = true
                     inputUrlAria.bgColor = 'white'"
@@ -45,6 +45,7 @@
                   <div v-if="loading.getLangList" class="text-center">
                     <v-progress-circular color="primary" indeterminate/>
                   </div>
+
                   <div v-else class="text-center">
                     <span class="grey--text">URLが入力されていません</span>
                   </div>
@@ -54,7 +55,7 @@
           </v-row>
 
           <v-row justify="center" class="mt-n6">
-            <v-col cols="10">
+            <v-col cols="11">
               <v-card
                 class="overflow-y-auto overflow-x-hidden"
                 outlined
@@ -63,42 +64,44 @@
                   :headers="headers"
                   :items="captions"
                   :items-per-page="-1"
-                  :search="searchTime"
-                  height="550"
+                  :search="searchCaption"
+                  :hide-default-header="captions.length === 0"
+                  height="530"
                   fixed-header
                   hide-default-footer
                 >
                   <template #top>
-                    <v-text-field
-                      v-model="searchTime"
-                      placeholder="search"
-                      class="mx-2 mt-4"
-                      dense
-                    />
+                    <v-row justify="center">
+                      <v-col cols="11" align="right">
+                        <div v-if="captions.length === 0">
+                          <v-btn
+                            :disabled="!selectLang.caption"
+                            :loading="loading.getCaption"
+                            color="primary"
+                            class="my-4"
+                            @click="validate().then(passes(getCaption))"
+                          >
+                            字幕を取得する
+                          </v-btn>
+                        </div>
+                        
+                        <div v-else>
+                          <v-text-field
+                            v-model="searchCaption"
+                            class="mt-4 mb-n2"
+                            placeholder="字幕を検索"
+                            dense
+                          />
+                        </div>
+                      </v-col>
+                    </v-row>
                   </template>
 
-                  <!-- <template v-slot:[`item.start`]="{ item }">
-                    {{ item.start | calcTime }}
-                  </template> -->
-
                   <template #no-data>
-                    <!-- サムネイル表示エリア -->
                     <v-img
                       :src="`https://img.youtube.com/vi/${videoInfo.id}/maxresdefault.jpg`"
                       :aspect-ratio="16/9"
                     />
-
-                    <!-- 字幕取得ボタン -->
-                    <v-row justify="center" class="mt-2">
-                      <v-btn
-                        :disabled="!selectLang.caption"
-                        color="primary"
-                        class="my-4"
-                        @click="validate().then(passes(getCaption))"
-                      >
-                        字幕を取得する
-                      </v-btn>
-                    </v-row>
                   </template>
                 </v-data-table>
               </v-card>
@@ -108,9 +111,9 @@
 
         <v-divider vertical />
 
-        <v-col cols="4">
+        <v-col cols="5">
           <v-row justify="center">
-            <v-col cols="10">
+            <v-col cols="7">
               <v-select
                 v-model="selectLang.translate"
                 :items="translateLang"
@@ -121,10 +124,18 @@
                 dense
               />
             </v-col>
+
+            <v-col cols="4">
+              <v-btn
+                color="primary"
+              >
+                DeepLで翻訳する
+              </v-btn>
+            </v-col>
           </v-row>
 
-          <v-row justify="center" class="mt-4">
-            <v-col cols="10">
+          <v-row justify="center" class="mt-1">
+            <v-col cols="11">
               <v-card
                 class="overflow-y-auto overflow-x-hidden"
                 height="300"
@@ -133,33 +144,6 @@
               </v-card>
             </v-col>
           </v-row>
-
-          <!-- <v-row justify="center">
-            <v-card color="#F6F9F9" width="90%" outlined>
-              <v-list color="#F6F9F9">
-                <v-subheader class="font-weight-bold">今週のプレイ動画ランキング！</v-subheader>
-
-                <v-list-item-group>
-                  <v-list-item v-for="n of 3" :key="n">
-                    <v-row class="my-4">
-                      <v-col cols="4">
-                        <v-img
-                          lazy-src="'https://cdn.vuetifyjs.com/images/parallax/material.jpg'"
-                          :src="'https://img.youtube.com/vi/ouf7rXDlkDk/maxresdefault.jpg'"
-                          :aspect-ratio="16/9"
-                        />
-                      </v-col>
-
-                      <v-col cols="8" class="text-truncate">
-                        <span class="text-caption text-no-wrap">Nissy(⻄島隆弘) / 「君に触れた時から」Music Video</span><br>
-                        <span class="text-caption">プレイ回数: 2000回</span><br>
-                      </v-col>
-                    </v-row>
-                  </v-list-item>
-                </v-list-item-group>
-              </v-list>
-            </v-card>
-          </v-row> -->
         </v-col>
       </v-row>
     </v-container>
@@ -189,20 +173,30 @@ export default {
       { text: 'time', value: 'start', width: 75 },
       { text: 'caption', value: 'caption' }
     ],
-    captions: [],
-    langList: [],
     selectLang: {
       caption: null,
       translate: null
     },
-    searchTime: null
+    captions: [],
+    langList: [],
+    searchCaption: null
   }),
   created() {
     this.videoInfo.url = 'https://www.youtube.com/watch?v=NoJXn-Fh6CU&t=19s'
-    this.videoInfo.id = 'NoJXn-Fh6CU'
-    this.selectLang.caption = 'en-US'
+    // this.videoInfo.id = 'NoJXn-Fh6CU'
+    // this.selectLang.caption = 'en-US'
 
-    this.getCaption()
+    // this.getCaption()
+  },
+  watch: {
+    'videoInfo.url'(val) {
+      if(!val) {
+        this.videoInfo.url = ''
+        this.videoInfo.id = ''
+        this.selectLang.caption = null
+        this.captions = []
+      }
+    }
   },
   methods: {
     async getLangList() {
@@ -230,7 +224,7 @@ export default {
           lang: this.selectLang.caption
         }})
       } catch(e) {
-        this.$toast.error('字幕が存在しません。')
+        this.$toast.error('字幕の取得に失敗しました。')
       }
 
       for (const el of res) {
