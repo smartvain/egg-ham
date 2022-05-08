@@ -100,10 +100,65 @@
                   </template>
 
                   <template #no-data>
-                    <v-img
-                      :src="`https://img.youtube.com/vi/${videoInfo.id}/maxresdefault.jpg`"
-                      :aspect-ratio="16/9"
-                    />
+                    <div v-if="videoInfo.id">
+                      <v-img
+                        :src="`https://img.youtube.com/vi/${videoInfo.id}/maxresdefault.jpg`"
+                        :aspect-ratio="16/9"
+                      />
+                    </div>
+
+                    <div v-else>
+                      <v-card
+                        class="mx-auto mt-16"
+                        color="grey lighten-4"
+                        max-width="600"
+                      >
+                        <v-card-title>
+                          <v-icon
+                            :color="checking ? 'red lighten-2' : 'indigo'"
+                            class="mr-12"
+                            size="64"
+                            @click="takePulse"
+                          >
+                            mdi-heart-pulse
+                          </v-icon>
+                          <v-row align="start">
+                            <div class="text-caption grey--text text-uppercase">
+                              Heart rate
+                            </div>
+                            <div>
+                              <span
+                                class="text-h3 font-weight-black"
+                                v-text="avg || '—'"
+                              ></span>
+                              <strong v-if="avg">BPM</strong>
+                            </div>
+                          </v-row>
+
+                          <v-spacer></v-spacer>
+
+                          <!-- <v-btn
+                            icon
+                            class="align-self-start"
+                            size="28"
+                          >
+                            <v-icon>mdi-arrow-right-thick</v-icon>
+                          </v-btn> -->
+                        </v-card-title>
+
+                        <v-sheet color="transparent">
+                          <v-sparkline
+                            :key="String(avg)"
+                            :smooth="16"
+                            :gradient="['#f72047', '#ffd200', '#1feaea']"
+                            :line-width="3"
+                            :value="heartbeats"
+                            auto-draw
+                            stroke-linecap="round"
+                          ></v-sparkline>
+                        </v-sheet>
+                      </v-card>
+                    </div>
                   </template>
                 </v-data-table>
               </v-card>
@@ -153,6 +208,8 @@
 </template>
 
 <script>
+const exhale = ms => new Promise(resolve => setTimeout(resolve, ms))
+
 export default {
   name: 'IndexPage',
   data: () => ({
@@ -179,6 +236,10 @@ export default {
       caption: null,
       translate: null
     },
+    // sparklines
+    checking: false,
+    heartbeats: [],
+    // -----------
     captions: [],
     langList: [],
     searchCaption: null
@@ -187,8 +248,21 @@ export default {
     this.videoInfo.url = 'https://www.youtube.com/watch?v=NoJXn-Fh6CU&t=19s'
     // this.videoInfo.id = 'NoJXn-Fh6CU'
     // this.selectLang.caption = 'en-US'
-
     // this.getCaption()
+    // ------------------------------------------
+
+    setInterval(this.takePulse, 3000)
+    this.takePulse(false)
+  },
+  computed: {
+    avg() {
+      const sum = this.heartbeats.reduce((acc, cur) => acc + cur, 0)
+      const length = this.heartbeats.length
+
+      if (!sum && !length) return 0
+
+      return Math.ceil(sum / length)
+    },
   },
   methods: {
     initCaption() {
@@ -237,6 +311,19 @@ export default {
       if (rem < 10) { rem = rem.padStart(2, '0') }
 
       return `${min}:${rem}`
+    },
+    heartbeat () {
+      return Math.ceil(Math.random() * (120 - 80) + 80)
+    },
+    async takePulse (inhale = true) {
+      this.checking = true
+
+      inhale && await exhale(1000)
+
+      this.heartbeats = Array.from({ length: 20 }, this.heartbeat)
+
+      this.checking = false
+    },
     }
   }
 }
