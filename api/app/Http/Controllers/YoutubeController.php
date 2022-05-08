@@ -54,17 +54,24 @@ class YoutubeController extends Controller
         $captionsIndex = 0;
         foreach ($captions as $caption) {
             $caption = trim($caption);
+
+            $startRegex = '/start="([\d.]+)"/';
+            preg_match($startRegex, $caption, $start);
+
             $caption = preg_replace('/<text.+>/', '', $caption);
             $caption = preg_replace('/&amp;/i', '&', $caption);
             $caption = preg_replace('/&#39;/i', "'", $caption);
             $caption = preg_replace('/<\/?[^>]+(>|$)/', '', $caption);
             
-            $captions = array_replace($captions, [$captionsIndex => $caption]);
+            $captions = array_replace($captions, [$captionsIndex => [
+                'start' => $start[1],
+                'caption' => $caption
+            ]]);
             
             $captionsIndex++;
         }
 
-        return ['captions' => $captions];
+        return $captions;
     }
 
     private function getUrlContent($url)
