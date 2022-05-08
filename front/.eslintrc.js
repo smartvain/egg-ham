@@ -12,6 +12,7 @@ module.exports = {
   plugins: [],
   // add your custom rules here
   rules: {
-    'no-unmodified-loop-condition': 'off'
+    'no-unmodified-loop-condition': 'off',
+    // 'no-return-assign': 'off'
   },
 }
