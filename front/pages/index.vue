@@ -253,7 +253,9 @@ export default {
   },
   watch: {
     'selectLang.caption'(value) {
-      this.selectLang.translate = value.match(/(en)/) ? 'JA' : 'EN'
+      if (value) {
+        this.selectLang.translate = value.match(/(en)/) ? 'JA' : 'EN'
+      }
     },
     'videoInfo.id'(value) {
       this.getVideoInfo(value)
