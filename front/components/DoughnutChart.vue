@@ -14,13 +14,14 @@ export default {
         {
           data: [0, 0],
           borderColor: 'transparent',
-          backgroundColor: ['#FF6384','#36A2EB'],
+          backgroundColor: ['#1095FE','#EBF6FF'],
         }
       ]
     },
     options: {
       responsive: true,
-      maintainAspectRatio: false
+      maintainAspectRatio: false,
+      cutoutPercentage: 60,
     }
   }),
   watch: {

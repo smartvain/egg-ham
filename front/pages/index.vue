@@ -119,7 +119,7 @@
                       <vue-loading
                         class="mt-16"
                         type="bars"
-                        color="#1976D1"
+                        color="#1095FE"
                         :size="{ width: '50px', height: '50px' }"
                       />
                     </div>
