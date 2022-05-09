@@ -222,9 +222,18 @@
           <v-row justify="center" class="mt-1">
             <v-col cols="11">
               <v-card height="415" outlined>
-                <v-card-text height="300">
-                  {{ translatedText }}
-                </v-card-text>
+                <div v-if="translatedText">
+                  <v-card-text height="300">
+                    {{ translatedText }}
+                  </v-card-text>
+                </div>
+
+                <div v-else>
+                  <DoughnutChart
+                    :characterCount="characterCount"
+                    :characterLimit="characterLimit"
+                  ></DoughnutChart>
+                </div>
               </v-card>
             </v-col>
           </v-row>
@@ -235,10 +244,15 @@
 </template>
 
 <script>
+import DoughnutChart from '~/components/DoughnutChart.vue'
+
 const exhale = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 export default {
   name: 'IndexPage',
+  components: {
+    DoughnutChart
+  },
   data: () => ({
     loading: {
       getLangList: false,
@@ -278,13 +292,14 @@ export default {
     searchCaption: null,
     text: '',
     translatedText: '',
-    characterCount: 500000
+    characterCount: 0,
+    characterLimit: 0
   }),
   async fetch() {
     await this.getCharacterCount()
   },
   created() {
-    this.videoInfo.url = 'https://www.youtube.com/watch?v=NoJXn-Fh6CU&t=19s'
+    // this.videoInfo.url = 'https://www.youtube.com/watch?v=NoJXn-Fh6CU&t=19s'
     // this.videoInfo.id = 'NoJXn-Fh6CU'
     // this.selectLang.caption = 'en-US'
     // this.getCaption()
@@ -377,17 +392,23 @@ export default {
           lang: this.selectLang.translate
         })
         this.translatedText = res.translations[0].text
-
       } catch(e) {
         this.$toast.error('翻訳に失敗しました。')
       }
       
       this.loading.translate = false
+
+      try {
+        await this.getCharacterCount()
+      } catch(e) {
+        console.log(e)
+      }
     },
     async getCharacterCount() {
       try {
         const res = await this.$axios.$post('character_count')
-        console.log(res)
+        this.characterCount = res.character_count
+        this.characterLimit = res.character_limit
       } catch(e) {
         this.$toast.error('文字数カウントの取得に失敗しました。')
       }
