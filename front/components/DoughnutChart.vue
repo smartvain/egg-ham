@@ -12,9 +12,9 @@ export default {
       labels: ['使用量', '残量'],
       datasets: [
         {
-          backgroundColor: ['#FF6384','#36A2EB'],
           data: [0, 0],
-          borderColor: 'transparent'
+          borderColor: 'transparent',
+          backgroundColor: ['#FF6384','#36A2EB'],
         }
       ]
     },
