@@ -100,12 +100,11 @@
                   </template>
 
                   <template #no-data>
-                    <div v-if="videoInfo.id">
-                      <v-img
-                        :src="`https://img.youtube.com/vi/${videoInfo.id}/maxresdefault.jpg`"
-                        :aspect-ratio="16/9"
-                      />
-                    </div>
+                    <div
+                      v-if="videoInfo.id"
+                      ref="iframe"
+                      v-html="videoInfo.html"
+                    />
 
                     <div v-else>
                       <vue-loading
@@ -217,7 +216,9 @@ export default {
     },
     videoInfo: {
       url: '',
-      id: ''
+      id: '',
+      title: '',
+      html: null
     },
     inputUrlArea: {
       bgColor: '#EEEEEE',// 薄いグレー
@@ -253,6 +254,9 @@ export default {
   watch: {
     'selectLang.caption'(value) {
       this.selectLang.translate = value.match(/(en)/) ? 'JA' : 'EN'
+    },
+    'videoInfo.id'(value) {
+      this.getVideoInfo(value)
     }
   },
   created() {
@@ -341,6 +345,26 @@ export default {
       }
 
       if (this.loading.getCharacterCount) { this.loading.getCharacterCount = false }
+    },
+    async getVideoInfo(videoId) {
+      const res = await this.$axios.$get(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`)
+
+      const iframe = this.createElementFromHTML(res.html)
+      iframe.setAttribute('height', (this.getElWidth(this.$refs.iframe) / 16) * 9)
+      iframe.setAttribute('width', '100%')
+
+      this.videoInfo.title = res.title
+      this.videoInfo.html = iframe.outerHTML
+    },
+    createElementFromHTML(html) {
+      const tempEl = document.createElement('div');
+      tempEl.innerHTML = html;
+      return tempEl.firstElementChild;
+    },
+    getElWidth(el) {
+      const dom = el
+      const rect = dom.getBoundingClientRect();
+      return rect.width
     }
   }
 }
