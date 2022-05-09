@@ -239,8 +239,8 @@ export default {
       { text: '英語', value: 'EN' }
     ],
     headers: [
-      { text: 'time', value: 'calcTime', width: 75 },
-      { text: 'caption', value: 'caption' }
+      { text: '時間', value: 'calcTime', width: 75 },
+      { text: '字幕', value: 'caption' }
     ],
     selectLang: {
       caption: null,
