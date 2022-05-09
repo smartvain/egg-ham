@@ -4,7 +4,6 @@
       <v-row class="mt-0">
         <v-col cols="7">
           <v-row justify="center">
-            <!-- URL入力欄 -->
             <v-col cols="8">
               <ValidationProvider
                 v-slot="{ errors }"
@@ -31,7 +30,6 @@
               </ValidationProvider>
             </v-col>
 
-            <!-- 言語選択欄 -->
             <v-col cols="3">
               <v-select
                 v-model="selectLang.caption"
@@ -185,7 +183,11 @@
 
           <v-row justify="center" class="mt-1">
             <v-col cols="11">
-              <v-card height="415" outlined :loading="loading.getCharacterCount">
+              <v-card
+                height="415"
+                :loading="loading.getCharacterCount"
+                outlined
+              >
                 <div v-if="translatedText">
                   <v-card-text height="300">
                     {{ translatedText }}
@@ -230,11 +232,11 @@ export default {
       html: null
     },
     inputUrlArea: {
-      bgColor: '#EEEEEE',// 薄いグレー
+      bgColor: '#EEEEEE',
       isFocus: false
     },
     inputTextArea: {
-      bgColor: '#EEEEEE',// 薄いグレー
+      bgColor: '#EEEEEE',
       isFocus: false
     },
     translateLang: [
