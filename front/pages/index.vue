@@ -230,8 +230,8 @@
 
                 <div v-else>
                   <DoughnutChart
-                    :characterCount="characterCount"
-                    :characterLimit="characterLimit"
+                    :character-count="characterCount"
+                    :character-limit="characterLimit"
                   ></DoughnutChart>
                 </div>
               </v-card>
@@ -298,6 +298,21 @@ export default {
   async fetch() {
     await this.getCharacterCount()
   },
+  computed: {
+    avg() {
+      const sum = this.heartbeats.reduce((acc, cur) => acc + cur, 0)
+      const length = this.heartbeats.length
+
+      if (!sum && !length) return 0
+
+      return Math.ceil(sum / length)
+    }
+  },
+  watch: {
+    'selectLang.caption'(value) {
+      this.selectLang.translate = value.match(/(en)/) ? 'JA' : 'EN'
+    }
+  },
   created() {
     // this.videoInfo.url = 'https://www.youtube.com/watch?v=NoJXn-Fh6CU&t=19s'
     // this.videoInfo.id = 'NoJXn-Fh6CU'
@@ -307,21 +322,6 @@ export default {
 
     setInterval(this.takePulse, 3000)
     this.takePulse(false)
-  },
-  computed: {
-    avg() {
-      const sum = this.heartbeats.reduce((acc, cur) => acc + cur, 0)
-      const length = this.heartbeats.length
-
-      if (!sum && !length) return 0
-
-      return Math.ceil(sum / length)
-    },
-  },
-  watch: {
-    'selectLang.caption'(value) {
-      this.selectLang.translate = value.match(/(en)/) ? 'JA' : 'EN'
-    }
   },
   methods: {
     initCaption() {

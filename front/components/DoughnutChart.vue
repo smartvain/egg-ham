@@ -4,8 +4,8 @@ import { Doughnut } from 'vue-chartjs'
 export default {
   extends: Doughnut,
   props: {
-    characterCount: { type: Number },
-    characterLimit: { type: Number }
+    characterCount: { type: Number, default: 0 },
+    characterLimit: { type: Number, default: 0 }
   },
   data: () => ({
     chartdata: {
