@@ -99,6 +99,12 @@
                     </v-row>
                   </template>
 
+                  <template #[`item.calcTime`]="{ item }">
+                    <a :href="`${videoInfo.url}&t=${item.start}s`">
+                      {{ item.calcTime }}
+                    </a>
+                  </template>
+
                   <template #no-data>
                     <div
                       v-if="videoInfo.id"
@@ -233,7 +239,7 @@ export default {
       { text: '英語', value: 'EN' }
     ],
     headers: [
-      { text: 'time', value: 'start', width: 75 },
+      { text: 'time', value: 'calcTime', width: 75 },
       { text: 'caption', value: 'caption' }
     ],
     selectLang: {
@@ -279,6 +285,7 @@ export default {
 
       const url = new URL(this.videoInfo.url)
       this.videoInfo.id = url.searchParams.get('v')
+      this.videoInfo.url = `${this.videoInfo.url.replace(/\?.*$/,"")}?v=${this.videoInfo.id}`
 
       try {
         this.langList = await this.$axios.$get('langList', {params: {
@@ -303,7 +310,7 @@ export default {
       }
 
       for (const el of res) {
-        el.start = this.calcTime(el.start)
+        el.calcTime = this.calcTime(el.start)
       }
       this.captions = res
 
@@ -341,7 +348,6 @@ export default {
         this.loading.getCharacterCount = false
         this.characterCount = res.character_count
         this.characterLimit = res.character_limit
-        console.log('ok')
       } catch(e) {
         this.$toast.error('文字数カウントの取得に失敗しました。')
       }
