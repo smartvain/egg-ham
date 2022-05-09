@@ -370,14 +370,12 @@ export default {
     },
     async translate() {
       this.loading.translate = true
-      console.log(this.text)
 
       try {
         const res = await this.$axios.$post('translate', {
           text: this.text,
           lang: this.selectLang.translate
         })
-        console.log(res)
         this.translatedText = res.translations[0].text
 
       } catch(e) {
