@@ -108,56 +108,12 @@
                     </div>
 
                     <div v-else>
-                      <v-card
-                        class="mx-auto mt-16"
-                        color="grey lighten-4"
-                        max-width="600"
-                      >
-                        <v-card-title>
-                          <v-icon
-                            :color="checking ? 'red lighten-2' : 'indigo'"
-                            class="mr-12"
-                            size="64"
-                            @click="takePulse"
-                          >
-                            mdi-heart-pulse
-                          </v-icon>
-                          <v-row align="start">
-                            <div class="text-caption grey--text text-uppercase">
-                              Heart rate
-                            </div>
-                            <div>
-                              <span
-                                class="text-h3 font-weight-black"
-                                v-text="avg || '—'"
-                              ></span>
-                              <strong v-if="avg">BPM</strong>
-                            </div>
-                          </v-row>
-
-                          <v-spacer></v-spacer>
-
-                          <!-- <v-btn
-                            icon
-                            class="align-self-start"
-                            size="28"
-                          >
-                            <v-icon>mdi-arrow-right-thick</v-icon>
-                          </v-btn> -->
-                        </v-card-title>
-
-                        <v-sheet color="transparent">
-                          <v-sparkline
-                            :key="String(avg)"
-                            :smooth="16"
-                            :gradient="['#f72047', '#ffd200', '#1feaea']"
-                            :line-width="3"
-                            :value="heartbeats"
-                            auto-draw
-                            stroke-linecap="round"
-                          ></v-sparkline>
-                        </v-sheet>
-                      </v-card>
+                      <vue-loading
+                        class="mt-16"
+                        type="bars"
+                        color="#1976D1"
+                        :size="{ width: '50px', height: '50px' }"
+                      />
                     </div>
                   </template>
                 </v-data-table>
@@ -221,7 +177,7 @@
 
           <v-row justify="center" class="mt-1">
             <v-col cols="11">
-              <v-card height="415" outlined>
+              <v-card height="415" outlined :loading="loading.getCharacterCount">
                 <div v-if="translatedText">
                   <v-card-text height="300">
                     {{ translatedText }}
@@ -232,7 +188,7 @@
                   <DoughnutChart
                     :character-count="characterCount"
                     :character-limit="characterLimit"
-                  ></DoughnutChart>
+                  />
                 </div>
               </v-card>
             </v-col>
@@ -244,20 +200,20 @@
 </template>
 
 <script>
+import { VueLoading } from 'vue-loading-template'
 import DoughnutChart from '~/components/DoughnutChart.vue'
-
-const exhale = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 export default {
   name: 'IndexPage',
   components: {
-    DoughnutChart
+    DoughnutChart, VueLoading
   },
   data: () => ({
     loading: {
       getLangList: false,
       getCaption: false,
-      translate: false
+      translate: false,
+      getCharacterCount: false
     },
     videoInfo: {
       url: '',
@@ -283,10 +239,6 @@ export default {
       caption: null,
       translate: null
     },
-    // sparklines
-    checking: false,
-    heartbeats: [],
-    // -----------
     captions: [],
     langList: [],
     searchCaption: null,
@@ -298,30 +250,17 @@ export default {
   async fetch() {
     await this.getCharacterCount()
   },
-  computed: {
-    avg() {
-      const sum = this.heartbeats.reduce((acc, cur) => acc + cur, 0)
-      const length = this.heartbeats.length
-
-      if (!sum && !length) return 0
-
-      return Math.ceil(sum / length)
-    }
-  },
   watch: {
     'selectLang.caption'(value) {
       this.selectLang.translate = value.match(/(en)/) ? 'JA' : 'EN'
     }
   },
   created() {
-    // this.videoInfo.url = 'https://www.youtube.com/watch?v=NoJXn-Fh6CU&t=19s'
+    this.videoInfo.url = 'https://www.youtube.com/watch?v=NoJXn-Fh6CU&t=19s'
     // this.videoInfo.id = 'NoJXn-Fh6CU'
     // this.selectLang.caption = 'en-US'
     // this.getCaption()
     // ------------------------------------------
-
-    setInterval(this.takePulse, 3000)
-    this.takePulse(false)
   },
   methods: {
     initCaption() {
@@ -371,18 +310,6 @@ export default {
 
       return `${min}:${rem}`
     },
-    heartbeat () {
-      return Math.ceil(Math.random() * (120 - 80) + 80)
-    },
-    async takePulse (inhale = true) {
-      this.checking = true
-
-      inhale && await exhale(1000)
-
-      this.heartbeats = Array.from({ length: 20 }, this.heartbeat)
-
-      this.checking = false
-    },
     async translate() {
       this.loading.translate = true
 
@@ -398,20 +325,22 @@ export default {
       
       this.loading.translate = false
 
-      try {
-        await this.getCharacterCount()
-      } catch(e) {
-        console.log(e)
-      }
+      await this.getCharacterCount()
     },
     async getCharacterCount() {
+      this.loading.getCharacterCount = true
+
       try {
         const res = await this.$axios.$post('character_count')
+        this.loading.getCharacterCount = false
         this.characterCount = res.character_count
         this.characterLimit = res.character_limit
+        console.log('ok')
       } catch(e) {
         this.$toast.error('文字数カウントの取得に失敗しました。')
       }
+
+      if (this.loading.getCharacterCount) { this.loading.getCharacterCount = false }
     }
   }
 }
