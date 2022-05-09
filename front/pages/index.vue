@@ -100,7 +100,10 @@
                   </template>
 
                   <template #[`item.calcTime`]="{ item }">
-                    <a :href="`${videoInfo.url}&t=${item.start}s`">
+                    <a
+                      :href="`${videoInfo.url}&t=${item.start}s`"
+                      target="subwindow"
+                    >
                       {{ item.calcTime }}
                     </a>
                   </template>
