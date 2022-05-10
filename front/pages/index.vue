@@ -394,8 +394,8 @@ export default {
 
       await this.getCharacterCount()
     },
-    async saveText() {
-
+    saveText() {
+      console.log('ok')
     }
   }
 }
