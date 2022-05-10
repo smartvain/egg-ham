@@ -10,7 +10,7 @@ export default {
   data: () => ({
     characterRemain: 0,
     chartData: {
-      labels: ['使用文字数', '残り文字数'],
+      labels: ['今月の使用文字数', '今月の残り文字数'],
       datasets: [
         {
           data: [0, 0],
