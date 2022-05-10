@@ -221,7 +221,7 @@
                       </v-card-text>
                     </div>
 
-                    <dir v-else>
+                    <div v-else>
                       <transition>
                         <div v-show="characterCount">
                           <DoughnutChart
@@ -233,7 +233,7 @@
                           />
                         </div>
                       </transition>
-                    </dir>
+                    </div>
                   </v-tab-item>
 
                   <v-tab-item>
