@@ -208,38 +208,32 @@
                 <v-tabs
                   v-model="tab"
                   background-color="transparent"
-                  color="basil"
                   grow
                 >
-                  <v-tab
-                    v-for="item in items"
-                    :key="item"
-                  >
+                  <v-tab v-for="item in items" :key="item">
                     {{ item }}
                   </v-tab>
                 </v-tabs>
 
                 <v-tabs-items v-model="tab">
                   <v-tab-item>
-                    <div v-if="translatedText">
-                      <v-card-text>
-                        {{ translatedText }}
-                      </v-card-text>
-                    </div>
-
-                    <div v-else>
-                      <transition>
-                        <div v-show="characterCount">
-                          <DoughnutChart
-                            class="mt-2"
-                            :character-count="characterCount"
-                            :character-limit="characterLimit"
-                            :width="chartSize"
-                            :height="chartSize"
-                          />
-                        </div>
-                      </transition>
-                    </div>
+                    <transition>
+                      <div v-show="characterCount">
+                        <DoughnutChart
+                          class="mt-2"
+                          :character-count="characterCount"
+                          :character-limit="characterLimit"
+                          :width="chartSize"
+                          :height="chartSize"
+                        />
+                      </div>
+                    </transition>
+                  </v-tab-item>
+                  
+                  <v-tab-item>
+                    <v-card-text>
+                      {{ translatedText }}
+                    </v-card-text>
                   </v-tab-item>
 
                   <v-tab-item>
@@ -342,7 +336,7 @@ export default {
     copyBtnSize: 33,
     tab: null,
     items: [
-      '翻訳文', '保存した単語'
+      'DEEPL使用量', '翻訳文', '保存した単語'
     ],
     newMeans: []
   }),
