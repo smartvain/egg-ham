@@ -238,7 +238,7 @@
 
                   <v-tab-item>
                     <v-data-table
-                      height="415"
+                      height="365"
                       :headers="sentencesHeaders"
                       :items="sentences"
                       :items-per-page="-1"
