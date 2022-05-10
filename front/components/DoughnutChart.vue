@@ -61,7 +61,7 @@ export default {
           ctx.fillText('残り文字数', centerWidth, centerHeight);
 
           ctx.font = Chart.helpers.fontString(fontSize * 2, fontStyle, fontFamily);// eslint-disable-line
-          ctx.fillText(remain, centerWidth, centerHeight + 30);
+          ctx.fillText(remain.toLocaleString(), centerWidth, centerHeight + 30);
         }
       })
     }
