@@ -106,6 +106,19 @@
                     </a>
                   </template>
 
+                  <template #[`item.copy`]="{ item }">
+                    <v-btn
+                      color="primary"
+                      elevation="2"
+                      fab small
+                      :width="copyBtnSize"
+                      :height="copyBtnSize"
+                      @click="text += item.caption"
+                    >
+                      <v-icon>mdi-content-copy</v-icon>
+                    </v-btn>
+                  </template>
+
                   <template #no-data>
                     <div
                       v-if="videoInfo.id"
@@ -243,7 +256,7 @@
                       :items="sentences"
                       :items-per-page="-1"
                       :search="searchSentence"
-                      fixed-header
+                      hide-default-header
                       hide-default-footer
                       no-data-text="保存された単語がありません"
                     >
@@ -302,7 +315,8 @@ export default {
     ],
     headers: [
       { text: '時間', value: 'calcTime', width: 75 },
-      { text: '字幕', value: 'caption' }
+      { text: '字幕', value: 'caption' },
+      { text: 'コピー', value: 'copy', sortable: false, width: 70 }
     ],
     sentencesHeaders: [
       { text: '文字', value: 'text' },
@@ -323,6 +337,7 @@ export default {
     characterCount: null,
     characterLimit: null,
     chartSize: 330,
+    copyBtnSize: 33,
     tab: null,
     items: [
       '翻訳文', '保存した単語'
