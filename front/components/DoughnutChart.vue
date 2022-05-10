@@ -22,8 +22,8 @@ export default {
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      cutoutPercentage: 60,
-    }
+      cutoutPercentage: 70,
+    },
   }),
   watch: {
     characterCount(value) {
