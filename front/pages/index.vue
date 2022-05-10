@@ -165,7 +165,6 @@
               <v-btn
                 :disabled="!text"
                 color="primary"
-                dense solo
                 @click="validate().then(passes(saveText))"
               >
                 単語を保存
