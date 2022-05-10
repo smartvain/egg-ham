@@ -285,6 +285,20 @@ export default {
       this.selectLang.caption = null
       this.captions = []
     },
+    async getCharacterCount() {
+      this.loading.getCharacterCount = true
+
+      try {
+        const res = await this.$axios.$post('character_count')
+        this.loading.getCharacterCount = false
+        this.characterCount = res.character_count
+        this.characterLimit = res.character_limit
+      } catch(e) {
+        this.$toast.error('文字数カウントの取得に失敗しました。')
+      }
+
+      if (this.loading.getCharacterCount) { this.loading.getCharacterCount = false }
+    },
     async getLangList() {
       this.loading.getLangList = true
 
@@ -301,6 +315,26 @@ export default {
       }
 
       this.loading.getLangList = false
+    },
+    async getVideoInfo(videoId) {
+      const res = await this.$axios.$get(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`)
+
+      const iframe = this.createElementFromHTML(res.html)
+      iframe.setAttribute('height', (this.getElWidth(this.$refs.iframe) / 16) * 9)
+      iframe.setAttribute('width', '100%')
+
+      this.videoInfo.title = res.title
+      this.videoInfo.html = iframe.outerHTML
+    },
+    createElementFromHTML(html) {
+      const tempEl = document.createElement('div');
+      tempEl.innerHTML = html;
+      return tempEl.firstElementChild;
+    },
+    getElWidth(el) {
+      const dom = el
+      const rect = dom.getBoundingClientRect();
+      return rect.width
     },
     async getCaption() {
       this.loading.getCaption = true
@@ -344,40 +378,6 @@ export default {
       this.loading.translate = false
 
       await this.getCharacterCount()
-    },
-    async getCharacterCount() {
-      this.loading.getCharacterCount = true
-
-      try {
-        const res = await this.$axios.$post('character_count')
-        this.loading.getCharacterCount = false
-        this.characterCount = res.character_count
-        this.characterLimit = res.character_limit
-      } catch(e) {
-        this.$toast.error('文字数カウントの取得に失敗しました。')
-      }
-
-      if (this.loading.getCharacterCount) { this.loading.getCharacterCount = false }
-    },
-    async getVideoInfo(videoId) {
-      const res = await this.$axios.$get(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`)
-
-      const iframe = this.createElementFromHTML(res.html)
-      iframe.setAttribute('height', (this.getElWidth(this.$refs.iframe) / 16) * 9)
-      iframe.setAttribute('width', '100%')
-
-      this.videoInfo.title = res.title
-      this.videoInfo.html = iframe.outerHTML
-    },
-    createElementFromHTML(html) {
-      const tempEl = document.createElement('div');
-      tempEl.innerHTML = html;
-      return tempEl.firstElementChild;
-    },
-    getElWidth(el) {
-      const dom = el
-      const rect = dom.getBoundingClientRect();
-      return rect.width
     }
   }
 }
