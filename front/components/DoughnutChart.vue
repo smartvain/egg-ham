@@ -8,7 +8,8 @@ export default {
     characterLimit: { type: Number, default: 0 }
   },
   data: () => ({
-    chartdata: {
+    characterRemain: 0,
+    chartData: {
       labels: ['使用文字数', '残り文字数'],
       datasets: [
         {
@@ -26,11 +27,14 @@ export default {
   }),
   watch: {
     characterCount(value) {
-      this.chartdata.datasets[0].data.splice(0, 1, value)
-      this.render()
+      this.chartData.datasets[0].data.splice(0, 1, value)
     },
     characterLimit(value) {
-      this.chartdata.datasets[0].data.splice(1, 1, value - this.characterCount)
+      this.characterRemain = value - this.characterCount
+    },
+    characterRemain(value) {
+      this.chartData.datasets[0].data.splice(1, 1, value)
+      this.insertCenterText(value)
       this.render()
     }
   },
@@ -39,7 +43,27 @@ export default {
   },
   methods: {
     render() {
-      this.renderChart(this.chartdata, this.options)
+      this.renderChart(this.chartData, this.options)
+    },
+    insertCenterText(remain) {
+      this.addPlugin({
+        afterDraw(chart) {
+          const ctx = chart.ctx
+          const centerWidth = chart.width / 2
+          const centerHeight = chart.height / 2
+          const fontSize = 18;
+          const fontStyle = 'normal';
+          const fontFamily = "Helvetica Neue";
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+
+          ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);// eslint-disable-line
+          ctx.fillText('残り文字数', centerWidth, centerHeight);
+
+          ctx.font = Chart.helpers.fontString(fontSize * 2, fontStyle, fontFamily);// eslint-disable-line
+          ctx.fillText(remain, centerWidth, centerHeight + 30);
+        }
+      })
     }
   }
 }
