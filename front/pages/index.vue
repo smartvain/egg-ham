@@ -195,10 +195,14 @@
                 </div>
 
                 <div v-else>
-                  <DoughnutChart
-                    :character-count="characterCount"
-                    :character-limit="characterLimit"
-                  />
+                  <transition>
+                    <div v-show="characterCount">
+                      <DoughnutChart
+                        :character-count="characterCount"
+                        :character-limit="characterLimit"
+                      />
+                    </div>
+                  </transition>
                 </div>
               </v-card>
             </v-col>
@@ -256,8 +260,8 @@ export default {
     searchCaption: null,
     text: '',
     translatedText: '',
-    characterCount: 0,
-    characterLimit: 0
+    characterCount: null,
+    characterLimit: null
   }),
   async fetch() {
     await this.getCharacterCount()
@@ -382,3 +386,13 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.v-enter-active, .v-leave-active {
+    transition: opacity .8s
+}
+
+.v-enter, .v-leave-to{
+    opacity: 0;
+}
+</style>
