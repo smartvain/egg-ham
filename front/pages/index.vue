@@ -245,7 +245,16 @@
                       :search="searchSentence"
                       fixed-header
                       hide-default-footer
-                    ></v-data-table>
+                      no-data-text="保存された単語がありません"
+                    >
+                      <template #[`item.mean`]="{ item, index }">
+                        <v-text-field
+                          v-model="newMeans[index]"
+                          :value="item.mean"
+                          @input="item.mean = newMeans[index]"
+                        />
+                      </template>
+                    </v-data-table>
                   </v-tab-item>
                 </v-tabs-items>
               </v-card>
@@ -317,7 +326,8 @@ export default {
     tab: null,
     items: [
       '翻訳文', '保存した単語'
-    ]
+    ],
+    newMeans: []
   }),
   async fetch() {
     await this.getCharacterCount()
