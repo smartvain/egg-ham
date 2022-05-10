@@ -132,7 +132,7 @@
 
         <v-col cols="5">
           <v-row justify="center">
-            <v-col cols="7">
+            <v-col cols="5">
               <v-select
                 v-model="selectLang.translate"
                 :items="translateLang"
@@ -144,14 +144,25 @@
               />
             </v-col>
 
-            <v-col cols="4">
+            <v-col cols="3" align="right">
               <v-btn
                 :disabled="!selectLang.translate || !text"
                 :loading="loading.translate"
                 color="primary"
                 @click="validate().then(passes(translate))"
               >
-                DeepLで翻訳する
+                DeepL翻訳
+              </v-btn>
+            </v-col>
+
+            <v-col cols="3" align="right">
+              <v-btn
+                :disabled="!text"
+                color="primary"
+                dense solo
+                @click="validate().then(passes(saveText))"
+              >
+                単語を保存
               </v-btn>
             </v-col>
           </v-row>
@@ -382,6 +393,9 @@ export default {
       this.loading.translate = false
 
       await this.getCharacterCount()
+    },
+    async saveText() {
+
     }
   }
 }
