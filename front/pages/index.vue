@@ -78,7 +78,7 @@
                             :disabled="!selectLang.caption"
                             :loading="loading.getCaption"
                             color="primary"
-                            class="my-4"
+                            class="my-3"
                             @click="validate().then(passes(getCaption))"
                           >
                             字幕を取得する
@@ -86,12 +86,24 @@
                         </div>
                         
                         <div v-else>
-                          <v-text-field
-                            v-model="searchCaption"
-                            class="mt-4 mb-n2"
-                            placeholder="字幕を検索"
-                            dense
-                          />
+                          <v-row class="mt-0">
+                            <v-col cols="10">
+                              <v-text-field
+                                v-model="searchCaption"
+                                placeholder="字幕を検索"
+                                dense
+                              />
+                            </v-col>
+
+                            <v-col cols="2">
+                              <v-btn
+                                color="primary"
+                                @click="captions = []"
+                              >
+                                リセット
+                              </v-btn>
+                            </v-col>
+                          </v-row>
                         </div>
                       </v-col>
                     </v-row>
