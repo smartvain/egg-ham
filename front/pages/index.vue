@@ -107,16 +107,9 @@
                   </template>
 
                   <template #[`item.copy`]="{ item }">
-                    <v-btn
-                      color="primary"
-                      elevation="2"
-                      fab small
-                      :width="copyBtnSize"
-                      :height="copyBtnSize"
-                      @click="text += item.caption"
-                    >
-                      <v-icon>mdi-content-copy</v-icon>
-                    </v-btn>
+                    <v-icon @click="text += item.caption">
+                      mdi-content-copy
+                    </v-icon>
                   </template>
 
                   <template #no-data>
@@ -263,9 +256,17 @@
                       <template #[`item.mean`]="{ item, index }">
                         <v-text-field
                           v-model="newMeans[index]"
+                          class="mt-1 mb-n2"
                           :value="item.mean"
+                          dense
                           @input="item.mean = newMeans[index]"
                         />
+                      </template>
+
+                      <template #[`item.delete`]="{ index }">
+                        <v-icon @click="deleteSentence(index)">
+                          mdi-close
+                        </v-icon>
                       </template>
                     </v-data-table>
                   </v-tab-item>
@@ -320,7 +321,8 @@ export default {
     ],
     sentencesHeaders: [
       { text: '文字', value: 'text' },
-      { text: '意味', value: 'mean' }
+      { text: '意味', value: 'mean' },
+      { text: '削除', value: 'delete' }
     ],
     selectLang: {
       caption: null,
@@ -467,8 +469,11 @@ export default {
     saveText() {
       this.sentences.push({
         text: this.text,
-        mean: 'hogehoge'
+        mean: null
       })
+    },
+    deleteSentence(idx) {
+      this.sentences.splice(idx, 1)
     }
   }
 }
