@@ -192,29 +192,62 @@
             </v-col>
           </v-row>
 
-          <v-row justify="center" class="mt-1">
+          <v-row justify="center" class="mt-0">
             <v-col cols="11">
               <v-card
                 height="415"
                 :loading="loading.getCharacterCount"
                 outlined
               >
-                <div v-if="translatedText">
-                  <v-card-text height="300">
-                    {{ translatedText }}
-                  </v-card-text>
-                </div>
+                <v-tabs
+                  v-model="tab"
+                  background-color="transparent"
+                  color="basil"
+                  grow
+                >
+                  <v-tab
+                    v-for="item in items"
+                    :key="item"
+                  >
+                    {{ item }}
+                  </v-tab>
+                </v-tabs>
 
-                <div v-else>
-                  <transition>
-                    <div v-show="characterCount">
-                      <DoughnutChart
-                        :character-count="characterCount"
-                        :character-limit="characterLimit"
-                      />
+                <v-tabs-items v-model="tab">
+                  <v-tab-item>
+                    <div v-if="translatedText">
+                      <v-card-text>
+                        {{ translatedText }}
+                      </v-card-text>
                     </div>
-                  </transition>
-                </div>
+
+                    <dir v-else>
+                      <transition>
+                        <div v-show="characterCount">
+                          <DoughnutChart
+                            class="mt-2"
+                            :character-count="characterCount"
+                            :character-limit="characterLimit"
+                            :width="chartSize"
+                            :height="chartSize"
+                          />
+                        </div>
+                      </transition>
+                    </dir>
+                  </v-tab-item>
+
+                  <v-tab-item>
+                    <v-data-table
+                      height="415"
+                      :headers="sentencesHeaders"
+                      :items="sentences"
+                      :items-per-page="-1"
+                      :search="searchSentence"
+                      fixed-header
+                      hide-default-footer
+                    ></v-data-table>
+                  </v-tab-item>
+                </v-tabs-items>
               </v-card>
             </v-col>
           </v-row>
@@ -262,17 +295,29 @@ export default {
       { text: '時間', value: 'calcTime', width: 75 },
       { text: '字幕', value: 'caption' }
     ],
+    sentencesHeaders: [
+      { text: '文字', value: 'text' },
+      { text: '意味', value: 'mean' }
+    ],
     selectLang: {
       caption: null,
       translate: null
     },
+    sentences: [],
     captions: [],
     langList: [],
-    searchCaption: null,
     text: '',
     translatedText: '',
+    switching: 1,
+    searchCaption: null,
+    searchSentence: null,
     characterCount: null,
-    characterLimit: null
+    characterLimit: null,
+    chartSize: 330,
+    tab: null,
+    items: [
+      '翻訳文', '保存した単語'
+    ]
   }),
   async fetch() {
     await this.getCharacterCount()
@@ -395,7 +440,10 @@ export default {
       await this.getCharacterCount()
     },
     saveText() {
-      console.log('ok')
+      this.sentences.push({
+        text: this.text,
+        mean: 'hogehoge'
+      })
     }
   }
 }
