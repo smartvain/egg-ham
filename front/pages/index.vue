@@ -303,7 +303,7 @@ export default {
     },
     videoInfo: {
       url: '',
-      id: '',
+      id: null,
       title: '',
       html: null
     },
@@ -361,7 +361,9 @@ export default {
       }
     },
     'videoInfo.id'(value) {
-      this.getVideoInfo(value)
+      if (value) {
+        this.getVideoInfo(value)
+      }
     }
   },
   created() {
@@ -373,7 +375,7 @@ export default {
   },
   methods: {
     initCaption() {
-      this.videoInfo.id = ''
+      this.videoInfo.id = null
       this.selectLang.caption = null
       this.captions = []
     },
