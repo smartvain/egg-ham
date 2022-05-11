@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Sentence;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class SentenceSeeder extends Seeder
 {
@@ -13,6 +15,7 @@ class SentenceSeeder extends Seeder
      */
     public function run()
     {
-        //
+        DB::table('sentences')->truncate();
+        Sentence::factory(10)->create();
     }
 }

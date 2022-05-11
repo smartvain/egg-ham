@@ -13,8 +13,11 @@ class SentenceFactory extends Factory
      */
     public function definition()
     {
+        $faker = $this->faker;
+        
         return [
-            //
+            'text' => $faker->sentence(),
+            'mean' => $faker->sentence()
         ];
     }
 }
