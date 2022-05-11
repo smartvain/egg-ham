@@ -150,7 +150,7 @@
 
         <v-col cols="5">
           <v-row justify="center">
-            <v-col cols="5">
+            <v-col cols="6">
               <v-select
                 v-model="selectLang.translate"
                 :items="translateLang"
@@ -173,13 +173,16 @@
               </v-btn>
             </v-col>
 
-            <v-col cols="3" align="right">
+            <v-col cols="2" align="right">
               <v-btn
                 :disabled="!text"
                 color="primary"
+                block
                 @click="validate().then(passes(saveText))"
               >
-                単語を保存
+                <v-icon>
+                  mdi-playlist-plus
+                </v-icon>
               </v-btn>
             </v-col>
           </v-row>
@@ -272,6 +275,17 @@
                         <v-icon @click="deleteSentence(index)">
                           mdi-close
                         </v-icon>
+                      </template>
+
+                      <template #foot>
+                        <v-btn
+                          :disabled="sentences.length === 0"
+                          class="mt-2 ml-2"
+                          color="primary"
+                          dense solo
+                        >
+                          全て保存
+                        </v-btn>
                       </template>
                     </v-data-table>
                   </v-tab-item>
@@ -478,6 +492,9 @@ export default {
         text: this.text,
         mean: null
       })
+    },
+    storeSentences() {
+      console.log(this.sentences)
     },
     deleteSentence(idx) {
       this.sentences.splice(idx, 1)
