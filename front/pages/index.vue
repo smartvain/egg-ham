@@ -496,6 +496,9 @@ export default {
         mean: null
       })
     },
+    deleteSentence(index) {
+      this.sentences.splice(index, 1)
+    },
     async storeSentences() {
       this.loading.storeSentences = true
 
@@ -510,9 +513,6 @@ export default {
       this.newMeans = []
 
       this.loading.storeSentences = false
-    },
-    deleteSentence(idx) {
-      this.sentences.splice(idx, 1)
     }
   }
 }
