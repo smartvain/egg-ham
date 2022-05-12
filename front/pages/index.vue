@@ -196,6 +196,7 @@
               >
                 <v-textarea
                   v-model="text"
+                  v-on:keydown.enter.meta.exact="saveText"
                   :error-messages="errors"
                   :background-color="inputTextArea.bgColor"
                   :flat="!inputTextArea.isFocus"
@@ -495,6 +496,8 @@ export default {
         text: this.text,
         mean: null
       })
+
+      this.text = ''
     },
     deleteSentence(index) {
       this.sentences.splice(index, 1)
