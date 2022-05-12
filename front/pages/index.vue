@@ -196,7 +196,7 @@
               >
                 <v-textarea
                   v-model="text"
-                  v-on:keydown.enter.meta.exact="saveText"
+                  v-on:keydown.enter.meta.exact="if (text) { saveText() }"
                   :error-messages="errors"
                   :background-color="inputTextArea.bgColor"
                   :flat="!inputTextArea.isFocus"
