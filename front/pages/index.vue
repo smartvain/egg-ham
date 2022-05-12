@@ -246,9 +246,17 @@
                   </v-tab-item>
                   
                   <v-tab-item>
-                    <v-card-text>
-                      {{ translatedText }}
-                    </v-card-text>
+                    <div v-if="!translatedText">
+                      <v-card-text class="grey--text lighten-4 text-center">
+                        翻訳された単語はありません
+                      </v-card-text>
+                    </div>
+
+                    <div v-else>
+                      <v-card-text>
+                        {{ translatedText }}
+                      </v-card-text>
+                    </div>
                   </v-tab-item>
 
                   <v-tab-item>
