@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Sentence extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'text',
+        'mean'
+    ];
 }

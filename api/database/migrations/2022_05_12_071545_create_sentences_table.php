@@ -16,7 +16,7 @@ class CreateSentencesTable extends Migration
         Schema::create('sentences', function (Blueprint $table) {
             $table->id();
             $table->string('text');
-            $table->string('mean');
+            $table->string('mean')->nullable();
             $table->timestamps();
         });
     }

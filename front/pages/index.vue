@@ -279,10 +279,12 @@
 
                       <template #foot>
                         <v-btn
+                          :loading="loading.storeSentences"
                           :disabled="sentences.length === 0"
                           class="mt-2 ml-2"
                           color="primary"
                           dense solo
+                          @click="storeSentences()"
                         >
                           全て保存
                         </v-btn>
@@ -313,7 +315,8 @@ export default {
       getLangList: false,
       getCaption: false,
       translate: false,
-      getCharacterCount: false
+      getCharacterCount: false,
+      storeSentences: false
     },
     videoInfo: {
       url: '',
@@ -493,8 +496,20 @@ export default {
         mean: null
       })
     },
-    storeSentences() {
-      console.log(this.sentences)
+    async storeSentences() {
+      this.loading.storeSentences = true
+
+      try {
+        await this.$axios.$post('sentences', this.sentences)
+        this.$toast.show('単語を全て保存しました。')
+      } catch(e) {
+        this.$toast.error('単語の保存に失敗しました。')
+      }
+
+      this.sentences = []
+      this.newMeans = []
+
+      this.loading.storeSentences = false
     },
     deleteSentence(idx) {
       this.sentences.splice(idx, 1)
