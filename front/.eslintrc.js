@@ -14,6 +14,7 @@ module.exports = {
   rules: {
     'no-unmodified-loop-condition': 'off',
     'no-var': 'off',
-    'no-console': 'off'
+    'no-console': 'off',
+    'no-vue/multi-word-component-names': 'off',
   },
 }
