@@ -28,9 +28,7 @@ export default {
   watch: {
     characterCount(value) {
       this.chartData.datasets[0].data.splice(0, 1, value)
-    },
-    characterLimit(value) {
-      this.characterRemain = value - this.characterCount
+      this.characterRemain = this.characterLimit - value
     },
     characterRemain(value) {
       this.chartData.datasets[0].data.splice(1, 1, value)
@@ -47,13 +45,14 @@ export default {
     },
     insertCenterText(remain) {
       this.addPlugin({
-        afterDraw(chart) {
+        beforeDraw(chart) {
           const ctx = chart.ctx
           const centerWidth = chart.width / 2
           const centerHeight = chart.height / 2
           const fontSize = 18;
           const fontStyle = 'normal';
           const fontFamily = "Helvetica Neue";
+          ctx.clearRect(0, 0, chart.width, chart.height)
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
 
