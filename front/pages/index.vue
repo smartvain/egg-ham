@@ -500,7 +500,8 @@ export default {
     saveText() {
       this.words.push({
         text: this.text,
-        mean: null
+        mean: null,
+        word_type: this.text.includes('　') || this.text.includes(' ') ? 2 : 1
       })
 
       this.text = ''

@@ -11,6 +11,7 @@ class Word extends Model
 
     protected $fillable = [
         'text',
-        'mean'
+        'mean',
+        'word_type'
     ];
 }
