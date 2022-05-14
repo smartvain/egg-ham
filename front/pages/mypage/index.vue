@@ -18,8 +18,6 @@
         </v-card>
       </v-col>
 
-      <v-divider vertical />
-
       <v-col cols="5">
         <v-card outlined>
           <v-data-table
@@ -49,12 +47,12 @@ export default {
     ]
   }),
   computed: {
-    words() {
+    filteredWords() {
       return this.words.filter(word => {
         return word.word_type === 1
       })
     },
-    idiom() {
+    filteredIdiom() {
       return this.words.filter(word => {
         return word.word_type === 2
       })
