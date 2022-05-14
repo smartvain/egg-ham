@@ -27,4 +27,5 @@ Route::get('langList', [YoutubeController::class, 'getLangList']);
 Route::post('translate', [DeepLController::class, 'translate']);
 Route::post('character_count', [DeepLController::class, 'getCharacterCount']);
 
+Route::get('sentences', [SentenceController::class, 'getSentences']);
 Route::post('sentences', [SentenceController::class, 'storeSentences']);

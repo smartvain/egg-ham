@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\DB;
 
 class SentenceController extends Controller
 {
+    public function getSentences()
+    {
+        return Sentence::get();
+    }
+
     public function storeSentences(Request $request)
     {
         $sentences = $request->all();
