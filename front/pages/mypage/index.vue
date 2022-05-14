@@ -11,7 +11,7 @@
         <v-card outlined>
           <v-data-table
             :headers="headers"
-            :items="words"
+            :items="filteredWords"
             :items-per-page="15"
           >
           </v-data-table>
@@ -22,7 +22,7 @@
         <v-card outlined>
           <v-data-table
             :headers="headers"
-            :items="idiom"
+            :items="filteredIdiom"
             :items-per-page="15"
           >
             <template #[`header.text`]>慣用句</template>
