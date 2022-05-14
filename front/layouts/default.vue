@@ -5,6 +5,12 @@
       
       <v-spacer />
 
+      <UrlInput
+        :url="url"
+      />
+      
+      <v-spacer />
+
       <v-btn
         icon
         @click.stop="clipped = !clipped"
@@ -27,8 +33,13 @@
 </template>
 
 <script>
+import UrlInput from '~/components/UrlInput.vue'
+
 export default {
   name: 'DefaultLayout',
+  components: {
+    UrlInput
+  },
   data: () => ({
     clipped: false,
     drawer: false,
