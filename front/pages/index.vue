@@ -354,7 +354,7 @@ export default {
       translate: null
     },
     items: [
-      'DEEPL使用量', '翻訳文', '追加した単語'
+      'DEEPL使用量', '翻訳単語', '追加した単語'
     ],
     words: [],
     text: '',
