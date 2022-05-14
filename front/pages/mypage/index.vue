@@ -13,7 +13,11 @@
             :headers="headers"
             :items="words"
             :items-per-page="15"
-          ></v-data-table>
+            :filter="WordType"
+            search="1"
+          >
+            <template #[`item.word_type`] />
+          </v-data-table>
         </v-card>
       </v-col>
 
@@ -25,7 +29,12 @@
             :headers="headers"
             :items="words"
             :items-per-page="15"
-          ></v-data-table>
+            :filter="WordType"
+            search="2"
+          >
+            <template #[`item.word_type`] />
+            <template #[`header.text`]>慣用句</template>
+          </v-data-table>
         </v-card>
       </v-col>
     </v-row>
@@ -37,12 +46,18 @@ export default {
   data: () => ({
     headers: [
       { text: '単語', value: 'text' },
-      { text: '意味', value: 'mean' }
+      { text: '意味', value: 'mean' },
+      { value: 'word_type', sortable: false},
     ]
   }),
   async asyncData({ $axios }) {
     return {
       words: await $axios.$get('words')
+    }
+  },
+  methods: {
+    WordType(value, search) {
+      return value.word_type === search
     }
   }
 }
