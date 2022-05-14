@@ -119,9 +119,11 @@
                   </template>
 
                   <template #[`item.copy`]="{ item }">
-                    <v-icon @click="text += item.caption">
-                      mdi-content-copy
-                    </v-icon>
+                    <v-btn @click="text += item.caption" icon>
+                      <v-icon>
+                        mdi-content-copy
+                      </v-icon>
+                    </v-btn>
                   </template>
 
                   <template #no-data>
