@@ -178,7 +178,7 @@
                 :disabled="!text"
                 color="primary"
                 block
-                @click="validate().then(passes(saveText))"
+                @click="saveText(text)"
               >
                 単語を追加
               </v-btn>
@@ -266,14 +266,13 @@
                       hide-default-footer
                       no-data-text="追加された単語がありません"
                     >
-                      <template #[`item.mean`]="{ item, index }">
+                      <template #[`item.mean`]="{ item }">
                         <v-text-field
-                          v-model="means[index]"
+                          v-model="item.mean"
                           class="mt-1 mb-n2"
-                          :value="item.mean"
                           dense
-                          @input="item.mean = means[index]"
                         />
+                        <v-card-text>{{ item }}</v-card-text>
                       </template>
 
                       <template #[`item.delete`]="{ index }">
@@ -360,7 +359,6 @@ export default {
     ],
     words: [],
     text: '',
-    means: [],
     langList: [],
     captions: [],
     translatedText: '',
@@ -490,17 +488,18 @@ export default {
         this.$toast.error('翻訳に失敗しました。')
       }
       
+      this.saveText(this.text, this.translatedText)
+      
       this.loading.translate = false
-
 
       await this.getCharacterCount()
     },
-    saveText(textVal) {
+    saveText(textVal, meanVal) {
       const wordType = 1
       const idiomaticType = 2
       this.words.push({
         text: textVal,
-        mean: null,
+        mean: meanVal,
         word_type: textVal.includes('　') || textVal.includes(' ') ? idiomaticType : wordType
       })
 
@@ -520,7 +519,6 @@ export default {
       }
 
       this.words = []
-      this.means = []
 
       this.loading.storeWords = false
     }
