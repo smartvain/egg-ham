@@ -196,7 +196,7 @@
               >
                 <v-textarea
                   v-model="text"
-                  v-on:keydown.enter.meta.exact="if (text) { saveText() }"
+                  v-on:keydown.enter.meta.exact="if (text) { saveText(text) }"
                   :error-messages="errors"
                   :background-color="inputTextArea.bgColor"
                   :flat="!inputTextArea.isFocus"
@@ -497,15 +497,16 @@ export default {
       
       this.loading.translate = false
 
+
       await this.getCharacterCount()
     },
-    saveText() {
+    saveText(textVal) {
       const wordType = 1
       const idiomaticType = 2
       this.words.push({
-        text: this.text,
+        text: textVal,
         mean: null,
-        word_type: this.text.includes('　') || this.text.includes(' ') ? idiomaticType : wordType
+        word_type: textVal.includes('　') || textVal.includes(' ') ? idiomaticType : wordType
       })
 
       this.text = ''
