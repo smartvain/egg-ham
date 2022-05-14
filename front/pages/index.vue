@@ -498,10 +498,12 @@ export default {
       await this.getCharacterCount()
     },
     saveText() {
+      const wordType = 1
+      const idiomaticType = 2
       this.words.push({
         text: this.text,
         mean: null,
-        word_type: this.text.includes('　') || this.text.includes(' ') ? 2 : 1
+        word_type: this.text.includes('　') || this.text.includes(' ') ? idiomaticType : wordType
       })
 
       this.text = ''
