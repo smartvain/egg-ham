@@ -272,11 +272,11 @@
                     >
                       <template #[`item.mean`]="{ item, index }">
                         <v-text-field
-                          v-model="newMeans[index]"
+                          v-model="means[index]"
                           class="mt-1 mb-n2"
                           :value="item.mean"
                           dense
-                          @input="item.mean = newMeans[index]"
+                          @input="item.mean = means[index]"
                         />
                       </template>
 
@@ -359,10 +359,14 @@ export default {
       caption: null,
       translate: null
     },
+    items: [
+      'DEEPL使用量', '翻訳文', '保存した単語'
+    ],
     sentences: [],
+    text: '',
+    means: [],
     captions: [],
     langList: [],
-    text: '',
     translatedText: '',
     switching: 1,
     searchCaption: null,
@@ -372,10 +376,6 @@ export default {
     chartSize: 330,
     copyBtnSize: 33,
     tab: null,
-    items: [
-      'DEEPL使用量', '翻訳文', '保存した単語'
-    ],
-    newMeans: []
   }),
   async fetch() {
     await this.getCharacterCount()
@@ -521,7 +521,7 @@ export default {
       }
 
       this.sentences = []
-      this.newMeans = []
+      this.means = []
 
       this.loading.storeSentences = false
     }
