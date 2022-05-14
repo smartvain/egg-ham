@@ -13,7 +13,7 @@
             :headers="headers"
             :items="words"
             :items-per-page="15"
-            :filter="WordType"
+            :custom-filter="WordType"
             search="1"
           >
             <template #[`item.word_type`] />
@@ -29,7 +29,7 @@
             :headers="headers"
             :items="words"
             :items-per-page="15"
-            :filter="WordType"
+            :custom-filter="WordType"
             search="2"
           >
             <template #[`item.word_type`] />
