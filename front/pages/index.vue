@@ -150,7 +150,7 @@
 
         <v-col cols="5">
           <v-row justify="center">
-            <v-col cols="6">
+            <v-col cols="5">
               <v-select
                 v-model="selectLang.translate"
                 :items="translateLang"
@@ -173,16 +173,14 @@
               </v-btn>
             </v-col>
 
-            <v-col cols="2" align="right">
+            <v-col cols="3" align="right">
               <v-btn
                 :disabled="!text"
                 color="primary"
                 block
                 @click="validate().then(passes(saveText))"
               >
-                <v-icon>
-                  mdi-playlist-plus
-                </v-icon>
+                単語を追加
               </v-btn>
             </v-col>
           </v-row>
@@ -200,7 +198,7 @@
                   :error-messages="errors"
                   :background-color="inputTextArea.bgColor"
                   :flat="!inputTextArea.isFocus"
-                  placeholder="翻訳したい文を入力"
+                  placeholder="翻訳したい単語を入力"
                   dense solo clearable
                   @focus="
                     inputTextArea.isFocus = true
@@ -268,7 +266,7 @@
                       :search="searchSentence"
                       hide-default-header
                       hide-default-footer
-                      no-data-text="保存された単語がありません"
+                      no-data-text="追加された単語がありません"
                     >
                       <template #[`item.mean`]="{ item, index }">
                         <v-text-field
@@ -360,7 +358,7 @@ export default {
       translate: null
     },
     items: [
-      'DEEPL使用量', '翻訳文', '保存した単語'
+      'DEEPL使用量', '翻訳文', '追加した単語'
     ],
     sentences: [],
     text: '',
