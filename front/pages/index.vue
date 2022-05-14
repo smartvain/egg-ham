@@ -272,7 +272,6 @@
                           class="mt-1 mb-n2"
                           dense
                         />
-                        <v-card-text>{{ item }}</v-card-text>
                       </template>
 
                       <template #[`item.delete`]="{ index }">
