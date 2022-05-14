@@ -119,7 +119,7 @@
                   </template>
 
                   <template #[`item.copy`]="{ item }">
-                    <v-btn @click="text += item.caption" icon>
+                    <v-btn icon @click="text += item.caption">
                       <v-icon>mdi-content-copy</v-icon>
                     </v-btn>
                   </template>
@@ -194,7 +194,6 @@
               >
                 <v-textarea
                   v-model="text"
-                  v-on:keydown.enter.meta.exact="if (text) { saveText(text) }"
                   :error-messages="errors"
                   :background-color="inputTextArea.bgColor"
                   :flat="!inputTextArea.isFocus"
@@ -206,6 +205,7 @@
                   @blur="
                     inputTextArea.isFocus = false
                     inputTextArea.bgColor = '#EEEEEE'"
+                  @keydown.enter.meta.exact="if (text) { saveText(text) }"
                 />
               </ValidationProvider>
             </v-col>

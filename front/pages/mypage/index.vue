@@ -43,6 +43,11 @@
 
 <script>
 export default {
+  async asyncData({ $axios }) {
+    return {
+      words: await $axios.$get('words')
+    }
+  },
   data: () => ({
     headers: [
       { text: '単語', value: 'text' },
@@ -50,11 +55,6 @@ export default {
       { value: 'word_type', sortable: false},
     ]
   }),
-  async asyncData({ $axios }) {
-    return {
-      words: await $axios.$get('words')
-    }
-  },
   methods: {
     WordType(value, search) {
       return value.word_type === search
