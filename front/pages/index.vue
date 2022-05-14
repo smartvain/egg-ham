@@ -495,11 +495,11 @@ export default {
     },
     saveText(textVal, meanVal) {
       const wordType = 1
-      const idiomaticType = 2
+      const idiomType = 2
       this.words.push({
         text: textVal,
         mean: meanVal,
-        word_type: textVal.includes('　') || textVal.includes(' ') ? idiomaticType : wordType
+        word_type: textVal.includes('　') || textVal.includes(' ') ? idiomType : wordType
       })
 
       this.text = ''

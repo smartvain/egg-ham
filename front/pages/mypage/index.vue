@@ -11,7 +11,7 @@
         <v-card outlined>
           <v-data-table
             :headers="headers"
-            :items="wordType1"
+            :items="words"
             :items-per-page="15"
           >
           </v-data-table>
@@ -24,7 +24,7 @@
         <v-card outlined>
           <v-data-table
             :headers="headers"
-            :items="wordType2"
+            :items="idiom"
             :items-per-page="15"
           >
             <template #[`header.text`]>慣用句</template>
@@ -49,12 +49,12 @@ export default {
     ]
   }),
   computed: {
-    wordType1() {
+    words() {
       return this.words.filter(word => {
         return word.word_type === 1
       })
     },
-    wordType2() {
+    idiom() {
       return this.words.filter(word => {
         return word.word_type === 2
       })
