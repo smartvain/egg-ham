@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Sentence;
+use App\Models\Word;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class SentenceSeeder extends Seeder
+class WordSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,7 +15,7 @@ class SentenceSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('sentences')->truncate();
-        Sentence::factory(10)->create();
+        DB::table('words')->truncate();
+        Word::factory(10)->create();
     }
 }

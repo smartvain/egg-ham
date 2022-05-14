@@ -11,7 +11,7 @@
         <v-card outlined>
           <v-data-table
             :headers="headers"
-            :items="sentences"
+            :items="words"
             :items-per-page="15"
           ></v-data-table>
         </v-card>
@@ -23,7 +23,7 @@
         <v-card outlined>
           <v-data-table
             :headers="headers"
-            :items="sentences"
+            :items="words"
             :items-per-page="15"
           ></v-data-table>
         </v-card>
@@ -42,7 +42,7 @@ export default {
   }),
   async asyncData({ $axios }) {
     return {
-      sentences: await $axios.$get('sentences')
+      words: await $axios.$get('words')
     }
   }
 }

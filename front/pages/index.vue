@@ -260,10 +260,10 @@
                   <v-tab-item>
                     <v-data-table
                       height="365"
-                      :headers="sentencesHeaders"
-                      :items="sentences"
+                      :headers="wordsHeaders"
+                      :items="words"
                       :items-per-page="-1"
-                      :search="searchSentence"
+                      :search="searchWord"
                       hide-default-header
                       hide-default-footer
                       no-data-text="追加された単語がありません"
@@ -279,19 +279,19 @@
                       </template>
 
                       <template #[`item.delete`]="{ index }">
-                        <v-icon @click="deleteSentence(index)">
+                        <v-icon @click="deleteWord(index)">
                           mdi-close
                         </v-icon>
                       </template>
 
                       <template #foot>
                         <v-btn
-                          :loading="loading.storeSentences"
-                          :disabled="sentences.length === 0"
+                          :loading="loading.storeWords"
+                          :disabled="words.length === 0"
                           class="mt-2 ml-2"
                           color="primary"
                           dense solo
-                          @click="storeSentences()"
+                          @click="storeWords()"
                         >
                           全て保存
                         </v-btn>
@@ -323,7 +323,7 @@ export default {
       getCaption: false,
       translate: false,
       getCharacterCount: false,
-      storeSentences: false
+      storeWords: false
     },
     videoInfo: {
       url: '',
@@ -348,7 +348,7 @@ export default {
       { text: '字幕', value: 'caption' },
       { text: 'コピー', value: 'copy', sortable: false, width: 70 }
     ],
-    sentencesHeaders: [
+    wordsHeaders: [
       { text: '文字', value: 'text' },
       { text: '意味', value: 'mean' },
       { text: '削除', value: 'delete' }
@@ -360,7 +360,7 @@ export default {
     items: [
       'DEEPL使用量', '翻訳文', '追加した単語'
     ],
-    sentences: [],
+    words: [],
     text: '',
     means: [],
     captions: [],
@@ -368,7 +368,7 @@ export default {
     translatedText: '',
     switching: 1,
     searchCaption: null,
-    searchSentence: null,
+    searchWord: null,
     characterCount: null,
     characterLimit: null,
     chartSize: 330,
@@ -498,30 +498,30 @@ export default {
       await this.getCharacterCount()
     },
     saveText() {
-      this.sentences.push({
+      this.words.push({
         text: this.text,
         mean: null
       })
 
       this.text = ''
     },
-    deleteSentence(index) {
-      this.sentences.splice(index, 1)
+    deleteWord(index) {
+      this.words.splice(index, 1)
     },
-    async storeSentences() {
-      this.loading.storeSentences = true
+    async storeWords() {
+      this.loading.storeWords = true
 
       try {
-        await this.$axios.$post('sentences', this.sentences)
+        await this.$axios.$post('words', this.words)
         this.$toast.show('単語を全て保存しました。')
       } catch(e) {
         this.$toast.error('単語の保存に失敗しました。')
       }
 
-      this.sentences = []
+      this.words = []
       this.means = []
 
-      this.loading.storeSentences = false
+      this.loading.storeWords = false
     }
   }
 }

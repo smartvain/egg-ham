@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\DeepLController;
-use App\Http\Controllers\SentenceController;
+use App\Http\Controllers\WordController;
 use App\Http\Controllers\YoutubeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -27,5 +27,5 @@ Route::get('langList', [YoutubeController::class, 'getLangList']);
 Route::post('translate', [DeepLController::class, 'translate']);
 Route::post('character_count', [DeepLController::class, 'getCharacterCount']);
 
-Route::get('sentences', [SentenceController::class, 'getSentences']);
-Route::post('sentences', [SentenceController::class, 'storeSentences']);
+Route::get('words', [WordController::class, 'getWords']);
+Route::post('words', [WordController::class, 'storeWords']);
