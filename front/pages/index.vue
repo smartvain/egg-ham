@@ -120,9 +120,7 @@
 
                   <template #[`item.copy`]="{ item }">
                     <v-btn @click="text += item.caption" icon>
-                      <v-icon>
-                        mdi-content-copy
-                      </v-icon>
+                      <v-icon>mdi-content-copy</v-icon>
                     </v-btn>
                   </template>
 
@@ -253,9 +251,7 @@
                     </div>
 
                     <div v-else>
-                      <v-card-text>
-                        {{ translatedText }}
-                      </v-card-text>
+                      <v-card-text>{{ translatedText }}</v-card-text>
                     </div>
                   </v-tab-item>
 
@@ -281,9 +277,9 @@
                       </template>
 
                       <template #[`item.delete`]="{ index }">
-                        <v-icon @click="deleteWord(index)">
-                          mdi-close
-                        </v-icon>
+                        <v-btn icon @click="deleteWord(index)">
+                          <v-icon>mdi-close</v-icon>
+                        </v-btn>
                       </template>
 
                       <template #foot>
