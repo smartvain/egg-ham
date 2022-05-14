@@ -11,12 +11,9 @@
         <v-card outlined>
           <v-data-table
             :headers="headers"
-            :items="words"
+            :items="wordType1"
             :items-per-page="15"
-            :custom-filter="WordType"
-            search="1"
           >
-            <template #[`item.word_type`] />
           </v-data-table>
         </v-card>
       </v-col>
@@ -27,12 +24,9 @@
         <v-card outlined>
           <v-data-table
             :headers="headers"
-            :items="words"
+            :items="wordType2"
             :items-per-page="15"
-            :custom-filter="WordType"
-            search="2"
           >
-            <template #[`item.word_type`] />
             <template #[`header.text`]>慣用句</template>
           </v-data-table>
         </v-card>
@@ -51,13 +45,19 @@ export default {
   data: () => ({
     headers: [
       { text: '単語', value: 'text' },
-      { text: '意味', value: 'mean' },
-      { value: 'word_type', sortable: false},
+      { text: '意味', value: 'mean' }
     ]
   }),
-  methods: {
-    WordType(value, search) {
-      return value.word_type === search
+  computed: {
+    wordType1() {
+      return this.words.filter(word => {
+        return word.word_type === 1
+      })
+    },
+    wordType2() {
+      return this.words.filter(word => {
+        return word.word_type === 2
+      })
     }
   }
 }

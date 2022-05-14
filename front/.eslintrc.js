@@ -15,6 +15,7 @@ module.exports = {
     'no-unmodified-loop-condition': 'off',
     'no-var': 'off',
     'no-console': 'off',
+    'no-return-assign': 'off',
     'vue/multi-word-component-names': 'off',
   },
 }
