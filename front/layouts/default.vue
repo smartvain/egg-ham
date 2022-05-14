@@ -26,9 +26,7 @@
     </v-navigation-drawer>
 
     <v-app-bar :clipped-left="clipped" fixed app elevation="2" height="50">
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-
-      <v-toolbar-title v-text="title" />
+      <v-toolbar-title v-text="'yuleapp'" />
       
       <v-spacer />
 
