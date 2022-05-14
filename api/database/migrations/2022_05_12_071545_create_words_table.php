@@ -17,6 +17,7 @@ class CreateWordsTable extends Migration
             $table->id();
             $table->string('text');
             $table->string('mean')->nullable();
+            $table->integer('word_type')->default(1);
             $table->timestamps();
         });
     }
