@@ -36,9 +36,7 @@
 <script>
 export default {
   async asyncData({ $axios }) {
-    return {
-      words: await $axios.$get('words')
-    }
+    return { words: await $axios.$get('words') }
   },
   data: () => ({
     headers: [

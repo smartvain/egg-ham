@@ -276,9 +276,7 @@ import DoughnutChart from '~/components/DoughnutChart.vue'
 
 export default {
   name: 'IndexPage',
-  components: {
-    DoughnutChart
-  },
+  components: { DoughnutChart },
   data: () => ({
     loading: {
       translate: false,
@@ -303,22 +301,20 @@ export default {
       { text: '意味', value: 'mean' },
       { text: '削除', value: 'delete' }
     ],
-    tabItems: [
-      'DEEPL使用量', '翻訳単語', '追加した単語'
-    ],
-    iframe: null,
+    tabItems: [ 'DEEPL使用量', '翻訳単語', '追加した単語' ],
+    borderRadius: 'rounded-lg',
     words: [],
     text: '',
     translatedText: '',
     toggleDisplay: true,
+    tab: null,
+    iframe: null,
     searchCaption: null,
     translateLang: null,
     characterCount: null,
     characterLimit: null,
     chartSize: 330,
     videoHeight: 415,
-    borderRadius: 'rounded-lg',
-    tab: null
   }),
   async fetch() {
     await this.getCharacterCount()
@@ -392,6 +388,7 @@ export default {
       const idiom = 2
       const word_type = text.includes('　') || text.includes(' ') ? idiom : word
       this.words.push({ text, mean, word_type })
+      
       if (!mean) {this.text = ''}
     },
     deleteWord(index) {
