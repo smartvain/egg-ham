@@ -4,14 +4,15 @@
       <v-col cols="7">
         <v-row justify="center">
           <v-col cols="11">
-            <div v-if="!videoId">
-              <v-sheet
-                color="grey darken-2"
-                elevation="1"
-                width="100%"
+            <div v-if="!videoId" :style="`height: ${videoHeight}px`">
+              <v-img
+                transition="scroll-x-transition"
+                class="mx-auto"
+                width="200"
+                contain
                 :height="videoHeight"
-                outlined
-                rounded
+                :src="require('~/assets/img/icon.png')"
+                :aspect-ratio="16/9"
               />
             </div>
 
