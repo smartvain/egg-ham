@@ -1,15 +1,15 @@
 <template>
   <v-app dark>
     <v-app-bar app elevation="2" height="60">
-      <v-img
-        :src="require('~/assets/img/icon.png')"
-        max-width="45"
-        max-height="100%"
-        contain
-      />
-      
-      <v-toolbar-title v-text="'yuleapp'" />
-      
+      <a href="/">
+        <v-img
+          :src="require('~/assets/img/logo.png')"
+          max-width="160"
+          max-height="100%"
+          contain
+        />
+      </a>
+
       <v-spacer />
       <UrlInput />
       <v-spacer />
