@@ -14,12 +14,38 @@
       <UrlInput />
       <v-spacer />
 
-      <v-btn
-        icon
-        :to="{ path: 'mypage' }"
-      >
-        <v-icon>mdi-cog-outline</v-icon>
-      </v-btn>
+      <div v-if="$route.path !== '/'">
+        <v-btn
+          class="mr-3"
+          outlined plain
+          :to="{ path: '/' }"
+        >
+          TOP
+        </v-btn>
+      </div>
+
+      <v-menu offset-y open-on-hover>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn icon>
+            <v-img
+              :src="require('~/assets/img/default_icon.png')"
+              class="rounded-circle"
+              max-width="43"
+              v-bind="attrs"
+              v-on="on"
+            />
+          </v-btn>
+        </template>
+
+        <v-list>
+          <v-list-item v-for="(page, index) in pages"
+            :key="index"
+            :to="page.path"
+          >
+            <v-list-item-title>{{ page.title }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </v-app-bar>
 
     <v-main>
@@ -35,6 +61,12 @@ export default {
   name: 'DefaultLayout',
   components: {
     UrlInput
-  }
+  },
+  data: () => ({
+    pages: [
+      { title: 'ログイン', path: 'login' },
+      { title: 'マイページ', path: 'mypage' },
+    ]
+  })
 }
 </script>
