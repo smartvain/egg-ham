@@ -48,14 +48,10 @@ export default {
   }),
   computed: {
     filteredWords() {
-      return this.words.filter(word => {
-        return word.word_type === 1
-      })
+      return this.words.filter(word => word.word_type === 1)
     },
     filteredIdiom() {
-      return this.words.filter(word => {
-        return word.word_type === 2
-      })
+      return this.words.filter(word => word.word_type === 2)
     }
   }
 }
