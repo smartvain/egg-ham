@@ -96,12 +96,11 @@
                 </template>
 
                 <template #no-data>
-                  <vue-loading
-                    class="mt-16"
-                    type="bars"
-                    color="#1095FE"
-                    :size="{ width: '50px', height: '50px' }"
-                  />
+                  <v-card-text
+                    v-if="!loading.getCaption"
+                    class="grey--text lighten-4 text-center text-subtitle-1 mt-16">
+                    URLを入力してください
+                  </v-card-text>
                 </template>
               </v-data-table>
             </v-card>
@@ -272,17 +271,15 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { VueLoading } from 'vue-loading-template'
 import DoughnutChart from '~/components/DoughnutChart.vue'
 
 export default {
   name: 'IndexPage',
   components: {
-    DoughnutChart, VueLoading
+    DoughnutChart
   },
   data: () => ({
     loading: {
-      getCaption: false,
       translate: false,
       getCharacterCount: false,
       storeWords: false
