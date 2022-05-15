@@ -308,7 +308,6 @@ export default {
     translatedText: '',
     toggleDisplay: true,
     tab: null,
-    iframe: null,
     searchCaption: null,
     translateLang: null,
     characterCount: null,
@@ -320,7 +319,7 @@ export default {
     await this.getCharacterCount()
   },
   computed: {
-    ...mapGetters(['url', 'videoId', 'captions', 'captionLang'])
+    ...mapGetters(['url', 'videoId', 'captions', 'captionLang', 'iframe'])
   },
   watch: {
     videoId(value) {
@@ -352,7 +351,7 @@ export default {
       iframe.setAttribute('height', (this.getElWidth(this.$refs.iframe) / 16) * 9)
       iframe.setAttribute('width', '100%')
 
-      this.iframe = iframe.outerHTML
+      this.$store.commit('setIframe', iframe.outerHTML)
     },
     createElementFromHTML(html) {
       const tempEl = document.createElement('div');
