@@ -66,7 +66,7 @@ export default {
     pages: [
       { title: 'ログイン', path: '/login' },
       { title: 'マイページ', path: '/mypage' },
-      { title: '設定', path: '/setting' },
+      { title: '設定', path: '/mypage/setting' },
       { title: 'ログアウト', path: '/logout' },
     ]
   })
