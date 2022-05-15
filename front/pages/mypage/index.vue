@@ -1,13 +1,13 @@
 <template>
   <v-container fluid>
-    <v-row>
-      <v-col cols="2">
+    <v-tabs v-model="tab">
+      <v-tab v-for="item in tabItems" :key="item">
+        {{ item }}
+      </v-tab>
+    </v-tabs>
 
-      </v-col>
-
-      <v-divider vertical />
-
-      <v-col cols="5">
+    <v-tabs-items v-model="tab">
+      <v-tab-item>
         <v-card outlined>
           <v-data-table
             :headers="headers"
@@ -16,9 +16,9 @@
           >
           </v-data-table>
         </v-card>
-      </v-col>
+      </v-tab-item>
 
-      <v-col cols="5">
+      <v-tab-item>
         <v-card outlined>
           <v-data-table
             :headers="headers"
@@ -28,8 +28,8 @@
             <template #[`header.text`]>慣用句</template>
           </v-data-table>
         </v-card>
-      </v-col>
-    </v-row>
+      </v-tab-item>
+    </v-tabs-items>
   </v-container>
 </template>
 
@@ -42,7 +42,9 @@ export default {
     headers: [
       { text: '単語', value: 'text' },
       { text: '意味', value: 'mean' }
-    ]
+    ],
+    tabItems: [ '単語', '慣用句' ],
+    tab: null
   }),
   computed: {
     filteredWords() {
