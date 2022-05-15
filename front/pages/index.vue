@@ -98,8 +98,9 @@
                 <template #no-data>
                   <v-card-text
                     v-if="!loading.getCaption"
-                    class="grey--text lighten-4 text-center text-subtitle-1 mt-16">
-                    URLを入力してください
+                    class="grey--text lighten-4 text-center text-subtitle-1 mt-16"
+                  >
+                    URLを入力後、字幕言語を選択すると<br>「字幕を取得する」ボタンをクリックできるようになります。
                   </v-card-text>
                 </template>
               </v-data-table>
