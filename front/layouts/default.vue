@@ -64,8 +64,10 @@ export default {
   },
   data: () => ({
     pages: [
-      { title: 'ログイン', path: 'login' },
-      { title: 'マイページ', path: 'mypage' },
+      { title: 'ログイン', path: '/login' },
+      { title: 'マイページ', path: '/mypage' },
+      { title: '設定', path: '/mypage/setting' },
+      { title: 'ログアウト', path: '/logout' },
     ]
   })
 }
