@@ -53,6 +53,7 @@
 
                           <v-col cols="2">
                             <v-btn
+                              :class="borderRadius"
                               color="primary"
                               @click="toggleDisplay = !toggleDisplay"
                             >
@@ -115,6 +116,7 @@
               <v-btn
                 :disabled="!translateLang || !text"
                 :loading="loading.translate"
+                :class="borderRadius"
                 color="primary"
                 block
                 @click="validate().then(passes(translate))"
@@ -126,6 +128,7 @@
             <v-col cols="3" align="right">
               <v-btn
                 :disabled="!text"
+                :class="borderRadius"
                 color="primary"
                 block
                 @click="saveText(text)"
@@ -234,7 +237,7 @@
                       <v-btn
                         :loading="loading.storeWords"
                         :disabled="words.length === 0"
-                        class="mt-2 ml-2"
+                        :class="`mt-2 ml-2 ${borderRadius}`"
                         color="primary"
                         dense solo
                         @click="storeWords()"
@@ -302,7 +305,8 @@ export default {
     characterLimit: null,
     chartSize: 330,
     videoHeight: 415,
-    tab: null,
+    borderRadius: 'rounded-lg',
+    tab: null
   }),
   async fetch() {
     await this.getCharacterCount()

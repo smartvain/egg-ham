@@ -53,6 +53,7 @@
         <v-btn
           :disabled="!captionLang"
           :loading="loading.getCaptions"
+          :class="borderRadius"
           color="primary"
           @click="validate().then(passes(getCaptions))"
         >
@@ -78,7 +79,8 @@ export default {
     },
     url: null,
     captionLang: null,
-    langList: []
+    langList: [],
+    borderRadius: 'rounded-lg'
   }),
   watch: {
     captionLang(value) {
