@@ -15,7 +15,7 @@
             dense solo clearable
             @focus="
               textField.isFocus = true
-              textField.bgColor = '#E3F2FD'"
+              textField.bgColor = '#EBF6FF'"
             @blur="
               textField.isFocus = false
               textField.bgColor = 'white'
