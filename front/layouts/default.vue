@@ -16,10 +16,7 @@
 
       <v-btn
         icon
-        @click.stop="clipped = !clipped"
-        :to="{
-          path: toggleUrl,
-        }"
+        :to="{ path: 'mypage' }"
       >
         <v-icon>mdi-cog-outline</v-icon>
       </v-btn>
@@ -38,17 +35,6 @@ export default {
   name: 'DefaultLayout',
   components: {
     UrlInput
-  },
-  computed: {
-    toggleUrl() {
-      let path
-      switch (this.$route.path) {
-        case '/'      : path = '/mypage'; break
-        case '/mypage': path = '/'      ; break
-      }
-
-      return path
-    }
   }
 }
 </script>
