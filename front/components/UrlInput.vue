@@ -1,6 +1,6 @@
 <template>
   <ValidationObserver v-slot="{ passes, validate }">
-    <v-row class="mt-3" style="width: 1000px">
+    <v-row class="mt-3" style="width: 800px">
       <v-col cols="7">
         <ValidationProvider
           v-slot="{ errors }"
