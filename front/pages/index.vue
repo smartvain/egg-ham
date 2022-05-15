@@ -5,15 +5,29 @@
         <v-row justify="center">
           <v-col cols="11">
             <div v-if="!videoId" :style="`height: ${videoHeight}px`">
-              <v-img
-                transition="scroll-x-transition"
-                class="mx-auto"
-                width="200"
-                contain
-                :height="videoHeight"
-                :src="require('~/assets/img/icon.png')"
-                :aspect-ratio="16/9"
-              />
+              <v-hover v-slot="{ hover }">
+                <v-row align-content="center" style="height: 100%" justify="center">
+                  <v-col cols="12" md="1">
+                    <v-img
+                      style="z-index: 9999"
+                      class="logo ml-n2 mt-6"
+                      :class="{ 'on-hover': !hover }"
+                      transition="scroll-x-transition"
+                      min-width="90"
+                      :src="require('~/assets/img/icon.png')"
+                    ></v-img>
+                  </v-col>
+
+                  <v-col cols="12" md="7">
+                    <v-img
+                      class="title ml-n9"
+                      :class="{ 'on-hover': hover }"
+                      min-width="502"
+                      :src="require('~/assets/img/title.png')"
+                    />
+                  </v-col>
+                </v-row>
+              </v-hover>
             </div>
 
             <div
@@ -406,10 +420,27 @@ export default {
 
 <style scoped>
 .v-enter-active, .v-leave-active {
-    transition: opacity .8s
+  transition: opacity .8s
 }
 
 .v-enter, .v-leave-to{
-    opacity: 0;
+  opacity: 0
+}
+
+.logo {
+  transition: all .2s
+}
+
+.logo:not(.on-hover) {
+  transform: scale(1.19)
+}
+
+.title {
+  transition: all .2s
+}
+
+.title:not(.on-hover) {
+  opacity: 0;
+  transform: translateX(-10px);
 }
 </style>
