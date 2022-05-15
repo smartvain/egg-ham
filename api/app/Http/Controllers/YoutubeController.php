@@ -27,7 +27,7 @@ class YoutubeController extends Controller
         return $langList;
     }
 
-    public function getCaption(Request $request)
+    public function getCaptions(Request $request)
     {
         $videoId = $request->get('videoId');
         $lang    = $request->get('lang');

@@ -1,14 +1,10 @@
 <template>
   <v-app dark>
-    <v-app-bar :clipped-left="clipped" fixed app elevation="2" height="50">
+    <v-app-bar app elevation="2" height="60">
       <v-toolbar-title v-text="'yuleapp'" />
       
       <v-spacer />
-
-      <UrlInput
-        :url="url"
-      />
-      
+      <UrlInput />
       <v-spacer />
 
       <v-btn
@@ -25,10 +21,6 @@
     <v-main>
       <Nuxt />
     </v-main>
-
-    <v-footer :absolute="!fixed" app>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>
   </v-app>
 </template>
 
@@ -40,26 +32,6 @@ export default {
   components: {
     UrlInput
   },
-  data: () => ({
-    clipped: false,
-    drawer: false,
-    fixed: false,
-    items: [
-      {
-        icon: 'mdi-apps',
-        title: 'Welcome',
-        to: '/',
-      },
-      {
-        icon: 'mdi-chart-bubble',
-        title: 'Inspire',
-        to: '/inspire',
-      },
-    ],
-    miniVariant: false,
-    right: true,
-    rightDrawer: false,
-  }),
   computed: {
     toggleUrl() {
       let path
