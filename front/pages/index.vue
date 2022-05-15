@@ -392,8 +392,7 @@ export default {
       const idiom = 2
       const word_type = text.includes('　') || text.includes(' ') ? idiom : word
       this.words.push({ text, mean, word_type })
-
-      this.text = ''
+      if (!mean) {this.text = ''}
     },
     deleteWord(index) {
       this.words.splice(index, 1)
