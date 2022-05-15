@@ -15,10 +15,10 @@
             dense solo clearable
             @focus="
               textField.isFocus = true
-              textField.bgColor = 'white'"
+              textField.bgColor = '#E3F2FD'"
             @blur="
               textField.isFocus = false
-              textField.bgColor = '#EEEEEE'
+              textField.bgColor = 'white'
               validateUrl(errors)
               if (url) { langList = []; getLangList() }"
             @click:clear="captionLang = null"
@@ -69,7 +69,7 @@ import { mapGetters } from 'vuex'
 export default {
   data: () => ({
     textField: {
-      bgColor: '#EEEEEE',
+      bgColor: 'white',
       isFocus: false
     },
     loading: {
