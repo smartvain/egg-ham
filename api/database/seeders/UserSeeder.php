@@ -21,7 +21,6 @@ class UserSeeder extends Seeder
             'email' => 'example@eggham.com',
             'email_verified_at' => now(),
             'password' => Hash::make('hogehoge'),
-            'remember_token' => Str::random(10),
         ]);
 
         User::factory(5)->create();
