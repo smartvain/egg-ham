@@ -38,12 +38,19 @@
         </template>
 
         <v-list>
-          <v-list-item v-for="(page, index) in pages"
+          <v-list-item
+            v-for="(page, index) in pages"
             :key="index"
             :to="page.path"
-            :disabled="isLogin(page.path)"
           >
             <v-list-item-title>{{ page.title }}</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item
+            @click="logout()"
+            :disabled="!$auth.loggedIn"
+          >
+            <v-list-item-title>ログアウト</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
@@ -68,12 +75,17 @@ export default {
       { title: 'ログイン', path: '/login' },
       { title: 'マイページ', path: '/mypage' },
       { title: '設定', path: '/mypage/setting' },
-      { title: 'ログアウト', path: '/logout' },
     ]
   }),
-  computed: {
-    isLogin() {
-      return path => !this.$auth.loggedIn && path === '/logout'
+  methods: {
+    logout() {
+      try {
+        this.$auth.logout()
+        this.$toast.show('ログアウトしました')
+      } catch (e) {
+        this.$toast.show('ログアウトに失敗しました')
+      }
+      
     }
   }
 }
