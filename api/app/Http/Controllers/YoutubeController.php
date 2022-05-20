@@ -10,7 +10,7 @@ class YoutubeController extends Controller
 {
     public function getLangList(Request $request)
     {
-        $videoId = $request->get('videoId');
+        $videoId = $request->videoId;
         
         $res = $this->getUrlContent("https://www.youtube.com/watch?v={$videoId}");
 
@@ -20,7 +20,10 @@ class YoutubeController extends Controller
         foreach ($captionTracks as $captionTrack) {
             $langList->push([
                 'text'  => $captionTrack->name->simpleText,
-                'value' => substr($captionTrack->vssId, (strpos($captionTrack->vssId, '.') + strlen('.')))
+                'value' => substr(
+                    $captionTrack->vssId,
+                    strpos($captionTrack->vssId, '.') + strlen('.')
+                )
             ]);
         }
         
@@ -29,10 +32,8 @@ class YoutubeController extends Controller
 
     public function getCaptions(Request $request)
     {
-        $videoId = $request->get('videoId');
-        $lang    = $request->get('lang');
-        // $videoId = 'NoJXn-Fh6CU';
-        // $lang    = 'en-US';
+        $videoId = $request->videoId;
+        $lang    = $request->lang;
         
         $res = $this->getUrlContent("https://www.youtube.com/watch?v={$videoId}");
         
@@ -86,8 +87,8 @@ class YoutubeController extends Controller
         $client = new Client();
         
         return $client->requestAsync('GET', $url)
-                      ->wait()
-                      ->getBody();
+                    ->wait()
+                    ->getBody();
     }
 
     private function extractCaptionTrack($content)
