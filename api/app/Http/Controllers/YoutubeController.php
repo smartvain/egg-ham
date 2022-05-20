@@ -82,6 +82,11 @@ class YoutubeController extends Controller
         return $captions;
     }
 
+    public function getVideoInfo(Request $request)
+    {
+        return $this->getUrlContent("https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v={$request->videoId}&format=json");
+    }
+
     private function getUrlContent($url)
     {
         $client = new Client();

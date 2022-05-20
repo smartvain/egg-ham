@@ -21,6 +21,7 @@ Route::post('login', [LoginController::class, 'login']);
 
 Route::get('captions', [YoutubeController::class, 'getCaptions']);
 Route::get('langList', [YoutubeController::class, 'getLangList']);
+Route::get('videoInfo', [YoutubeController::class, 'getVideoInfo']);
 
 Route::post('translate', [DeepLController::class, 'translate']);
 Route::post('character_count', [DeepLController::class, 'getCharacterCount']);

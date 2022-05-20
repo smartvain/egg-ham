@@ -345,8 +345,7 @@ export default {
       if (this.loading.getCharacterCount) { this.loading.getCharacterCount = false }
     },
     async getVideoInfo(videoId) {
-      const res = await this.$axios.$get(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`)
-
+      const res = await this.$axios.$get('videoInfo', { params: { videoId }})
       const iframe = this.createElementFromHTML(res.html)
       iframe.setAttribute('height', (this.getElWidth(this.$refs.iframe) / 16) * 9)
       iframe.setAttribute('width', '100%')
@@ -380,7 +379,7 @@ export default {
       
       this.loading.translate = false
 
-      await this.getCharacterCount()
+      this.getCharacterCount()
     },
     saveText(text, mean) {
       const word = 1
