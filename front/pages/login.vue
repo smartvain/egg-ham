@@ -4,7 +4,9 @@
     <v-col cols="6">
       <v-card class="pa-3" elevation="1">
         <v-card-text>
-          <h1><v-img :src="require('~/assets/img/logo.png')" /></h1>
+          <h1>
+            <v-img :src="require('~/assets/img/logo.png')" />
+          </h1>
 
           <ValidationObserver v-slot="{ passes, validate }">
             <v-form>
