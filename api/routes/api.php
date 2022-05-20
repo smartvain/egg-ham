@@ -27,7 +27,8 @@ Route::post('character_count', [DeepLController::class, 'getCharacterCount']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('user', [LoginController::class, 'user']);
-
+    Route::post('logout', [LoginController::class, 'logout']);
+    
     Route::get('words', [WordController::class, 'getWords']);
     Route::post('words', [WordController::class, 'storeWords']);
 });
