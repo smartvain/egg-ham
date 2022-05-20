@@ -90,7 +90,7 @@
                 </template>
 
                 <template #[`item.copy`]="{ item }">
-                  <v-btn icon @click="text += item.caption">
+                  <v-btn icon @click="text += item.caption; time = item.start">
                     <v-icon>mdi-content-copy</v-icon>
                   </v-btn>
                 </template>
@@ -301,12 +301,17 @@ export default {
       { text: '意味', value: 'mean' },
       { text: '削除', value: 'delete' }
     ],
+    wordType: {
+      word: 1,
+      idiom: 2
+    },
     tabItems: [ 'DEEPL使用量', '翻訳単語', '追加した単語' ],
     borderRadius: 'rounded-lg',
     words: [],
     toggleDisplay: true,
     tab: null,
     text: null,
+    time: null,
     translatedText: null,
     searchCaption: null,
     translateLang: null,
@@ -383,12 +388,12 @@ export default {
       this.getCharacterCount()
     },
     saveText(text, mean) {
-      const word = 1
-      const idiom = 2
-      const word_type = text.includes('　') || text.includes(' ') ? idiom : word
+      const word_type = text.includes('　') || text.includes(' ') ? this.wordType.idiom : this.wordType.word
+      console.log(this.time)
       this.words.push({ text, mean, word_type,
         url: this.url,
         video_title: this.videoTitle,
+        time: this.time
       })
       
       if (!mean) {this.text = ''}

@@ -22,6 +22,15 @@
                 {{ item.url }}
               </a>
             </template>
+
+            <template #[`item.time`]="{ item }">
+              <a
+                :href="`${url}&t=${item.time}s`"
+                target="subwindow"
+              >
+                {{ item.time | calcTime }}
+              </a>
+            </template>
           </v-data-table>
         </v-card>
       </v-tab-item>
@@ -42,8 +51,12 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import Mixin from '~/mixins/mixin.js'
+
 export default {
   middleware: 'auth',
+  mixins: [ Mixin ],
   async asyncData({ $axios }) {
     return { words: await $axios.$get('words') }
   },
@@ -53,11 +66,13 @@ export default {
       { text: '意味', value: 'mean' },
       { text: '動画タイトル', value: 'video_title' },
       { text: 'URL', value: 'url' },
+      { text: '時間', value: 'time' }
     ],
     tabItems: [ '単語', '慣用句' ],
     tab: null
   }),
   computed: {
+    ...mapGetters([ 'url' ]),
     filteredWords() {
       return this.words.filter(word => word.word_type === 1)
     },

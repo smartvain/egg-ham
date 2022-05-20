@@ -15,6 +15,7 @@ class Word extends Model
         'mean',
         'video_title',
         'url',
+        'time',
         'word_type',
     ];
 
