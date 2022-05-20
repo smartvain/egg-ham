@@ -82,13 +82,13 @@ export default {
     langList: [],
     borderRadius: 'rounded-lg'
   }),
+  computed: {
+    ...mapGetters(['videoId'])
+  },
   watch: {
     captionLang(value) {
       this.$store.commit('setCaptionLang', value)
     },
-  },
-  computed: {
-    ...mapGetters(['videoId'])
   },
   created() {
     this.url = 'https://www.youtube.com/watch?v=NoJXn-Fh6CU&t=19s'

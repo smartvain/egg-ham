@@ -52,11 +52,28 @@
 import { mapGetters } from 'vuex'
 
 export default {
+  filters: {
+    calcTime(time) {
+      const min = Math.floor(time % 3600 / 60);
+      let rem = String(Math.floor(time % 60));
+      if (rem < 10) { rem = rem.padStart(2, '0') }
+
+      return `${min}:${rem}`
+    }
+  },
   props: {
-    headers: { type: Array },
-    filteredItems: { type: Array }
+    filteredItems: { type: Array, default: () => [] }
   },
   data: () => ({
+    headers: [
+      { text: '単語', value: 'text' },
+      { text: '意味', value: 'mean' },
+      { text: '動画タイトル', value: 'video_title' },
+      { text: 'URL', value: 'url' },
+      { text: '時間', value: 'time', width: 80 },
+      { text: '種別', value: 'word_type', sortable: false },
+      { text: '操作', value: 'operation', sortable: false }
+    ],
     wordType: [
       { type: '単語', value: 1 },
       { type: '慣用句', value: 2 },
@@ -67,15 +84,6 @@ export default {
   }),
   computed:{
     ...mapGetters([ 'url' ]),
-  },
-  filters: {
-    calcTime(time) {
-      const min = Math.floor(time % 3600 / 60);
-      let rem = String(Math.floor(time % 60));
-      if (rem < 10) { rem = rem.padStart(2, '0') }
-
-      return `${min}:${rem}`
-    }
   },
   methods: {
     async deleteWord(wordId) {
