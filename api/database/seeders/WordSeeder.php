@@ -16,6 +16,6 @@ class WordSeeder extends Seeder
     public function run()
     {
         DB::table('words')->truncate();
-        Word::factory(100)->create();
+        Word::factory(20)->create();
     }
 }

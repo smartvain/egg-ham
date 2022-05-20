@@ -319,7 +319,7 @@ export default {
     await this.getCharacterCount()
   },
   computed: {
-    ...mapGetters(['url', 'videoId', 'captions', 'captionLang', 'iframe'])
+    ...mapGetters(['url', 'videoId', 'captions', 'captionLang', 'iframe', 'videoTitle'])
   },
   watch: {
     videoId(value) {
@@ -351,6 +351,7 @@ export default {
       iframe.setAttribute('width', '100%')
 
       this.$store.commit('setIframe', iframe.outerHTML)
+      this.$store.commit('setVideoTitle', res.title)
     },
     createElementFromHTML(html) {
       const tempEl = document.createElement('div');
@@ -385,7 +386,10 @@ export default {
       const word = 1
       const idiom = 2
       const word_type = text.includes('　') || text.includes(' ') ? idiom : word
-      this.words.push({ text, mean, word_type })
+      this.words.push({ text, mean, word_type,
+        url: this.url,
+        video_title: this.videoTitle,
+      })
       
       if (!mean) {this.text = ''}
     },

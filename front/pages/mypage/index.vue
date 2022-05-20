@@ -14,6 +14,14 @@
             :items="filteredWords"
             :items-per-page="15"
           >
+            <template #[`item.url`]="{ item }">
+              <a
+                :href="item.url"
+                target="subwindow"
+              >
+                {{ item.url }}
+              </a>
+            </template>
           </v-data-table>
         </v-card>
       </v-tab-item>
@@ -42,7 +50,9 @@ export default {
   data: () => ({
     headers: [
       { text: '単語', value: 'text' },
-      { text: '意味', value: 'mean' }
+      { text: '意味', value: 'mean' },
+      { text: '動画タイトル', value: 'video_title' },
+      { text: 'URL', value: 'url' },
     ],
     tabItems: [ '単語', '慣用句' ],
     tab: null

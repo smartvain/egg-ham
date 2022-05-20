@@ -13,7 +13,9 @@ class Word extends Model
     protected $fillable = [
         'text',
         'mean',
-        'word_type'
+        'video_title',
+        'url',
+        'word_type',
     ];
 
     public function store($words)

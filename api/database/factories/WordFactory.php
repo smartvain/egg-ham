@@ -16,9 +16,11 @@ class WordFactory extends Factory
         $faker = $this->faker;
         
         return [
-            'text'      => $faker->sentence(),
-            'mean'      => $faker->sentence(),
-            'word_type' => $faker->numberBetween(1, 2)
+            'text'        => $faker->sentence(),
+            'mean'        => $faker->sentence(),
+            'video_title' => $faker->jobTitle,
+            'url'         => $faker->url,
+            'word_type'   => $faker->numberBetween(1, 2),
         ];
     }
 }
