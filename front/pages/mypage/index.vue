@@ -9,41 +9,23 @@
     <v-tabs-items v-model="tab">
       <v-tab-item>
         <v-card outlined>
-          <v-data-table
+          <WordList
             :headers="headers"
-            :items="filteredWords"
-            :items-per-page="15"
+            :filteredItems="filteredWords"
           >
-            <template #[`item.url`]="{ item }">
-              <a
-                :href="item.url"
-                target="subwindow"
-              >
-                {{ item.url }}
-              </a>
-            </template>
-
-            <template #[`item.time`]="{ item }">
-              <a
-                :href="`${url}&t=${item.time}s`"
-                target="subwindow"
-              >
-                {{ item.time | calcTime }}
-              </a>
-            </template>
-          </v-data-table>
+            単語
+          </WordList>
         </v-card>
       </v-tab-item>
 
       <v-tab-item>
         <v-card outlined>
-          <v-data-table
+          <WordList
             :headers="headers"
-            :items="filteredIdiom"
-            :items-per-page="15"
+            :filteredItems="filteredIdioms"
           >
-            <template #[`header.text`]>慣用句</template>
-          </v-data-table>
+            慣用句
+          </WordList>
         </v-card>
       </v-tab-item>
     </v-tabs-items>
@@ -51,12 +33,11 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import Mixin from '~/mixins/mixin.js'
+import WordList from '~/components/WordList.vue'
 
 export default {
   middleware: 'auth',
-  mixins: [ Mixin ],
+  components: { WordList },
   async asyncData({ $axios }) {
     return { words: await $axios.$get('words') }
   },
@@ -66,17 +47,18 @@ export default {
       { text: '意味', value: 'mean' },
       { text: '動画タイトル', value: 'video_title' },
       { text: 'URL', value: 'url' },
-      { text: '時間', value: 'time' }
+      { text: '時間', value: 'time', width: 80 },
+      { text: '種別', value: 'word_type', sortable: false },
+      { text: '操作', value: 'operation', sortable: false }
     ],
     tabItems: [ '単語', '慣用句' ],
     tab: null
   }),
   computed: {
-    ...mapGetters([ 'url' ]),
     filteredWords() {
       return this.words.filter(word => word.word_type === 1)
     },
-    filteredIdiom() {
+    filteredIdioms() {
       return this.words.filter(word => word.word_type === 2)
     }
   }

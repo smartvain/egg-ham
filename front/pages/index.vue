@@ -389,7 +389,6 @@ export default {
     },
     saveText(text, mean) {
       const word_type = text.includes('　') || text.includes(' ') ? this.wordType.idiom : this.wordType.word
-      console.log(this.time)
       this.words.push({ text, mean, word_type,
         url: this.url,
         video_title: this.videoTitle,
