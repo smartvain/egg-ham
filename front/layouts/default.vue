@@ -48,7 +48,7 @@
 
           <v-list-item
             @click="logout()"
-            :disabled="!$auth.loggedIn"
+            v-if="$auth.loggedIn"
           >
             <v-list-item-title>ログアウト</v-list-item-title>
           </v-list-item>
