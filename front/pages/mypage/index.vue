@@ -35,6 +35,7 @@
 
 <script>
 export default {
+  middleware: 'auth',
   async asyncData({ $axios }) {
     return { words: await $axios.$get('words') }
   },
