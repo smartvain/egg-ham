@@ -31,5 +31,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     
     Route::get('words', [WordController::class, 'getWords']);
     Route::post('words', [WordController::class, 'storeWords']);
+    Route::delete('word/{wordId}', [WordController::class, 'deleteWord']);
 });
 

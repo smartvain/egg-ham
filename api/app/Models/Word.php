@@ -28,4 +28,9 @@ class Word extends Model
             }
         });
     }
+
+    public function remove($word)
+    {
+        $word->delete();
+    }
 }

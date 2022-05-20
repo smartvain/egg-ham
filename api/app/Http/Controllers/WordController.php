@@ -23,4 +23,10 @@ class WordController extends Controller
     {
         $this->word->store($request->all());
     }
+
+    public function deleteWord($wordId)
+    {
+        $word = $this->word->find($wordId);
+        $this->word->remove($word);
+    }
 }

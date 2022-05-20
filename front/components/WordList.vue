@@ -36,8 +36,12 @@
       />
     </template>
 
-    <template #[`item.operation`]>
-      <v-btn icon>
+    <template #[`item.operation`]="{ item }">
+      <v-btn
+        icon
+        :loading="loading.deleteWord === item.id"
+        @click="deleteWord(item.id)"
+      >
         <v-icon>mdi-delete-empty</v-icon>
       </v-btn>
     </template>
@@ -56,7 +60,10 @@ export default {
     wordType: [
       { type: '単語', value: 1 },
       { type: '慣用句', value: 2 },
-    ]
+    ],
+    loading: {
+      deleteWord: false
+    }
   }),
   computed:{
     ...mapGetters([ 'url' ]),
@@ -68,6 +75,20 @@ export default {
       if (rem < 10) { rem = rem.padStart(2, '0') }
 
       return `${min}:${rem}`
+    }
+  },
+  methods: {
+    async deleteWord(wordId) {
+      this.loading.deleteWord = wordId
+
+      try {
+        await this.$axios.$delete(`word/${wordId}`)
+        await this.$nuxt.refresh()
+      } catch (e) {
+        this.$toast.error('削除に失敗しました。')
+      }
+
+      this.loading.deleteWord = false
     }
   }
 }
