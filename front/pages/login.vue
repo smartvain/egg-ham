@@ -69,14 +69,13 @@ export default {
       this.loading.login = true
       
       try {
-        const res = await this.$auth.loginWith('local', { data: {
+        await this.$auth.loginWith('local', { data: {
           email: this.email,
           password: this.password
         } })
-        console.log(res)
         this.$toast.show('ログインしました')
       } catch (e) {
-        console.log(e)
+        this.$toast.error('ログインに失敗しました。')
       }
 
       this.loading.login = false
