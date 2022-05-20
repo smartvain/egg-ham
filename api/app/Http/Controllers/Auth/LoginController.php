@@ -14,13 +14,16 @@ class LoginController extends Controller
     {
         $email = $request->email;
         $password = $request->password;
-
         $user = User::where('email', $email)->first();
+        $errorMessage = [
+            'email' => 'このメールアドレスは登録されていません。',
+            'password' => 'パスワードが違います。'
+        ];
 
-        if (!$user || !Hash::check($password, $user->password)) {
-            throw ValidationException::withMessages([
-                'email' => ['ログインできませんでした'],
-            ]);
+        if (!$user) {
+            throw ValidationException::withMessages([$errorMessage['email']]);
+        } else if (!Hash::check($password, $user->password)) {
+            throw ValidationException::withMessages([$errorMessage['password']]);
         }
 
         $token = $user->createToken('token')->plainTextToken;
