@@ -51,6 +51,11 @@ export default {
   },
 
   auth: {
+    redirect: {
+      login: '/login',
+      logout: '/',
+      home: '/mypage'
+    },
     strategies: {
       local: {
         token: {
