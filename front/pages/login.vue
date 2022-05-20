@@ -54,10 +54,9 @@
 <script>
 
 export default {
-  layout: 'plain',
   data: () => ({
-    email: '',
-    password: '',
+    email: null,
+    password: null,
     loading: {
       login: false
     }
