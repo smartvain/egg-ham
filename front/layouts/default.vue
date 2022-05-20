@@ -11,7 +11,7 @@
       </a>
 
       <v-spacer />
-      <UrlInput />
+      <UrlInput v-if="$route.path === '/'" />
       <v-spacer />
 
       <div v-if="$route.path !== '/'">
