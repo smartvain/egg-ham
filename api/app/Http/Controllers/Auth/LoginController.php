@@ -7,29 +7,35 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Log;
 
 class LoginController extends Controller
 {
     public function login(Request $request)
     {
-        $email = $request->email;
-        $password = $request->password;
-        $user = User::where('email', $email)->first();
-        $errorMessage = [
-            'email' => 'このメールアドレスは登録されていません。',
+        $email          = $request->email;
+        $password       = $request->password;
+        $user           = User::where('email', $email)->first();
+        $defaultMessage = '正常にログインが行われませんでした。もう一度お試しください。';
+        $successMessage = 'ログインに成功しました。';
+        $errorMessage   = [
+            'email'    => 'このメールアドレスは登録されていません。',
             'password' => 'パスワードが違います。'
         ];
 
+        $responseMessage = $defaultMessage;
+        $token           = null;
+        
         if (!$user) {
-            throw ValidationException::withMessages([$errorMessage['email']]);
+            $responseMessage = $errorMessage['email'];
         } else if (!Hash::check($password, $user->password)) {
-            throw ValidationException::withMessages([$errorMessage['password']]);
+            $responseMessage = $errorMessage['password'];
+        } else {
+            $responseMessage = $successMessage;
+            $token           = $user->createToken('token')->plainTextToken;
         }
 
-        $token = $user->createToken('token')->plainTextToken;
-
-        return compact('token');
+        return ['token' => $token, 'message' => $responseMessage];
     }
 
     public function user(Request $request)
