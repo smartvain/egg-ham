@@ -15,6 +15,7 @@ class LoginController extends Controller
         $email          = $request->email;
         $password       = $request->password;
         $user           = User::where('email', $email)->first();
+        
         $defaultMessage = '正常にログインが行われませんでした。もう一度お試しください。';
         $successMessage = 'ログインに成功しました。';
         $errorMessage   = [
