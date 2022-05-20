@@ -24,7 +24,7 @@
         </v-btn>
       </div>
 
-      <v-menu offset-y open-on-hover>
+      <v-menu offset-y>
         <template v-slot:activator="{ on, attrs }">
           <v-btn icon>
             <v-img
