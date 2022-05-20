@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 
 class LoginController extends Controller
 {
@@ -35,13 +34,12 @@ class LoginController extends Controller
             $token           = $user->createToken('token')->plainTextToken;
         }
 
-        return ['token' => $token, 'message' => $responseMessage];
+        return [ 'token' => $token, 'message' => $responseMessage ];
     }
 
     public function user(Request $request)
     {
-        $user = $request->user();
-        return compact('user');
+        return [ 'user' => $request->user() ];
     }
 
     public function logout(Request $request)
