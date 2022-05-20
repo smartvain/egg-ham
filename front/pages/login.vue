@@ -69,13 +69,13 @@ export default {
       this.loading.login = true
       
       try {
-        await this.$auth.loginWith('local', { data: {
+        const res = await this.$auth.loginWith('local', { data: {
           email: this.email,
           password: this.password
-        } })
-        this.$toast.show('ログインしました')
+        }})
+        this.$toast.show(res.data.message)
       } catch (e) {
-        this.$toast.error('ログインに失敗しました。')
+        this.$toast.error('ログインに失敗しました。もう一度お試しください。')
       }
 
       this.loading.login = false
