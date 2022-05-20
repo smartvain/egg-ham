@@ -41,6 +41,7 @@
           <v-list-item v-for="(page, index) in pages"
             :key="index"
             :to="page.path"
+            :disabled="isLogin(page.path)"
           >
             <v-list-item-title>{{ page.title }}</v-list-item-title>
           </v-list-item>
@@ -69,6 +70,11 @@ export default {
       { title: '設定', path: '/mypage/setting' },
       { title: 'ログアウト', path: '/logout' },
     ]
-  })
+  }),
+  computed: {
+    isLogin() {
+      return path => !this.$auth.loggedIn && path === '/logout'
+    }
+  }
 }
 </script>
