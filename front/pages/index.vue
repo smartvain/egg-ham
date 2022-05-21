@@ -82,7 +82,7 @@
 
                 <template #[`item.calcTime`]="{ item }">
                   <a
-                    :href="`${url}&t=${item.start}s`"
+                    :href="`${url}&t=${item.startSecond}s`"
                     target="subwindow"
                   >
                     {{ item.calcTime }}
@@ -90,7 +90,7 @@
                 </template>
 
                 <template #[`item.copy`]="{ item }">
-                  <v-btn icon @click="text += item.caption; time = item.start">
+                  <v-btn icon @click="text += item.caption; startSecond = item.startSecond">
                     <v-icon>mdi-content-copy</v-icon>
                   </v-btn>
                 </template>
@@ -311,7 +311,7 @@ export default {
     toggleDisplay: true,
     tab: null,
     text: null,
-    time: null,
+    startSecond: null,
     translatedText: null,
     searchCaption: null,
     translateLang: null,
@@ -392,7 +392,7 @@ export default {
       this.words.push({ text, mean, word_type,
         url: this.url,
         video_title: this.videoTitle,
-        time: this.time
+        start_second: this.startSecond
       })
       
       if (!mean) {this.text = ''}

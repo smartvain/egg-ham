@@ -66,8 +66,10 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import Mixin from '~/mixins/mixin.js'
 
 export default {
+  mixins: [ Mixin ],
   data: () => ({
     textField: {
       bgColor: 'white',
@@ -129,18 +131,11 @@ export default {
       }
 
       for (const caption of captions) {
-        caption.calcTime = this.calcTime(caption.start)
+        caption.calcTime = this.calcTime(caption.startSecond)
       }
       this.$store.commit('setCaptions', captions)
       
       this.loading.getCaptions = false
-    },
-    calcTime(time) {
-      const min = Math.floor(time % 3600 / 60);
-      let rem = String(Math.floor(time % 60));
-      if (rem < 10) { rem = rem.padStart(2, '0') }
-
-      return `${min}:${rem}`
     },
     validateUrl(errorMessage) {
       if (errorMessage.length > 0) { this.$toast.error(errorMessage) }

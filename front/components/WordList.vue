@@ -3,7 +3,21 @@
     :headers="headers"
     :items="filteredItems"
     :items-per-page="10"
+    :search="searchWord"
+    fixed-header
   >
+    <template #top>
+      <v-row justify="center" class="mt-0">
+        <v-col cols="11">
+          <v-text-field
+            v-model="searchWord"
+            placeholder="字幕を検索"
+            dense
+          />
+        </v-col>
+      </v-row>
+    </template>
+
     <template #[`header.text`]>
       <slot />
     </template>
@@ -17,12 +31,12 @@
       </a>
     </template>
 
-    <template #[`item.time`]="{ item }">
+    <template #[`item.calcTime`]="{ item }">
       <a
-        :href="`${url}&t=${item.time}s`"
+        :href="`${url}&t=${item.start_second}s`"
         target="subwindow"
       >
-        {{ item.time | calcTime }}
+        {{ item.calcTime }}
       </a>
     </template>
 
@@ -52,15 +66,6 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  filters: {
-    calcTime(time) {
-      const min = Math.floor(time % 3600 / 60);
-      let rem = String(Math.floor(time % 60));
-      if (rem < 10) { rem = rem.padStart(2, '0') }
-
-      return `${min}:${rem}`
-    }
-  },
   props: {
     filteredItems: { type: Array, default: () => [] }
   },
@@ -70,7 +75,7 @@ export default {
       { text: '意味', value: 'mean' },
       { text: '動画タイトル', value: 'video_title' },
       { text: 'URL', value: 'url' },
-      { text: '時間', value: 'time', width: 80 },
+      { text: '時間', value: 'calcTime', width: 80 },
       { text: '種別', value: 'word_type', sortable: false },
       { text: '操作', value: 'operation', sortable: false }
     ],
@@ -80,7 +85,8 @@ export default {
     ],
     loading: {
       deleteWord: false
-    }
+    },
+    searchWord: null
   }),
   computed:{
     ...mapGetters([ 'url' ]),

@@ -24,12 +24,19 @@
 
 <script>
 import WordList from '~/components/WordList.vue'
+import Mixin from '~/mixins/mixin.js'
 
 export default {
+  mixins: [ Mixin ],
   components: { WordList },
   middleware: 'auth',
   async asyncData({ $axios }) {
     return { words: await $axios.$get('words') }
+  },
+  fetch() {
+    for (const word of this.words) {
+      word.calcTime = this.calcTime(word.start_second)
+    }
   },
   data: () => ({
     tabItems: [ '単語', '慣用句' ],

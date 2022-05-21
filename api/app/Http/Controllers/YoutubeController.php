@@ -72,7 +72,7 @@ class YoutubeController extends Controller
             $caption = preg_replace('/<\/?[^>]+(>|$)/', '', $caption);
             
             $captions = array_replace($captions, [$captionsIndex => [
-                'start' => $start[1],
+                'startSecond' => $start[1],
                 'caption' => $caption
             ]]);
             
