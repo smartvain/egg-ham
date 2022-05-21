@@ -10,7 +10,12 @@
 
           <ValidationObserver v-slot="{ passes, validate }">
             <v-form>
-              <ValidationProvider v-slot="{ errors }" rules="required|max:20" name="ログインID">
+              <ValidationProvider
+                v-slot="{ errors }"
+                rules="required|max:20"
+                name="ログインID"
+                mode="passive"
+              >
                 <v-text-field
                   v-model="email"
                   append-icon="mdi-account"
@@ -21,7 +26,12 @@
                 />
               </ValidationProvider>
 
-              <ValidationProvider v-slot="{ errors }" rules="required|max:20" name="パスワード">
+              <ValidationProvider
+                v-slot="{ errors }"
+                rules="required|max:20"
+                name="パスワード"
+                mode="passive"
+              >
                 <v-text-field
                   v-model="password"
                   append-icon="mdi-lock"
