@@ -27,21 +27,21 @@ import WordList from '~/components/WordList.vue'
 import Mixin from '~/mixins/mixin.js'
 
 export default {
-  mixins: [ Mixin ],
   components: { WordList },
+  mixins: [ Mixin ],
   middleware: 'auth',
   async asyncData({ $axios }) {
     return { words: await $axios.$get('words') }
-  },
-  fetch() {
-    for (const word of this.words) {
-      word.calcTime = this.calcTime(word.start_second)
-    }
   },
   data: () => ({
     tabItems: [ '単語', '慣用句' ],
     tab: null
   }),
+  fetch() {
+    for (const word of this.words) {
+      word.calcTime = this.calcTime(word.start_second)
+    }
+  },
   computed: {
     filteredWords() {
       return this.words.filter(word => word.word_type === 1)
