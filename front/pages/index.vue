@@ -9,7 +9,7 @@
                 <v-row align-content="center" style="height: 100%" justify="center">
                   <v-col cols="12" md="1">
                     <v-img
-                      style="z-index: 9999"
+                      style="z-index: 10"
                       class="logo ml-n2 mt-6"
                       :class="{ 'on-hover': !hover }"
                       transition="scroll-x-transition"
