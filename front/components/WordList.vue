@@ -45,11 +45,12 @@
       <slot />
     </template>
 
-    <template #[`item.text`]="{ item }">
+    <template #[`item.text`]="{ item, index }">
       <v-text-field
         v-model="item.text"
         v-if="editMode"
         dense
+        @change="addWord(index)"
       />
 
       <div v-else>
@@ -57,11 +58,12 @@
       </div>
     </template>
 
-    <template #[`item.mean`]="{ item }">
+    <template #[`item.mean`]="{ item, index }">
       <v-text-field
         v-model="item.mean"
         v-if="editMode"
         dense
+        @change="addWord(index)"
       />
 
       <div v-else>
@@ -69,11 +71,12 @@
       </div>
     </template>
 
-    <template #[`item.video_title`]="{ item }">
+    <template #[`item.video_title`]="{ item, index }">
       <v-text-field
         v-model="item.video_title"
         v-if="editMode"
         dense
+        @change="addWord(index)"
       />
 
       <div v-else>
@@ -99,7 +102,7 @@
       </a>
     </template>
 
-    <template #[`item.word_type`]="{ item }">
+    <template #[`item.word_type`]="{ item, index }">
       <v-select
         v-model="item.word_type"
         :items="wordTypesArray"
@@ -107,6 +110,7 @@
         item-text="text"
         item-value="value"
         dense
+        @change="addWord(index)"
       />
     </template>
 
@@ -148,7 +152,8 @@ export default {
       saveWords: false
     },
     searchWord: null,
-    editMode: false
+    editMode: false,
+    editedWords: []
   }),
   computed:{
     ...mapGetters([ 'url' ]),
@@ -170,13 +175,21 @@ export default {
       this.loading.saveWords = true
 
       try {
-        await this.$axios.$put('words', { words: this.filteredItems })
+        await this.$axios.$put('words', { words: this.editedWords })
+        this.editedWords = []
         this.$toast.show('編集内容を保存しました。')
       } catch (e) {
         this.$toast.error('編集内容の保存に失敗しました。')
       }
       
       this.loading.saveWords = false
+    },
+    addWord(index) {
+      const word = this.filteredItems[index]
+      for (const item of this.editedWords) {
+        if (item.id === word.id) { return }
+      }
+      this.editedWords.push(word)
     }
   }
 }
