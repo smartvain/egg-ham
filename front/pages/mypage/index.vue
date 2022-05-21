@@ -9,13 +9,23 @@
     <v-tabs-items v-model="tab">
       <v-tab-item>
         <v-card outlined>
-          <WordList :filtered-items="filteredWords">単語</WordList>
+          <WordList
+            :filtered-items="filteredWords"
+            :word-type="wordTypes.word"
+          >
+            単語
+          </WordList>
         </v-card>
       </v-tab-item>
 
       <v-tab-item>
         <v-card outlined>
-          <WordList :filtered-items="filteredIdioms">慣用句</WordList>
+          <WordList
+            :filtered-items="filteredIdioms"
+            :word-type="wordTypes.idiom"
+          >
+            慣用句
+          </WordList>
         </v-card>
       </v-tab-item>
     </v-tabs-items>

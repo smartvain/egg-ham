@@ -11,7 +11,7 @@
         <v-col cols="8">
           <v-text-field
             v-model="searchWord"
-            placeholder="字幕を検索"
+            :placeholder="`${wordType.text}を検索`"
             dense
           />
         </v-col>
@@ -87,8 +87,8 @@
     <template #[`item.word_type`]="{ item }">
       <v-select
         v-model="item.word_type"
-        :items="wordType"
-        item-text="type"
+        :items="wordTypesArray"
+        item-text="text"
         item-value="value"
         dense
       />
@@ -108,10 +108,13 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import Mixin from '~/mixins/mixin.js'
 
 export default {
+  mixins: [ Mixin ],
   props: {
-    filteredItems: { type: Array, default: () => [] }
+    filteredItems: { type: Array, default: () => [] },
+    wordType: { type: Object, default: () => {} }
   },
   data: () => ({
     headers: [
@@ -122,10 +125,6 @@ export default {
       { text: '時間', value: 'calcTime', width: 80 },
       { text: '種別', value: 'word_type', sortable: false },
       { text: '操作', value: 'operation', sortable: false }
-    ],
-    wordType: [
-      { type: '単語', value: 1 },
-      { type: '慣用句', value: 2 },
     ],
     loading: {
       deleteWord: false,
