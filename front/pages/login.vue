@@ -62,8 +62,11 @@ export default {
     }
   }),
   created() {
-    console.log(this.$auth.user)
     console.log(this.$auth.loggedIn)
+    if (!this.$auth.loggedIn) {
+      this.email = 'example@eggham.com'
+      this.password = 'hogehoge'
+    }
   },
   methods: {
     async login() {
