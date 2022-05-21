@@ -48,22 +48,37 @@
     <template #[`item.text`]="{ item }">
       <v-text-field
         v-model="item.text"
-        :disabled="!editMode"
-      ></v-text-field>
+        v-if="editMode"
+        dense
+      />
+
+      <div v-else>
+        {{ item.text }}
+      </div>
     </template>
 
     <template #[`item.mean`]="{ item }">
       <v-text-field
         v-model="item.mean"
-        :disabled="!editMode"
-      ></v-text-field>
+        v-if="editMode"
+        dense
+      />
+
+      <div v-else>
+        {{ item.mean }}
+      </div>
     </template>
 
     <template #[`item.video_title`]="{ item }">
       <v-text-field
         v-model="item.video_title"
-        :disabled="!editMode"
-      ></v-text-field>
+        v-if="editMode"
+        dense
+      />
+
+      <div v-else>
+        {{ item.video_title }}
+      </div>
     </template>
 
     <template #[`item.url`]="{ item }">
@@ -88,6 +103,7 @@
       <v-select
         v-model="item.word_type"
         :items="wordTypesArray"
+        :disabled="!editMode"
         item-text="text"
         item-value="value"
         dense
