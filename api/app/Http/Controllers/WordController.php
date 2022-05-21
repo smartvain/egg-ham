@@ -19,6 +19,11 @@ class WordController extends Controller
         return Word::get();
     }
 
+    public function saveWords(Request $request)
+    {
+        $this->word->replace($request->words);
+    }
+
     public function storeWords(Request $request)
     {
         $this->word->store($request->all());

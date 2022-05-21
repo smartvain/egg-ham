@@ -29,6 +29,15 @@ class Word extends Model
         });
     }
 
+    public function replace($words)
+    {
+        DB::transaction(function () use ($words) {
+            foreach ($words as $word) {
+                $this->find($word['id'])->fill($word)->save();
+            }
+        });
+    }
+
     public function remove($word)
     {
         $word->delete();

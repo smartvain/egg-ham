@@ -8,18 +8,62 @@
   >
     <template #top>
       <v-row justify="center" class="mt-0">
-        <v-col cols="11">
+        <v-col cols="8">
           <v-text-field
             v-model="searchWord"
             placeholder="字幕を検索"
             dense
           />
         </v-col>
+
+        <v-col cols="1">
+          <v-btn
+            color="primary"
+            dense solo block
+            :outlined="editMode"
+            @click="editMode = !editMode"
+          >
+            編集モード
+          </v-btn>
+        </v-col>
+
+        <v-col cols="1" align="right">
+          <v-btn
+            color="primary"
+            dense solo block
+            :loading="loading.saveWords"
+            :disabled="!editMode"
+            @click="saveWords()"
+          >
+            保存する
+          </v-btn>
+        </v-col>
       </v-row>
     </template>
 
     <template #[`header.text`]>
       <slot />
+    </template>
+
+    <template #[`item.text`]="{ item }">
+      <v-text-field
+        v-model="item.text"
+        :disabled="!editMode"
+      ></v-text-field>
+    </template>
+
+    <template #[`item.mean`]="{ item }">
+      <v-text-field
+        v-model="item.mean"
+        :disabled="!editMode"
+      ></v-text-field>
+    </template>
+
+    <template #[`item.video_title`]="{ item }">
+      <v-text-field
+        v-model="item.video_title"
+        :disabled="!editMode"
+      ></v-text-field>
     </template>
 
     <template #[`item.url`]="{ item }">
@@ -84,9 +128,11 @@ export default {
       { type: '慣用句', value: 2 },
     ],
     loading: {
-      deleteWord: false
+      deleteWord: false,
+      saveWords: false
     },
-    searchWord: null
+    searchWord: null,
+    editMode: false
   }),
   computed:{
     ...mapGetters([ 'url' ]),
@@ -103,6 +149,18 @@ export default {
       }
 
       this.loading.deleteWord = false
+    },
+    async saveWords() {
+      this.loading.saveWords = true
+
+      try {
+        await this.$axios.$put('words', { words: this.filteredItems })
+        this.$toast.show('編集内容を保存しました。')
+      } catch (e) {
+        this.$toast.error('編集内容の保存に失敗しました。')
+      }
+      
+      this.loading.saveWords = false
     }
   }
 }
