@@ -113,6 +113,7 @@
     <template #[`item.operation`]="{ item }">
       <v-btn
         icon
+        :disabled="!editMode"
         :loading="loading.deleteWord === item.id"
         @click="deleteWord(item.id)"
       >
