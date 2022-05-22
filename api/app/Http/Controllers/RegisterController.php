@@ -19,6 +19,7 @@ class RegisterController extends Controller
     {
         $form = $request->all();
         $user = $this->user->where('email', $form['email'])->first();
+        
         $defaultMessage = 'アカウント作成に失敗しました。もう一度お試しください。';
         $successMessage = 'アカウント登録しました。';
         $errorMessage = [
