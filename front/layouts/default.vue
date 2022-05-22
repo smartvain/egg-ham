@@ -90,6 +90,7 @@ export default {
   },
   data: () => ({
     pages: [
+      { title: '新規登録', path: '/register' },
       { title: 'マイページ', path: '/mypage' },
       { title: '設定', path: '/mypage/setting' },
     ],

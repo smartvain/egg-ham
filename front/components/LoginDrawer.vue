@@ -86,7 +86,7 @@
 
           <v-row>
             <v-col cols="6" align="left">
-              <span>新規登録</span>
+              <router-link :to="{ path: '/register' }">新規登録</router-link>
             </v-col>
 
             <v-col cols="6" align="left" class="px-0">
