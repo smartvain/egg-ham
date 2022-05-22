@@ -23,9 +23,9 @@ class RegisterController extends Controller
         
         $defaultMessage = 'アカウント作成に失敗しました。もう一度お試しください。';
         $successMessage = '入力されたメールアドレスに確認メールを送信しました。';
-        $errorMessage = [
+        $errorMessage   = [
             'registered' => 'このメールアドレスはすでに登録されています。',
-            'mismatch' => 'パスワードが一致しませんでした。'
+            'mismatch'   => 'パスワードが一致しませんでした。'
         ];
         
         $message = $defaultMessage;
@@ -35,9 +35,9 @@ class RegisterController extends Controller
         } else if ($form['password'] !== $form['confirm']) {
             $message = $errorMessage['mismatch'];
         } else {
-            $message = $successMessage;
+            $message          = $successMessage;
             $form['password'] = Hash::make($form['password']);
-            $newUser = $this->user->createUser($form)->sendEmailVerificationNotification();
+            $newUser          = $this->user->createUser($form)->sendEmailVerificationNotification();
         }
         
         return compact('message');

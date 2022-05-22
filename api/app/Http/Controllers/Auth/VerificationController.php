@@ -15,7 +15,7 @@ class VerificationController extends Controller
 
         $defaultMessage = 'メール認証に失敗しました。もう一度お試しください。';
         $successMessage = 'メール認証しました。';
-        $errorMessage = [
+        $errorMessage   = [
             'expired' => '期限切れのURLです。'
         ];
 
@@ -37,7 +37,7 @@ class VerificationController extends Controller
         
         $defaultMessage = 'メールの再送信に失敗しました。もう一度お試しください。';
         $successMessage = '入力されたメールアドレスにメールを再送信しました。';
-        $errorMessage = [
+        $errorMessage   = [
             'verified' => 'このメールアドレスはすでに確認済みです。'
         ];
 

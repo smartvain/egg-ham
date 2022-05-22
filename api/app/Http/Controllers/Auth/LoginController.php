@@ -11,9 +11,7 @@ class LoginController extends Controller
 {
     public function login(Request $request)
     {
-        $email          = $request->email;
-        $password       = $request->password;
-        $user           = User::where('email', $email)->first();
+        $user = User::where('email', $request->email)->first();
         
         $defaultMessage = '正常にログインが行われませんでした。もう一度お試しください。';
         $successMessage = 'ログインに成功しました。';
@@ -23,21 +21,21 @@ class LoginController extends Controller
             'unverified' => 'まずはメールアドレスを認証してください。'
         ];
 
-        $responseMessage = $defaultMessage;
-        $token           = null;
+        $message = $defaultMessage;
+        $token   = null;
         
         if (!$user) {
-            $responseMessage = $errorMessage['email'];
-        } else if (!Hash::check($password, $user->password)) {
-            $responseMessage = $errorMessage['password'];
+            $message = $errorMessage['email'];
+        } else if (!Hash::check($request->password, $user->password)) {
+            $message = $errorMessage['password'];
         } else if ($user->email_verified_at === null) {
-            $responseMessage = $errorMessage['unverified'];
+            $message = $errorMessage['unverified'];
         } else {
-            $responseMessage = $successMessage;
-            $token           = $user->createToken('token')->plainTextToken;
+            $message = $successMessage;
+            $token   = $user->createToken('token')->plainTextToken;
         }
 
-        return [ 'token' => $token, 'message' => $responseMessage ];
+        return [ 'token' => $token, 'message' => $message ];
     }
 
     public function user(Request $request)
