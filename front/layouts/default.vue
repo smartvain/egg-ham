@@ -15,6 +15,7 @@
       <v-btn
         v-if="$route.path !== '/'"
         class="mr-3"
+        style="border-color: #979797"
         outlined plain
         :to="{ path: '/' }"
       >
