@@ -5,8 +5,6 @@
         <v-img
           :src="require('~/assets/img/logo.png')"
           max-width="160"
-          max-height="100%"
-          contain
         />
       </a>
 
