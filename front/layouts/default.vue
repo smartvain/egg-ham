@@ -46,6 +46,10 @@
         </template>
 
         <v-list>
+          <v-list-item @click="drawer = true">
+            <v-list-item-title>ログイン</v-list-item-title>
+          </v-list-item>
+
           <v-list-item
             v-for="(page, index) in pages"
             :key="index"
@@ -86,7 +90,6 @@ export default {
   },
   data: () => ({
     pages: [
-      { title: 'ログイン', path: '/login' },
       { title: 'マイページ', path: '/mypage' },
       { title: '設定', path: '/mypage/setting' },
     ],
