@@ -26,12 +26,22 @@ class VerificationController extends Controller
     public function resend(Request $request)
     {
         $user = User::where('email', $request->email)->first();
+        
+        $defaultMessage = 'メールの再送信に失敗しました。もう一度お試しください。';
+        $successMessage = '入力されたメールアドレスにメールを再送信しました。';
+        $errorMessage = [
+            'verified' => 'このメールアドレスはすでに確認済みです。'
+        ];
+
+        $message = $defaultMessage;
+
         if ($user->hasVerifiedEmail()) {
-            return response()->json(["message" => "このメールアドレスはすでに確認済みです。"], 400);
+            $message = $errorMessage['verified'];
+        } else {
+            $user->sendEmailVerificationNotification();
+            $message = $successMessage;
         }
     
-        $user->sendEmailVerificationNotification();
-    
-        return response()->json(["message" => "入力されたメールアドレスにメールを再送信しました。"]);
+        return compact('message');
     }
 }

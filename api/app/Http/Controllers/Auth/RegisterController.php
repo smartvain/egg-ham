@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -21,7 +22,7 @@ class RegisterController extends Controller
         $user = $this->user->where('email', $form['email'])->first();
         
         $defaultMessage = 'アカウント作成に失敗しました。もう一度お試しください。';
-        $successMessage = 'アカウント登録しました。';
+        $successMessage = '入力されたメールアドレスに確認メールを送信しました。';
         $errorMessage = [
             'registered' => 'このメールアドレスはすでに登録されています。',
             'mismatch' => 'パスワードが一致しませんでした。'
