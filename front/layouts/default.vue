@@ -21,7 +21,7 @@
         トップ
       </v-btn>
 
-      <div v-else>
+      <div v-if="!$auth.loggedIn">
         <v-btn
           class="mr-3"
           style="border-color: #979797"
