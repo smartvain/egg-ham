@@ -1,9 +1,9 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\DeepLController;
-use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\WordController;
 use App\Http\Controllers\YoutubeController;
 use Illuminate\Support\Facades\Route;
