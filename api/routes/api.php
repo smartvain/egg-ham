@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\DeepLController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\WordController;
@@ -20,6 +21,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('login', [LoginController::class, 'login']);
 Route::post('register', [RegisterController::class, 'register']);
+Route::get('email/verify/{id}', [VerificationController::class, 'verify'])->name('verification.verify');
+Route::get('email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
 
 Route::get('captions', [YoutubeController::class, 'getCaptions']);
 Route::get('langList', [YoutubeController::class, 'getLangList']);
