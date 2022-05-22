@@ -4,7 +4,7 @@
     width="27%"
     right temporary fixed
   >
-    <v-card class="px-2" flat>
+    <v-card class="px-2" height="100%" flat>
       <v-btn
         icon right fixed
         @click="_drawer = false"
@@ -14,11 +14,13 @@
 
       <v-img
         :src="require('~/assets/img/logo.png')"
-        max-width="60%"
-        class="mx-auto mt-5"
+        max-width="70%"
+        min-height="100"
+        class="mx-auto"
+        contain
       />
 
-      <v-card-text>
+      <v-card-text class="py-0">
         <v-btn
           class="text-capitalize caption"
           color="#00ACEE"
@@ -84,25 +86,56 @@
             />
           </ValidationProvider>
 
-          <v-row>
-            <v-col cols="6" align="left">
-              <router-link :to="{ path: '/register' }">新規登録</router-link>
-            </v-col>
-
-            <v-col cols="6" align="left" class="px-0">
-              <span>パスワードを忘れた方</span>
-            </v-col>
-          </v-row>
+          <v-checkbox v-model="remember" class="mt-n2">
+            <template #label>
+              <span class="text-caption">ログインしたままにする</span>
+            </template>
+          </v-checkbox>
 
           <div class="text-center">
             <v-btn
-              class="primary mt-5"
+              class="primary"
+              block
               @click="validate().then(passes(login))"
             >
-              ログイン
+              <span class="text-subtitle-1">ログイン</span>
             </v-btn>
           </div>
         </ValidationObserver>
+        
+        <v-divider class="my-4" />
+
+        <v-row>
+          <v-col cols="12" align="center">
+            <span>アカウント登録はお済みですか？</span>
+            <router-link class="font-weight-bold" :to="{ path: '/register' }">
+              新規登録
+            </router-link>
+          </v-col>
+
+          <!-- <v-col cols="12" align="right" class="px-1">
+            <span>パスワードを忘れた方</span>
+            <v-icon>mdi-chevron-right</v-icon>
+          </v-col> -->
+        </v-row>
+
+        <v-btn
+          class="pa-0 mb-8"
+          absolute bottom right plain small
+        >
+          パスワードをお忘れの方
+          <v-icon>mdi-chevron-right</v-icon>
+        </v-btn>
+
+        <v-btn
+          v-if="$auth.loggedIn"
+          class="pa-0"
+          absolute bottom right plain small
+          @click="logout()"
+        >
+          ログアウト
+          <v-icon>mdi-logout</v-icon>
+        </v-btn>
       </v-card-text>
     </v-card>
   </v-navigation-drawer>
@@ -116,6 +149,7 @@ export default {
   data: () => ({
     email: null,
     password: null,
+    remember: false,
     loading: {
       login: false
     }
@@ -157,7 +191,15 @@ export default {
       }
 
       this.loading.login = false
-    }
+    },
+    logout() {
+      try {
+        this.$auth.logout()
+        this.$toast.show('ログアウトしました')
+      } catch (e) {
+        this.$toast.show('ログアウトに失敗しました')
+      }
+    },
   }
 }
 </script>
