@@ -53,7 +53,7 @@ export default {
     redirect: {
       login: '/',
       logout: '/',
-      home: '/mypage'
+      home: false
     },
     strategies: {
       local: {
