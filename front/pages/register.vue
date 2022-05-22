@@ -97,6 +97,16 @@
             >
               新規登録
             </v-btn>
+
+            <v-btn
+              :class="inputMt"
+              color="primary"
+              :loading="loading.resend"
+              block
+              @click="validate().then(passes(resend))"
+            >
+              再送信
+            </v-btn>
           </ValidationObserver>
         </v-card-text>
       </v-card>
@@ -116,7 +126,8 @@ export default {
       confirm: null,
     },
     loading: {
-      register: false
+      register: false,
+      resend: false
     },
     inputMt: 'mt-3'
   }),
@@ -139,6 +150,19 @@ export default {
       }
 
       this.loading.register = false
+    },
+    async resend() {
+      this.loading.resend = true
+      
+      try {
+        const res = await this.$axios.$get('email/resend', { params: this.form })
+        console.log(res)
+        this.$toast.show(res.message)
+      } catch (e) {
+        this.$toast.error('リクエスト失敗')
+      }
+
+      this.loading.resend = false
     }
   }
 }
