@@ -59,23 +59,30 @@
     <v-main>
       <Nuxt />
     </v-main>
+
+    <LoginDrawer
+      :drawer="drawer"
+      @close="close"
+    />
   </v-app>
 </template>
 
 <script>
 import UrlInput from '~/components/UrlInput.vue'
+import LoginDrawer from '~/components/LoginDrawer.vue'
 
 export default {
   name: 'DefaultLayout',
   components: {
-    UrlInput
+    UrlInput, LoginDrawer
   },
   data: () => ({
     pages: [
       { title: 'ログイン', path: '/login' },
       { title: 'マイページ', path: '/mypage' },
       { title: '設定', path: '/mypage/setting' },
-    ]
+    ],
+    drawer: false
   }),
   methods: {
     logout() {
@@ -85,7 +92,10 @@ export default {
       } catch (e) {
         this.$toast.show('ログアウトに失敗しました')
       }
-      
+    },
+    close(bool) {
+      console.log(bool)
+      this.drawer = bool
     }
   }
 }
