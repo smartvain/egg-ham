@@ -4,9 +4,15 @@
     <v-col cols="6">
       <v-card class="pa-3" elevation="3">
         <v-card-text>
-          <h1>
-            <v-img :src="require('~/assets/img/logo.png')" />
+          <h1 class="mb-5">
+            <!-- <v-img :src="require('~/assets/img/logo.png')" /> -->
+            EggHamへようこそ！
           </h1>
+
+          <p>アカウント登録すると以下の機能を使用できます。</p>
+          <p>・翻訳機能</p>
+          <p>・単語を保存/編集</p>
+          <p>・保存した単語をダウンロード</p>
 
           <ValidationObserver v-slot="{ passes, validate }">
             <ValidationProvider
