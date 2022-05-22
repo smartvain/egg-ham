@@ -14,13 +14,23 @@
       <UrlInput v-if="$route.path === '/'" />
       <v-spacer />
 
-      <div v-if="$route.path !== '/'">
+      <v-btn
+        v-if="$route.path !== '/'"
+        class="mr-3"
+        outlined plain
+        :to="{ path: '/' }"
+      >
+        トップ
+      </v-btn>
+
+      <div v-else>
         <v-btn
           class="mr-3"
+          style="border-color: #979797"
           outlined plain
-          :to="{ path: '/' }"
+          @click="drawer = true"
         >
-          TOP
+          ログイン
         </v-btn>
       </div>
 
