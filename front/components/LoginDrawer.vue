@@ -1,82 +1,108 @@
 <template>
   <v-navigation-drawer
     v-model="_drawer"
-    width="450"
+    width="27%"
     right temporary fixed
   >
-    <v-card height="100%" flat>
-      <v-row justify="center" class="ml-0">
-        <v-spacer />
+    <v-card class="px-2" flat>
+      <v-btn
+        icon right fixed
+        @click="_drawer = false"
+      >
+        <v-icon>mdi-close</v-icon>
+      </v-btn>
 
-        <v-col cols="6">
-          <v-card-title class="justify-center">ログイン</v-card-title>
-        </v-col>
-
-        <v-col cols="3">
-          <v-btn
-            class="float-right mt-1 mr-1"
-            icon
-            @click="_drawer = false"
-          >
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-        </v-col>
-      </v-row>
+      <v-img
+        :src="require('~/assets/img/logo.png')"
+        max-width="60%"
+        class="mx-auto mt-5"
+      />
 
       <v-card-text>
         <v-btn
           class="text-capitalize caption"
           color="#00ACEE"
-          width="100%"
           height="48px"
           rounded dark depressed block
         >
-          <img
-            class="button-logo-img mr-4"
-            src="~/assets/img/twitter_logo_white.png"
-            style="height: 20px"
+          <v-img
+            class="mr-4"
+            :src="require('~/assets/img/twitter_logo_white.png')"
+            max-width="24"
           />
           twitterでログイン
         </v-btn>
 
         <v-btn
-          class="text-capitalize caption"
+          class="text-capitalize caption mt-5"
           style="border-color: #979797"
-          width="100%"
           height="48px"
           rounded outlined block
         >
-          <img
-            class="button-logo-img mr-4"
+          <v-img
+            class="mr-4"
             src="https://madeby.google.com/static/images/google_g_logo.svg"
-            style="height: 24px"
+            max-width="24"
           />
           Googleでログイン
         </v-btn>
 
-        <p class="text-center pt-3 mt-3 text-subtitle-1 siginIn-border-top">
+        <p class="text-center mt-5 text-subtitle-1">
           メールアドレスでログイン
         </p>
         
-        <v-form class="mx-9" ref="form" v-model="valid">
-          <v-text-field
-            placeholder="メールアドレス"
-            outlined
-            dense
-          />
+        <ValidationObserver v-slot="{ passes, validate }">
+          <ValidationProvider
+            v-slot="{ errors }"
+            rules="required|max:20"
+            name="メールアドレス"
+            mode="passive"
+          >
+            <v-text-field
+              v-model="email"
+              append-icon="mdi-email"
+              placeholder="メールアドレス"
+              type="text"
+              outlined dense
+              :error-messages="errors"
+            />
+          </ValidationProvider>
 
-          <v-text-field
-            placeholder="パスワード"
-            outlined
-            dense
-          />
+          <ValidationProvider
+            v-slot="{ errors }"
+            rules="required|max:20"
+            name="パスワード"
+            mode="passive"
+          >
+            <v-text-field
+              v-model="password"
+              append-icon="mdi-lock"
+              placeholder="パスワード"
+              type="password"
+              outlined dense
+              :error-messages="errors"
+            />
+          </ValidationProvider>
 
-          <p class="pointer">パスワードを忘れた方</p>
+          <v-row>
+            <v-col cols="6" align="left">
+              <span>新規登録</span>
+            </v-col>
+
+            <v-col cols="6" align="left" class="px-0">
+              <span>パスワードを忘れた方</span>
+            </v-col>
+          </v-row>
 
           <div class="text-center">
-            <v-btn class="primary" :disabled="!valid">ログイン</v-btn>
+            <v-btn
+              class="primary mt-5"
+              @click="validate().then(passes(login))"
+            >
+              ログイン
+            </v-btn>
           </div>
-        </v-form>
+        </ValidationObserver>
       </v-card-text>
     </v-card>
   </v-navigation-drawer>
@@ -88,7 +114,11 @@ export default {
     drawer: { type: Boolean, default: false }
   },
   data: () => ({
-    valid: false,
+    email: null,
+    password: null,
+    loading: {
+      login: false
+    }
   }),
   computed: {
     _drawer: {
@@ -98,6 +128,30 @@ export default {
       set(value) {
         this.$emit('close', value)
       }
+    }
+  },
+  created() {
+    console.log(this.$auth.loggedIn)
+    if (!this.$auth.loggedIn) {
+      this.email = 'example@eggham.com'
+      this.password = 'hogehoge'
+    }
+  },
+  methods: {
+    async login() {
+      this.loading.login = true
+      
+      try {
+        const res = await this.$auth.loginWith('local', { data: {
+          email: this.email,
+          password: this.password
+        }})
+        this.$toast.show(res.data.message)
+      } catch (e) {
+        this.$toast.error('ログインに失敗しました。もう一度お試しください。')
+      }
+
+      this.loading.login = false
     }
   }
 }
