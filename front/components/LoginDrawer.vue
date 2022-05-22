@@ -139,6 +139,11 @@ export default {
   },
   methods: {
     async login() {
+      if (this.$auth.loggedIn) {
+        this.$toast.show('すでにログインしています。')
+        return
+      }
+      
       this.loading.login = true
       
       try {
