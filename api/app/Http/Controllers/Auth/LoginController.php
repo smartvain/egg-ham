@@ -18,8 +18,9 @@ class LoginController extends Controller
         $defaultMessage = '正常にログインが行われませんでした。もう一度お試しください。';
         $successMessage = 'ログインに成功しました。';
         $errorMessage   = [
-            'email'    => 'このメールアドレスは登録されていません。',
-            'password' => 'パスワードが違います。'
+            'email'      => 'このメールアドレスは登録されていません。',
+            'password'   => 'パスワードが違います。',
+            'unverified' => 'まずはメールアドレスを認証してください。'
         ];
 
         $responseMessage = $defaultMessage;
@@ -29,6 +30,8 @@ class LoginController extends Controller
             $responseMessage = $errorMessage['email'];
         } else if (!Hash::check($password, $user->password)) {
             $responseMessage = $errorMessage['password'];
+        } else if ($user->email_verified_at === null) {
+            $responseMessage = $errorMessage['unverified'];
         } else {
             $responseMessage = $successMessage;
             $token           = $user->createToken('token')->plainTextToken;
