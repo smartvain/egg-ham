@@ -35,7 +35,7 @@
       </div>
 
       <v-menu offset-y>
-        <template v-slot:activator="{ on, attrs }">
+        <template #activator="{ on, attrs }">
           <v-btn icon>
             <v-img
               :src="require('~/assets/img/default_icon.png')"
@@ -57,8 +57,8 @@
           </v-list-item>
 
           <v-list-item
-            @click="logout()"
             v-if="$auth.loggedIn"
+            @click="logout()"
           >
             <v-list-item-title>ログアウト</v-list-item-title>
           </v-list-item>
@@ -104,7 +104,6 @@ export default {
       }
     },
     close(bool) {
-      console.log(bool)
       this.drawer = bool
     }
   }

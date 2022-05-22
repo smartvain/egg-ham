@@ -47,8 +47,8 @@
 
     <template #[`item.text`]="{ item, index }">
       <v-text-field
-        v-model="item.text"
         v-if="editMode"
+        v-model="item.text"
         dense
         @change="addWord(index)"
       />
@@ -60,8 +60,8 @@
 
     <template #[`item.mean`]="{ item, index }">
       <v-text-field
-        v-model="item.mean"
         v-if="editMode"
+        v-model="item.mean"
         dense
         @change="addWord(index)"
       />
@@ -73,8 +73,8 @@
 
     <template #[`item.video_title`]="{ item, index }">
       <v-text-field
-        v-model="item.video_title"
         v-if="editMode"
+        v-model="item.video_title"
         dense
         @change="addWord(index)"
       />
