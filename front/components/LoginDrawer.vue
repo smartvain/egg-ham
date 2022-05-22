@@ -1,7 +1,7 @@
 <template>
   <v-navigation-drawer
     v-model="_drawer"
-    width="27%"
+    :width="width <= 767 ? '100%' : '27%'"
     right temporary fixed
   >
     <v-card class="px-2" height="100%" flat>
@@ -152,7 +152,8 @@ export default {
     remember: false,
     loading: {
       login: false
-    }
+    },
+    width: window.innerWidth,
   }),
   computed: {
     _drawer: {
@@ -164,7 +165,8 @@ export default {
       }
     }
   },
-  created() {
+  mounted() {
+    window.addEventListener('resize', () => this.width = window.innerWidth)
     console.log(this.$auth.loggedIn)
     if (!this.$auth.loggedIn) {
       this.email = 'example@eggham.com'
