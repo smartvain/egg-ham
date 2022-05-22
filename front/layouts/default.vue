@@ -35,7 +35,7 @@
 
       <v-menu offset-y>
         <template #activator="{ on, attrs }">
-          <v-btn icon>
+          <v-btn v-if="$auth.loggedIn" icon>
             <v-img
               :src="require('~/assets/img/default_icon.png')"
               class="rounded-circle"
