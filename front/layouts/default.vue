@@ -35,14 +35,23 @@
 
       <v-menu offset-y>
         <template #activator="{ on, attrs }">
-          <v-btn v-if="$auth.loggedIn" icon>
+          <v-btn icon>
             <v-img
+              v-if="$auth.loggedIn"
               :src="require('~/assets/img/default_icon.png')"
               class="rounded-circle"
               max-width="43"
               v-bind="attrs"
               v-on="on"
             />
+
+            <v-icon
+              v-else
+              v-bind="attrs"
+              v-on="on"
+            >
+              mdi-dots-vertical
+            </v-icon>
           </v-btn>
         </template>
 
