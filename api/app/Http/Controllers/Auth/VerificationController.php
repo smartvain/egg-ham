@@ -10,17 +10,25 @@ class VerificationController extends Controller
 {
     public function verify($userId, Request $request)
     {
+        $user = User::find($userId);
+        $path = config('app.home_url');
+
+        $defaultMessage = 'メール認証に失敗しました。もう一度お試しください。';
+        $successMessage = 'メール認証しました。';
+        $errorMessage = [
+            'expired' => '期限切れのURLです。'
+        ];
+
+        $message = $defaultMessage;
+
         if (!$request->hasValidSignature()) {
-            return response()->json(["message" => "期限切れのURLです。"], 401);
-        }
-    
-        $user = User::findOrFail($userId);
-    
-        if (!$user->hasVerifiedEmail()) {
+            $message = $errorMessage['expired'];
+            return response()->json(compact('message'), 401);
+        } else if (!$user->hasVerifiedEmail()) {
             $user->markEmailAsVerified();
         }
     
-        return redirect()->to('http://dev.yuleapp.com:1080/');
+        return redirect($path)->with('message', $message);
     }
     
     public function resend(Request $request)

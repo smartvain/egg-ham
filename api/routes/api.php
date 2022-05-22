@@ -31,7 +31,7 @@ Route::get('videoInfo', [YoutubeController::class, 'getVideoInfo']);
 Route::post('translate', [DeepLController::class, 'translate']);
 Route::post('character_count', [DeepLController::class, 'getCharacterCount']);
 
-Route::group(['middleware' => ['auth:sanctum']], function () {
+Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::get('user', [LoginController::class, 'user']);
     
     Route::get('words', [WordController::class, 'getWords']);
