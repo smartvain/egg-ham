@@ -33,6 +33,17 @@
         </v-btn>
       </div>
 
+      <div v-if="$route.path !== '/mypage' && $auth.loggedIn">
+        <v-btn
+          class="mr-3"
+          style="border-color: #979797"
+          outlined plain
+          :to="{ path: '/mypage' }"
+        >
+          マイページ
+        </v-btn>
+      </div>
+
       <v-menu offset-y>
         <template #activator="{ on, attrs }">
           <v-btn icon>
