@@ -187,6 +187,7 @@ export default {
           email: this.email,
           password: this.password
         }})
+        this._drawer = false
         this.$toast.show(res.data.message)
       } catch (e) {
         this.$toast.error('ログインに失敗しました。もう一度お試しください。')
