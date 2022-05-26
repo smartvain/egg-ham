@@ -95,10 +95,10 @@
           <div class="text-center">
             <v-btn
               class="primary"
-              block
+              rounded block
               @click="validate().then(passes(login))"
             >
-              <span class="text-subtitle-1">ログイン</span>
+              <span class="text-subtitle-1 font-weight-bold">ログイン</span>
             </v-btn>
           </div>
         </ValidationObserver>
