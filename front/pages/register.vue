@@ -19,24 +19,6 @@
             <ValidationProvider
               v-slot="{ errors }"
               rules="required|max:20"
-              name="ユーザー名"
-              mode="passive"
-            >
-              <v-text-field
-                class="mt-8"
-                v-model="form.name"
-                append-icon="mdi-account"
-                label="ユーザー名"
-                type="text"
-                counter="20"
-                outlined dense
-                :error-messages="errors"
-              />
-            </ValidationProvider>
-
-            <ValidationProvider
-              v-slot="{ errors }"
-              rules="required|max:20"
               name="メールアドレス"
               mode="passive"
             >
@@ -143,6 +125,7 @@ export default {
     async register() {
       this.loading.register = true
       
+      this.form.name = this.form.email
       try {
         const res = await this.$axios.$post('register', this.form)
         this.$toast.show(res.message)
