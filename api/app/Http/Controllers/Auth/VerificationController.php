@@ -35,8 +35,8 @@ class VerificationController extends Controller
     {
         $user = User::where('email', $request->email)->first();
         
-        $defaultMessage = 'メールの再送信に失敗しました。もう一度お試しください。';
-        $successMessage = '入力されたメールアドレスにメールを再送信しました。';
+        $defaultMessage = '確認メールの再送信に失敗しました。もう一度お試しください。';
+        $successMessage = '入力されたメールアドレスに確認メールを再送信しました。';
         $errorMessage   = [
             'verified' => 'このメールアドレスはすでに確認済みです。'
         ];

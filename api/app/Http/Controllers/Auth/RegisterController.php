@@ -24,13 +24,14 @@ class RegisterController extends Controller
         $defaultMessage = 'アカウント作成に失敗しました。もう一度お試しください。';
         $successMessage = '入力されたメールアドレスに確認メールを送信しました。';
         $errorMessage   = [
-            'registered' => 'このメールアドレスはすでに登録されています。',
+            'registered' => 'このメールアドレスはすでに登録されています。確認メールを再送信しました。',
             'mismatch'   => 'パスワードが一致しませんでした。'
         ];
         
         $message = $defaultMessage;
 
         if ($user) {
+            $user->sendEmailVerificationNotification();
             $message = $errorMessage['registered'];
         } else if ($form['password'] !== $form['confirm']) {
             $message = $errorMessage['mismatch'];

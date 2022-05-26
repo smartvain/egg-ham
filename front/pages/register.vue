@@ -76,36 +76,24 @@
             </ValidationProvider>
 
             <v-btn
+              class="font-weight-bold"
               color="primary"
               :class="inputMt"
               :loading="loading.register"
-              @click="validate().then(passes(register))"
               rounded
-              class="font-weight-bold"
+              @click="!isRequested ? validate().then(passes(register)) : validate().then(passes(resend))"
             >
-              アカウントを作成
+              <span>{{ !isRequested ? 'アカウントを作成' : 'メールをもう一度送る' }}</span>
             </v-btn>
-
-            <!-- <v-btn
-              :class="inputMt"
-              color="primary"
-              :loading="loading.resend"
-              block
-              @click="validate().then(passes(resend))"
-            >
-              再送信
-            </v-btn> -->
             
             <v-row align-content="center" justify="center" class="my-3">
-              <v-col cols="5" class="mt-3">
-                <v-divider />
-              </v-col>
+              <v-col cols="5" class="mt-3"><v-divider /></v-col>
+
               <v-col cols="2">
                 <span class="text-subtitle-1">または</span>
               </v-col>
-              <v-col cols="5" class="mt-3">
-                <v-divider />
-              </v-col>
+
+              <v-col cols="5" class="mt-3"><v-divider /></v-col>
             </v-row>
 
             <v-btn
@@ -155,9 +143,9 @@ export default {
     },
     loading: {
       register: false,
-      resend: false
     },
-    inputMt: 'mt-3'
+    inputMt: 'mt-3',
+    isRequested: false
   }),
   // created() {
   //   console.log(this.$auth.loggedIn)
@@ -173,6 +161,7 @@ export default {
       this.form.name = this.form.email
       try {
         const res = await this.$axios.$post('register', this.form)
+        this.isRequested = true
         this.$toast.show(res.message)
       } catch (e) {
         this.$toast.error('アカウント登録に失敗しました。もう一度お試しください。')
@@ -181,7 +170,7 @@ export default {
       this.loading.register = false
     },
     async resend() {
-      this.loading.resend = true
+      this.loading.register = true
       
       try {
         const res = await this.$axios.$get('email/resend', { params: this.form })
@@ -191,7 +180,7 @@ export default {
         this.$toast.error('リクエスト失敗')
       }
 
-      this.loading.resend = false
+      this.loading.register = false
     }
   }
 }
