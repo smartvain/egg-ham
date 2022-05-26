@@ -1,8 +1,9 @@
 <template>
 <v-container fill-height>
-  <v-row justify="center">
+  <span class="bg"></span>
+  <v-row justify="end">
     <v-col cols="6">
-      <v-card class="pa-3" elevation="3">
+      <v-card class="pa-3" elevation="5">
         <v-card-text>
           <h1 class="mb-5">
             <!-- <v-img :src="require('~/assets/img/logo.png')" /> -->
@@ -167,3 +168,29 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.bg {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: url( '~/assets/img/pexels-frans-van-heerden-624015.jpg') no-repeat center center;
+  background-size: cover;
+  background-color: black;
+}
+
+.bg::before {
+  content: '';
+  /* ↓暗いオーバーレイを半透明で配置 */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* ↓全体を覆うように配置 */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+</style>
