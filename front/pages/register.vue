@@ -1,19 +1,23 @@
 <template>
 <v-container fill-height>
   <span class="bg"></span>
-  <v-row justify="end">
+  <v-row>
     <v-col cols="6">
-      <v-card class="pa-3" elevation="5">
-        <v-card-text>
-          <h1 class="mb-5">
-            <!-- <v-img :src="require('~/assets/img/logo.png')" /> -->
-            EggHamへようこそ！
-          </h1>
+      <h1 class="register-title text-h3 font-weight-bold">
+        EggHamへようこそ。
+      </h1>
 
-          <p>アカウント登録すると以下の機能を使用できます。</p>
-          <p>・翻訳機能</p>
-          <p>・単語を保存/編集</p>
-          <p>・保存した単語をダウンロード</p>
+      <p class="register-text text-subtitle-1">
+        YouTube再生、DEEPL翻訳、単語の保存が1ページでできるサイトです
+      </p>
+    </v-col>
+    
+    <v-col cols="6" align="center">
+      <v-card class="px-8" elevation="5" height="600">
+        <v-card-text>
+          <v-card-title class="text-h5 font-weight-bold">
+            アカウント作成
+          </v-card-title>
 
           <ValidationObserver v-slot="{ passes, validate }">
             <ValidationProvider
@@ -72,16 +76,17 @@
             </ValidationProvider>
 
             <v-btn
-              :class="inputMt"
               color="primary"
+              :class="inputMt"
               :loading="loading.register"
-              block
               @click="validate().then(passes(register))"
+              rounded
+              class="font-weight-bold"
             >
-              新規登録
+              アカウントを作成
             </v-btn>
 
-            <v-btn
+            <!-- <v-btn
               :class="inputMt"
               color="primary"
               :loading="loading.resend"
@@ -89,6 +94,46 @@
               @click="validate().then(passes(resend))"
             >
               再送信
+            </v-btn> -->
+            
+            <v-row align-content="center" justify="center" class="my-3">
+              <v-col cols="5" class="mt-3">
+                <v-divider />
+              </v-col>
+              <v-col cols="2">
+                <span class="text-subtitle-1">または</span>
+              </v-col>
+              <v-col cols="5" class="mt-3">
+                <v-divider />
+              </v-col>
+            </v-row>
+
+            <v-btn
+              class="text-capitalize caption"
+              color="#00ACEE"
+              height="48px"
+              rounded dark depressed block
+            >
+              <v-img
+                class="mr-4"
+                :src="require('~/assets/img/twitter_logo_white.png')"
+                max-width="24"
+              />
+              twitterでログイン
+            </v-btn>
+
+            <v-btn
+              class="text-capitalize caption mt-5"
+              style="border-color: #979797"
+              height="48px"
+              rounded outlined block
+            >
+              <v-img
+                class="mr-4"
+                src="https://madeby.google.com/static/images/google_g_logo.svg"
+                max-width="24"
+              />
+              Googleでログイン
             </v-btn>
           </ValidationObserver>
         </v-card-text>
@@ -166,14 +211,26 @@ export default {
 
 .bg::before {
   content: '';
-  /* ↓暗いオーバーレイを半透明で配置 */
   background-color: rgba(0, 0, 0, 0.4);
-  /* ↓全体を覆うように配置 */
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   display: block;
+}
+
+.register-title {
+  color: white;
+  position: absolute;
+  top: 30%;
+  left: 10%;
+}
+
+.register-text {
+  color: white;
+  position: absolute;
+  top: 40%;
+  left: 10%;
 }
 </style>
