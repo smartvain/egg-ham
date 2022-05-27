@@ -8,25 +8,25 @@
 
     <v-tabs-items v-model="tab">
       <v-tab-item>
-        <v-card outlined>
-          <WordList
-            :filtered-items="filteredWords"
-            :word-type="wordTypes.word"
-          >
-            単語
-          </WordList>
-        </v-card>
+        <WordList
+          :filtered-items="filteredWords"
+          :word-type="wordTypes.word"
+        >
+          単語
+        </WordList>
       </v-tab-item>
 
       <v-tab-item>
-        <v-card outlined>
-          <WordList
-            :filtered-items="filteredIdioms"
-            :word-type="wordTypes.idiom"
-          >
-            慣用句
-          </WordList>
-        </v-card>
+        <WordList
+          :filtered-items="filteredIdioms"
+          :word-type="wordTypes.idiom"
+        >
+          慣用句
+        </WordList>
+      </v-tab-item>
+
+      <v-tab-item>
+        <Setting />
       </v-tab-item>
     </v-tabs-items>
   </v-container>
@@ -34,17 +34,18 @@
 
 <script>
 import WordList from '~/components/WordList.vue'
+import Setting from '~/components/Setting/SettingMenu.vue'
 import Mixin from '~/mixins/mixin.js'
 
 export default {
-  components: { WordList },
+  components: { WordList, Setting },
   mixins: [ Mixin ],
   middleware: 'auth',
   async asyncData({ $axios }) {
     return { words: await $axios.$get('words') }
   },
   data: () => ({
-    tabItems: [ '単語', '慣用句' ],
+    tabItems: [ '単語', '慣用句', '設定' ],
     tab: null
   }),
   fetch() {
