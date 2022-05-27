@@ -309,7 +309,7 @@ export default {
     words: [],
     toggleDisplay: true,
     tab: null,
-    text: null,
+    text: '',
     startSecond: null,
     translatedText: null,
     searchCaption: null,
