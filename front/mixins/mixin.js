@@ -26,8 +26,8 @@ export default {
     calcSeconds(minutes) {
       const splitMinutes = String(minutes).split(':')
       const hour = Number(splitMinutes[0]) * 3600
-      const min = Number(splitMinutes[1]) * 60
-      const rem = Number(splitMinutes[2])
+      const min  = Number(splitMinutes[1]) * 60
+      const rem  = Number(splitMinutes[2])
 
       return hour + min + rem
     }
