@@ -113,7 +113,6 @@ export default {
     pages: [
       { title: 'トップ', path: '/' },
       { title: 'マイページ', path: '/mypage' },
-      { title: '設定', path: '/mypage/setting' },
       { title: '新規登録', path: '/register' },
     ],
     drawer: false
