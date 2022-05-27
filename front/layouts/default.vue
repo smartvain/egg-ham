@@ -49,7 +49,7 @@
           <v-btn icon>
             <v-img
               v-if="$auth.loggedIn"
-              :src="require('~/assets/img/default_icon.png')"
+              :src="require('~/assets/img/default_user.png')"
               class="rounded-circle"
               max-width="43"
               v-bind="attrs"
