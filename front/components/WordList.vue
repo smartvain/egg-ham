@@ -84,8 +84,16 @@
       </div>
     </template>
 
-    <template #[`item.url`]="{ item }">
+    <template #[`item.url`]="{ item, index }">
+      <v-text-field
+        v-if="editMode"
+        v-model="item.url"
+        dense
+        @change="addWord(index)"
+      />
+
       <a
+        v-else
         :href="item.url"
         target="subwindow"
       >
@@ -93,8 +101,16 @@
       </a>
     </template>
 
-    <template #[`item.calcTime`]="{ item }">
+    <template #[`item.calcTime`]="{ item, index }">
+      <v-text-field
+        v-if="editMode"
+        v-model="item.calcTime"
+        dense
+        @change="addWord(index)"
+      />
+
       <a
+        v-else
         :href="`${url}&t=${item.start_second}s`"
         target="subwindow"
       >
@@ -173,6 +189,10 @@ export default {
     },
     async saveWords() {
       this.loading.saveWords = true
+      
+      for (const word of this.editedWords) {
+        word.start_second = this.calcSeconds(word.calcTime)
+      }
 
       try {
         await this.$axios.$put('words', { words: this.editedWords })

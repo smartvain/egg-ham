@@ -11,11 +11,22 @@ export default {
   }),
   methods: {
     calcTime(time) {
-      const min = Math.floor(time % 3600 / 60);
-      let rem = String(Math.floor(time % 60));
+      let hour = String(Math.floor(time / 3600))
+      let min  = String(Math.floor(time % 3600 / 60))
+      let rem  = String(Math.floor(time % 60))
+      if (hour < 10) { hour = hour.padStart(2, '0') }
+      if (min < 10) { min = min.padStart(2, '0') }
       if (rem < 10) { rem = rem.padStart(2, '0') }
 
-      return `${min}:${rem}`
+      return `${hour}:${min}:${rem}`
     },
+    calcSeconds(minutes) {
+      const splitMinutes = String(minutes).split(':')
+      const hour = Number(splitMinutes[0]) * 3600
+      const min = Number(splitMinutes[1]) * 60
+      const rem = Number(splitMinutes[2])
+
+      return hour + min + rem
+    }
   }
 }
