@@ -10,15 +10,18 @@ export default {
     ]
   }),
   methods: {
-    calcTime(time) {
-      let hour = String(Math.floor(time / 3600))
-      let min  = String(Math.floor(time % 3600 / 60))
-      let rem  = String(Math.floor(time % 60))
+    calcTime(seconds) {
+      let hour = String(Math.floor(seconds / 3600))
+      let min  = String(Math.floor(seconds % 3600 / 60))
+      let rem  = String(Math.floor(seconds % 60))
       if (hour < 10) { hour = hour.padStart(2, '0') }
       if (min < 10) { min = min.padStart(2, '0') }
       if (rem < 10) { rem = rem.padStart(2, '0') }
 
-      return `${hour}:${min}:${rem}`
+      let time = `${hour}:${min}:${rem}`
+      if (hour === '00') { time = `${min}:${rem}` }
+
+      return time
     },
     calcSeconds(minutes) {
       const splitMinutes = String(minutes).split(':')
