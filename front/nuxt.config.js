@@ -78,7 +78,7 @@ export default {
   },
 
   toast: {
-    duration: 3000
+    duration: 5000
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
