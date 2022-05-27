@@ -1,146 +1,148 @@
 <template>
-  <v-data-table
-    :headers="headers"
-    :items="filteredItems"
-    :items-per-page="10"
-    :search="searchWord"
-    fixed-header
-  >
-    <template #top>
-      <v-row justify="center" class="mt-0">
-        <v-col cols="8">
-          <v-text-field
-            v-model="searchWord"
-            :placeholder="`${wordType.text}を検索`"
-            dense
-          />
-        </v-col>
+  <v-card outlined>
+    <v-data-table
+      :headers="headers"
+      :items="filteredItems"
+      :items-per-page="10"
+      :search="searchWord"
+      fixed-header
+    >
+      <template #top>
+        <v-row justify="center" class="mt-0">
+          <v-col cols="8">
+            <v-text-field
+              v-model="searchWord"
+              :placeholder="`${wordType.text}を検索`"
+              dense
+            />
+          </v-col>
 
-        <v-col cols="1">
-          <v-btn
-            color="primary"
-            dense solo block
-            :outlined="editMode"
-            @click="editMode = !editMode"
-          >
-            編集モード
-          </v-btn>
-        </v-col>
+          <v-col cols="1">
+            <v-btn
+              color="primary"
+              dense solo block
+              :outlined="editMode"
+              @click="editMode = !editMode"
+            >
+              編集モード
+            </v-btn>
+          </v-col>
 
-        <v-col cols="1" align="right">
-          <v-btn
-            color="primary"
-            dense solo block
-            :loading="loading.saveWords"
-            :disabled="!editMode"
-            @click="saveWords()"
-          >
-            保存する
-          </v-btn>
-        </v-col>
-      </v-row>
-    </template>
+          <v-col cols="1" align="right">
+            <v-btn
+              color="primary"
+              dense solo block
+              :loading="loading.saveWords"
+              :disabled="!editMode"
+              @click="saveWords()"
+            >
+              保存する
+            </v-btn>
+          </v-col>
+        </v-row>
+      </template>
 
-    <template #[`header.text`]>
-      <slot />
-    </template>
+      <template #[`header.text`]>
+        <slot />
+      </template>
 
-    <template #[`item.text`]="{ item, index }">
-      <v-text-field
-        v-if="editMode"
-        v-model="item.text"
-        dense
-        @change="addWord(index)"
-      />
+      <template #[`item.text`]="{ item, index }">
+        <v-text-field
+          v-if="editMode"
+          v-model="item.text"
+          dense
+          @change="addWord(index)"
+        />
 
-      <div v-else>
-        {{ item.text }}
-      </div>
-    </template>
+        <div v-else>
+          {{ item.text }}
+        </div>
+      </template>
 
-    <template #[`item.mean`]="{ item, index }">
-      <v-text-field
-        v-if="editMode"
-        v-model="item.mean"
-        dense
-        @change="addWord(index)"
-      />
+      <template #[`item.mean`]="{ item, index }">
+        <v-text-field
+          v-if="editMode"
+          v-model="item.mean"
+          dense
+          @change="addWord(index)"
+        />
 
-      <div v-else>
-        {{ item.mean }}
-      </div>
-    </template>
+        <div v-else>
+          {{ item.mean }}
+        </div>
+      </template>
 
-    <template #[`item.video_title`]="{ item, index }">
-      <v-text-field
-        v-if="editMode"
-        v-model="item.video_title"
-        dense
-        @change="addWord(index)"
-      />
+      <template #[`item.video_title`]="{ item, index }">
+        <v-text-field
+          v-if="editMode"
+          v-model="item.video_title"
+          dense
+          @change="addWord(index)"
+        />
 
-      <div v-else>
-        {{ item.video_title }}
-      </div>
-    </template>
+        <div v-else>
+          {{ item.video_title }}
+        </div>
+      </template>
 
-    <template #[`item.url`]="{ item, index }">
-      <v-text-field
-        v-if="editMode"
-        v-model="item.url"
-        dense
-        @change="addWord(index)"
-      />
+      <template #[`item.url`]="{ item, index }">
+        <v-text-field
+          v-if="editMode"
+          v-model="item.url"
+          dense
+          @change="addWord(index)"
+        />
 
-      <a
-        v-else
-        :href="item.url"
-        target="subwindow"
-      >
-        {{ item.url }}
-      </a>
-    </template>
+        <a
+          v-else
+          :href="item.url"
+          target="subwindow"
+        >
+          {{ item.url }}
+        </a>
+      </template>
 
-    <template #[`item.calcTime`]="{ item, index }">
-      <v-text-field
-        v-if="editMode"
-        v-model="item.calcTime"
-        dense
-        @change="addWord(index)"
-      />
+      <template #[`item.calcTime`]="{ item, index }">
+        <v-text-field
+          v-if="editMode"
+          v-model="item.calcTime"
+          dense
+          @change="addWord(index)"
+        />
 
-      <a
-        v-else
-        :href="`${url}&t=${item.start_second}s`"
-        target="subwindow"
-      >
-        {{ item.calcTime }}
-      </a>
-    </template>
+        <a
+          v-else
+          :href="`${url}&t=${item.start_second}s`"
+          target="subwindow"
+        >
+          {{ item.calcTime }}
+        </a>
+      </template>
 
-    <template #[`item.word_type`]="{ item, index }">
-      <v-select
-        v-model="item.word_type"
-        :items="wordTypesArray"
-        :disabled="!editMode"
-        item-text="text"
-        item-value="value"
-        dense
-        @change="addWord(index)"
-      />
-    </template>
+      <template #[`item.word_type`]="{ item, index }">
+        <v-select
+          v-model="item.word_type"
+          :items="wordTypesArray"
+          :disabled="!editMode"
+          item-text="text"
+          item-value="value"
+          dense
+          @change="addWord(index)"
+        />
+      </template>
 
-    <template #[`item.operation`]="{ item }">
-      <v-btn
-        icon
-        :disabled="!editMode"
-        :loading="loading.deleteWord === item.id"
-        @click="deleteWord(item.id)"
-      >
-        <v-icon>mdi-delete-empty</v-icon>
-      </v-btn>
-    </template>
-  </v-data-table>
+      <template #[`item.operation`]="{ item }">
+        <v-btn
+          icon
+          :disabled="!editMode"
+          :loading="loading.deleteWord === item.id"
+          @click="deleteWord(item.id)"
+        >
+          <v-icon>mdi-delete-empty</v-icon>
+        </v-btn>
+      </template>
+    </v-data-table>
+  </v-card>
 </template>
 
 <script>
