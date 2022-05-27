@@ -201,9 +201,8 @@
                   <transition>
                     <div v-show="characterCount">
                       <DoughnutChart
+                        ref="chart"
                         class="mt-6"
-                        :character-count="characterCount"
-                        :character-limit="characterLimit"
                         :width="chartSize"
                         :height="chartSize"
                       />
@@ -315,8 +314,8 @@ export default {
     translatedText: null,
     searchCaption: null,
     translateLang: null,
-    characterCount: null,
-    characterLimit: null,
+    // characterCount: null,
+    // characterLimit: null,
     chartSize: 330,
     videoHeight: 415,
   }),
@@ -324,7 +323,16 @@ export default {
     await this.getCharacterCount()
   },
   computed: {
-    ...mapGetters(['url', 'videoId', 'captions', 'captionLang', 'iframe', 'videoTitle'])
+    ...mapGetters([
+      'url',
+      'videoId',
+      'captions',
+      'captionLang',
+      'iframe',
+      'videoTitle',
+      'characterCount',
+      'characterLimit'
+    ])
   },
   watch: {
     videoId(value) {
@@ -338,13 +346,15 @@ export default {
     async getCharacterCount() {
       this.loading.getCharacterCount = true
 
-      try {
-        const res = await this.$axios.$post('character_count')
-        this.loading.getCharacterCount = false
-        this.characterCount = res.character_count
-        this.characterLimit = res.character_limit
-      } catch(e) {
-        this.$toast.error('文字数カウントの取得に失敗しました。')
+      if (!this.characterCount) {
+        try {
+          const res = await this.$axios.$post('character_count')
+          this.loading.getCharacterCount = false
+          this.$store.commit('setCharacterCount', res.character_count)
+          this.$store.commit('setCharacterLimit', res.character_limit)
+        } catch(e) {
+          this.$toast.error('文字数カウントの取得に失敗しました。')
+        }
       }
 
       if (this.loading.getCharacterCount) { this.loading.getCharacterCount = false }

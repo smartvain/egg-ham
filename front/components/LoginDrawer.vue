@@ -162,7 +162,7 @@ export default {
   },
   mounted() {
     window.addEventListener('resize', () => this.width = window.innerWidth)
-    console.log(this.$auth.loggedIn)
+    
     if (!this.$auth.loggedIn) {
       this.email = 'example@eggham.com'
       this.password = 'hogehoge'

@@ -1,40 +1,47 @@
 <script>
+import { mapGetters } from 'vuex'
 import { Doughnut } from 'vue-chartjs'
 
 export default {
   extends: Doughnut,
-  props: {
-    characterCount: { type: Number, default: 0 },
-    characterLimit: { type: Number, default: 0 }
+  data() {
+    return {
+      chartData: {
+        labels: ['今月の使用文字数', '今月の残り文字数'],
+        datasets: [
+          {
+            data: [this.characterCount, this.characterRemain],
+            borderColor: 'transparent',
+            backgroundColor: ['#1095FE','#EBF6FF'],
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutoutPercentage: 70,
+      }
+    }
   },
-  data: () => ({
-    characterRemain: 0,
-    chartData: {
-      labels: ['今月の使用文字数', '今月の残り文字数'],
-      datasets: [
-        {
-          data: [0, 0],
-          borderColor: 'transparent',
-          backgroundColor: ['#1095FE','#EBF6FF'],
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      cutoutPercentage: 70,
-    },
-  }),
   watch: {
     characterCount(value) {
-      this.chartData.datasets[0].data.splice(0, 1, value)
-      this.characterRemain = this.characterLimit - value
+      this.$set(this.chartData.datasets[0].data, [0], value)
     },
     characterRemain(value) {
-      this.chartData.datasets[0].data.splice(1, 1, value)
+      this.$set(this.chartData.datasets[0].data, [1], value)
+
       this.insertCenterText(value)
       this.render()
     }
+  },
+  computed: {
+    ...mapGetters([ 'characterCount', 'characterLimit', 'characterRemain' ]),
+  },
+  created() {
+    const chartData = this.chartData.datasets[0].data
+    this.$set(chartData, [0], this.characterCount)
+    this.$set(chartData, [1], this.characterRemain)
+    this.insertCenterText(this.characterRemain)
   },
   mounted() {
     this.render()

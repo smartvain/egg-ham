@@ -10,6 +10,15 @@
       <p class="register-text text-subtitle-1">
         YouTube再生、DEEPL翻訳、単語の保存が1ページでできるサイトです
       </p>
+
+      <v-btn
+        :to="{ path: '/' }"
+        class="register-action-text text-subtitle-1"
+        plain nuxt
+      >
+        <v-icon>mdi-chevron-left</v-icon>
+        アカウント登録せずに利用する
+      </v-btn>
     </v-col>
     
     <v-col cols="6" align="center">
@@ -220,6 +229,13 @@ export default {
   color: white;
   position: absolute;
   top: 40%;
+  left: 10%;
+}
+
+.register-action-text {
+  color: white;
+  position: absolute;
+  top: 50%;
   left: 10%;
 }
 </style>
