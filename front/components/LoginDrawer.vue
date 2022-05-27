@@ -112,11 +112,6 @@
               新規登録
             </router-link>
           </v-col>
-
-          <!-- <v-col cols="12" align="right" class="px-1">
-            <span>パスワードを忘れた方</span>
-            <v-icon>mdi-chevron-right</v-icon>
-          </v-col> -->
         </v-row>
 
         <v-btn
