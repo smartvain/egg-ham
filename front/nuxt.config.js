@@ -72,6 +72,23 @@ export default {
           user: { url: "/user", method: "get" },
           logout: false
         }
+      },
+      google: {
+        token: {
+          property: "token",
+          global: true,
+        },
+        user: {
+          property: "user",
+        },
+        clientId: process.env.GOOGLE_CLIENT_ID,
+        codeChallengeMethod: '',
+        responseType: 'code',
+        redirectUri: process.env.GOOGLE_REDIRECT_URL,
+        endpoints: {
+          token: process.env.GOOGLE_FETCH_TOKEN_URL,
+          userInfo: process.env.GOOGLE_FETCH_USER_URL
+        }
       }
     },
     localStorage: false,
