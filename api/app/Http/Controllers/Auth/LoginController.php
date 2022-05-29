@@ -32,7 +32,7 @@ class LoginController extends Controller
             $message = $errorMessage['unverified'];
         } else {
             $message = $successMessage;
-            $token   = $user->createToken('token')->plainTextToken;
+            $token   = $user->createToken('normal')->plainTextToken;
         }
 
         return [ 'token' => $token, 'message' => $message ];

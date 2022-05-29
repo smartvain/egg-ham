@@ -11,7 +11,6 @@ class VerificationController extends Controller
     public function verify($userId, Request $request)
     {
         $user = User::find($userId);
-        $path = config('app.home_url');
 
         $defaultMessage = 'メール認証に失敗しました。もう一度お試しください。';
         $successMessage = 'メール認証しました。';
@@ -28,7 +27,7 @@ class VerificationController extends Controller
             $user->markEmailAsVerified();
         }
     
-        return redirect($path)->with('message', $message);
+        return redirect(config('app.home_url'))->with('message', $message);
     }
     
     public function resend(Request $request)
