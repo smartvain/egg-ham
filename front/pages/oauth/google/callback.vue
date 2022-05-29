@@ -8,7 +8,7 @@
 
       <VueLoading
         type="barsCylon"
-        color="#1095FE"
+        color="#F8BBD0"
         :size="{ width: '50px', height: '50px' }"
       />
     </v-col>
