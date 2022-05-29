@@ -49,8 +49,9 @@ class LoginController extends Controller
         return Socialite::driver($provider)->redirect()->getTargetUrl();
     }
 
-    public function handleCallback($provider)
+    public function handleGoogleCallback()
     {
+        $provider = 'google';
         $socialUser = Socialite::driver($provider)->stateless()->user();
         $user = User::firstOrCreate(['email' => $socialUser->getEmail()], [
             'name' => $socialUser->getName(),
@@ -61,11 +62,32 @@ class LoginController extends Controller
 
         $user->markEmailAsVerified();
 
-        $token = $user->createToken('social')->plainTextToken;
+        $token = $user->createToken($provider)->plainTextToken;
 
         return [
             'token'   => $token,
-            'message' => "${provider}でのログインに成功しました。"
+            'message' => 'Googleでのログインに成功しました。'
+        ];
+    }
+
+    public function handleTwitterCallback()
+    {
+        $provider = 'twitter';
+        $socialUser = Socialite::driver($provider)->user();
+        $user = User::firstOrCreate(['email' => $socialUser->getEmail()], [
+            'name' => $socialUser->getName(),
+            'avatar' => $socialUser->getAvatar(),
+            'provider_id' => $socialUser->getId(),
+            'provider_name' => $provider
+        ]);
+
+        $user->markEmailAsVerified();
+
+        $token = $user->createToken($provider)->plainTextToken;
+
+        return [
+            'token'   => $token,
+            'message' => 'Twitterでのログインに成功しました。'
         ];
     }
 }

@@ -33,7 +33,8 @@ Route::post('character_count', [DeepLController::class, 'getCharacterCount']);
 
 Route::group(['middleware' => ['session'], 'prefix' => 'oauth'], function () {
     Route::get('{provider}/redirect', [LoginController::class, 'socialRedirect']);
-    Route::get('{provider}/callback', [LoginController::class, 'handleCallback']);
+    Route::get('google/callback', [LoginController::class, 'handleGoogleCallback']);
+    Route::get('twitter/callback', [LoginController::class, 'handleTwitterCallback']);
 });
 
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
