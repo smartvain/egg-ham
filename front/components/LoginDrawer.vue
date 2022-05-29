@@ -39,7 +39,9 @@
           class="text-capitalize caption mt-5"
           style="border-color: #979797"
           height="48px"
+          :loading="loading.googleLogin"
           rounded outlined block
+          @click="googleLogin()"
         >
           <v-img
             class="mr-4"
@@ -147,7 +149,8 @@ export default {
     password: null,
     remember: false,
     loading: {
-      login: false
+      login: false,
+      googleLogin: false
     },
     width: window.innerWidth,
   }),
@@ -163,7 +166,7 @@ export default {
   },
   mounted() {
     window.addEventListener('resize', () => this.width = window.innerWidth)
-    
+    console.log(this.$auth.user)
     if (!this.$auth.loggedIn) {
       this.email = 'example@eggham.com'
       this.password = 'hogehoge'
@@ -190,6 +193,22 @@ export default {
       }
 
       this.loading.login = false
+    },
+    async googleLogin() {
+      if (this.$auth.loggedIn) {
+        this.$toast.show('すでにログインしています。')
+        return
+      }
+      
+      this.loading.googleLogin = true
+
+      try {
+        await this.$auth.loginWith('google')
+      } catch (e) {
+        this.$toast.error(e.message)
+      }
+
+      this.loading.googleLogin = false
     },
     logout() {
       try {
