@@ -25,6 +25,7 @@
           class="text-capitalize caption"
           color="#00ACEE"
           height="48px"
+          :loading="loading.twitterLogin"
           rounded dark depressed block
           @click="twitterLogin()"
         >
