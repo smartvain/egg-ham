@@ -213,7 +213,7 @@ export default {
 
       this.loading.googleLogin = false
     },
-    async twitterLogin() {
+    twitterLogin() {
       if (this.$auth.loggedIn) {
         this.$toast.show('すでにログインしています。')
         return
@@ -221,13 +221,13 @@ export default {
       
       this.loading.twitterLogin = true
 
-      try {
-        // await this.$auth.loginWith('twitter')
-        const redirectUrl = await this.$axios.$get('oauth/twitter/redirect')
-        window.location.href = redirectUrl
-      } catch (e) {
-        this.$toast.error(e.message)
-      }
+      // try {
+      //   // await this.$auth.loginWith('twitter')
+      //   const redirectUrl = await this.$axios.$get('oauth/twitter/redirect')
+      //   window.location.href = redirectUrl
+      // } catch (e) {
+      //   this.$toast.error(e.message)
+      // }
 
       this.loading.twitterLogin = false
     },
