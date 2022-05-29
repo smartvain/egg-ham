@@ -221,7 +221,9 @@ export default {
       this.loading.twitterLogin = true
 
       try {
-        await this.$auth.loginWith('twitter')
+        // await this.$auth.loginWith('twitter')
+        const redirectUrl = await this.$axios.$get('oauth/twitter/redirect')
+        window.location.href = redirectUrl
       } catch (e) {
         this.$toast.error(e.message)
       }

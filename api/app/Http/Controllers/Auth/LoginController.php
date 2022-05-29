@@ -44,6 +44,11 @@ class LoginController extends Controller
         return [ 'user' => $request->user() ];
     }
 
+    public function socialRedirect($provider)
+    {
+        return Socialite::driver($provider)->redirect()->getTargetUrl();
+    }
+
     public function handleCallback($provider)
     {
         $socialUser = Socialite::driver($provider)->stateless()->user();

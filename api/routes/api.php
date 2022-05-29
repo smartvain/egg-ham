@@ -32,6 +32,7 @@ Route::post('translate', [DeepLController::class, 'translate']);
 Route::post('character_count', [DeepLController::class, 'getCharacterCount']);
 
 Route::group(['middleware' => ['session'], 'prefix' => 'oauth'], function () {
+    Route::get('{provider}/redirect', [LoginController::class, 'socialRedirect']);
     Route::get('{provider}/callback', [LoginController::class, 'handleCallback']);
 });
 
