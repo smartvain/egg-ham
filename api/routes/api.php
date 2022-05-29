@@ -31,6 +31,10 @@ Route::get('videoInfo', [YoutubeController::class, 'getVideoInfo']);
 Route::post('translate', [DeepLController::class, 'translate']);
 Route::post('character_count', [DeepLController::class, 'getCharacterCount']);
 
+Route::group(['middleware' => ['session'], 'prefix' => 'oauth'], function () {
+    Route::get('{provider}/callback', [LoginController::class, 'handleCallback']);
+});
+
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::get('user', [LoginController::class, 'user']);
     
