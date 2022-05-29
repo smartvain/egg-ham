@@ -7,7 +7,7 @@
       </v-card-text>
 
       <VueLoading
-        type="bars"
+        type="barsCylon"
         color="#1095FE"
         :size="{ width: '50px', height: '50px' }"
       />
