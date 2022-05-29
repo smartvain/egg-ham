@@ -26,6 +26,7 @@
           color="#00ACEE"
           height="48px"
           rounded dark depressed block
+          @click="twitterLogin()"
         >
           <v-img
             class="mr-4"
@@ -150,7 +151,8 @@ export default {
     remember: false,
     loading: {
       login: false,
-      googleLogin: false
+      googleLogin: false,
+      twitterLogin: false
     },
     width: window.innerWidth,
   }),
@@ -209,6 +211,22 @@ export default {
       }
 
       this.loading.googleLogin = false
+    },
+    async twitterLogin() {
+      if (this.$auth.loggedIn) {
+        this.$toast.show('すでにログインしています。')
+        return
+      }
+      
+      this.loading.twitterLogin = true
+
+      try {
+        await this.$auth.loginWith('twitter')
+      } catch (e) {
+        this.$toast.error(e.message)
+      }
+
+      this.loading.twitterLogin = false
     },
     logout() {
       try {
