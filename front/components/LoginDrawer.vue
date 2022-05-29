@@ -96,6 +96,7 @@
             <v-btn
               class="primary"
               rounded block
+              :loading="loading.login"
               @click="validate().then(passes(login))"
             >
               <span class="text-subtitle-1 font-weight-bold">ログイン</span>
