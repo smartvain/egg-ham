@@ -124,6 +124,7 @@
               style="border-color: #979797"
               height="48px"
               rounded outlined block
+              @click="googleLogin()"
             >
               <v-img
                 class="mr-4"
@@ -152,6 +153,7 @@ export default {
     },
     loading: {
       register: false,
+      googleLogin: false
     },
     inputMt: 'mt-3',
     isRequested: false
@@ -190,7 +192,23 @@ export default {
       }
 
       this.loading.register = false
-    }
+    },
+    async googleLogin() {
+      if (this.$auth.loggedIn) {
+        this.$toast.show('すでにログインしています。')
+        return
+      }
+      
+      this.loading.googleLogin = true
+
+      try {
+        await this.$auth.loginWith('google')
+      } catch (e) {
+        this.$toast.error(e.message)
+      }
+
+      this.loading.googleLogin = false
+    },
   }
 }
 </script>
