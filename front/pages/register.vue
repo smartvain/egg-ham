@@ -123,6 +123,7 @@
               class="text-capitalize caption mt-5"
               style="border-color: #979797"
               height="48px"
+              :loading="loading.googleLogin"
               rounded outlined block
               @click="googleLogin()"
             >
