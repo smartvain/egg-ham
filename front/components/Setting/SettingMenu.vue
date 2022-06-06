@@ -28,7 +28,11 @@
 
       <v-col cols="8" class="pl-0">
         <v-card-text>
-          <MailAddress v-if="selectedItem === 0" />
+          <MailAddress
+            v-if="selectedItem === 0"
+            :loading="loading.changeEmail"
+            @change-email="changeEmail"
+          />
           <Password v-if="selectedItem === 1" />
           <DeepL v-if="selectedItem === 2" />
           <SiteLanguage v-if="selectedItem === 3" />
@@ -58,8 +62,27 @@ export default {
       { text: 'サイト内言語' },
       { text: 'ダークモード' },
     ],
+    loading: {
+      changeEmail: false
+    },
     selectedItem: null
-  })
+  }),
+  methods: {
+    changeEmail(email) {
+      this.loading.changeEmail = true
+
+      try {
+        alert(email)
+        // const res = await this.$axios.$put('user/email', { email })
+        // console.log(res)
+        // this.$toast.show()
+      } catch (e) {
+        this.$toast.error(e.message)
+      }
+
+      this.loading.changeEmail = false
+    }
+  }
 }
 </script>
 
