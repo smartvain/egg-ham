@@ -1,7 +1,6 @@
 <?php
 
-use App\Http\Controllers\DeepLController;
-use App\Http\Controllers\YoutubeController;
+use App\Http\Controllers\ToeflWordController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [DeepLController::class, 'getCharacterCount']);
+// Route::get('/', [ToeflWordController::class, 'insertToeflWords']);
+Route::get('/', function () {
+    return view('welcome');
+});
