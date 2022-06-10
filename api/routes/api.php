@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\DeepLController;
+use App\Http\Controllers\ToeflWordController;
 use App\Http\Controllers\WordController;
 use App\Http\Controllers\YoutubeController;
 use Illuminate\Support\Facades\Route;
@@ -30,6 +31,8 @@ Route::get('videoInfo', [YoutubeController::class, 'getVideoInfo']);
 
 Route::post('translate',       [DeepLController::class, 'translate'        ]);
 Route::post('character_count', [DeepLController::class, 'getCharacterCount']);
+
+Route::get('toefl/words', [ToeflWordController::class, 'getToeflWords']);
 
 Route::group(['middleware' => ['session'], 'prefix' => 'oauth'], function () {
     Route::get('{provider}/redirect', [LoginController::class, 'socialRedirect'       ]);

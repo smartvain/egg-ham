@@ -16,6 +16,7 @@ class CreateToeflWordsTable extends Migration
         Schema::create('toefl_words', function (Blueprint $table) {
             $table->id();
             $table->string('text');
+            $table->string('url');
             $table->timestamps();
         });
     }

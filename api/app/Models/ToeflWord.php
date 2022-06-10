@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class ToeflWord extends Model
 {
     use HasFactory;
+
+    protected $guarded = [
+        'id'
+    ];
+
+    protected $hidden = [
+        'id',
+        'created_at',
+        'updated_at'
+    ];
 }
