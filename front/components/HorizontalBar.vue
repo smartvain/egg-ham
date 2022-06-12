@@ -13,7 +13,7 @@ export default {
             label: '単語出現回数',
             data: [],
             borderColor: 'transparent',
-            backgroundColor: '#1095FE',
+            backgroundColor: '',
           }
         ]
       },
@@ -24,7 +24,7 @@ export default {
             position: 'top'
           }],
           yAxes: [{
-            ticks: {fontSize: 16},
+            ticks: {fontSize: 16, fontFamily: 'Helvetica Neue'},
           }]
         },
         responsive: true,
@@ -38,6 +38,7 @@ export default {
     },
     rates(value) {
       this.chartData.datasets[0].data = value
+      
       this.render()
     }
   },
@@ -49,6 +50,12 @@ export default {
   },
   methods: {
     render() {
+      const gradient = this.$refs.canvas.getContext('2d').createLinearGradient(500, 0, 100, 0)
+      gradient.addColorStop(0, 'rgba(0, 191, 255, 0.8)')
+      gradient.addColorStop(0.5, 'rgba(0, 191, 255, 0.4)');
+      gradient.addColorStop(1, 'rgba(0, 191, 255, 0.2)');
+      this.chartData.datasets[0].backgroundColor = gradient
+      
       this.renderChart(this.chartData, this.options)
     }
   }
