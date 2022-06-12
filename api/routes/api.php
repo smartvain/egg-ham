@@ -26,7 +26,6 @@ Route::get('email/verify/{id}', [VerificationController::class, 'verify'  ])->na
 Route::get('email/resend',      [VerificationController::class, 'resend'  ])->name('verification.resend');
 
 Route::get('captions',  [YoutubeController::class, 'getCaptions' ]);
-Route::get('sentence',  [YoutubeController::class, 'getSentence' ]);
 Route::get('langList',  [YoutubeController::class, 'getLangList' ]);
 Route::get('videoInfo', [YoutubeController::class, 'getVideoInfo']);
 
