@@ -26,7 +26,7 @@ export default {
             position: 'top'
           }],
           yAxes: [{
-            ticks: {fontSize: 16},
+            ticks: {fontSize: 16, fontStyle: 500},
           }]
         },
         tooltips: {
