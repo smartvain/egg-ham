@@ -22,7 +22,7 @@ export default {
             position: 'top'
           }],
           yAxes: [{
-            ticks: {fontSize: 16, fontFamily: 'Helvetica Neue'},
+            ticks: {fontSize: 16},
           }]
         },
         animation: {
