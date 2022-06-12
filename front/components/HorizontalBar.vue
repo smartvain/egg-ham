@@ -21,6 +21,7 @@ export default {
         scales: {
           xAxes: [{
             ticks: {min: 0, stepSize: 1},
+            position: 'top'
           }],
           yAxes: [{
             ticks: {fontSize: 16},
