@@ -16,6 +16,10 @@ export default {
         }]
       },
       options: {
+        onClick: (evt, item) => {
+          if (!item[0]) {return}
+          window.open(`https://ejje.weblio.jp/content/${item[0]._model.label}`, '_blank')
+        },
         scales: {
           xAxes: [{
             ticks: {beginAtZero: true, stepSize: 1},
@@ -24,6 +28,11 @@ export default {
           yAxes: [{
             ticks: {fontSize: 16},
           }]
+        },
+        tooltips: {
+          callbacks: {
+            footer: () => '※ グラフをクリックでWeblio英和辞典を表示',
+          }
         },
         animation: {
           duration: 1500,
