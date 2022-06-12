@@ -27,6 +27,10 @@ export default {
             ticks: {fontSize: 16, fontFamily: 'Helvetica Neue'},
           }]
         },
+        animation: {
+          duration: 1500,
+          easing: 'easeOutQuint'
+        },
         responsive: true,
         maintainAspectRatio: false
       }
@@ -38,7 +42,6 @@ export default {
     },
     rates(value) {
       this.chartData.datasets[0].data = value
-      
       this.render()
     }
   },
