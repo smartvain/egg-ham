@@ -81,10 +81,8 @@ export default {
       return this.captions.length > 0
     },
     horizontalBarStyle() {
-      return {
-        height: `${this.labels.length * 30}px`,
-        position: 'relative'
-      }
+      const height = this.labels.length > 0 ? `${this.labels.length * 30}px` : '100%'
+      return { height, position: 'relative' }
     }
   }
 }
