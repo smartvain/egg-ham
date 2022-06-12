@@ -8,14 +8,12 @@ export default {
     return {
       chartData: {
         labels: [],
-        datasets: [
-          {
+        datasets: [{
             label: '単語出現回数',
             data: [],
             borderColor: 'transparent',
             backgroundColor: '',
-          }
-        ]
+        }]
       },
       options: {
         scales: {
