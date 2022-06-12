@@ -18,6 +18,5 @@ module.exports = {
     'no-return-assign': 'off',
     'vue/multi-word-component-names': 'off',
     'camelcase': 'off',
-    'vue/no-unused-components': 'off'
   },
 }

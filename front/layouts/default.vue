@@ -1,6 +1,6 @@
 <template>
   <v-app dark>
-    <v-app-bar app elevation="2" height="60">
+    <v-app-bar app flat height="60">
       <a href="/">
         <v-img
           :src="require('~/assets/img/logo.png')"
@@ -9,7 +9,7 @@
       </a>
 
       <v-spacer />
-      <UrlInput v-if="$route.path === '/'" />
+      <UrlInput />
       <v-spacer />
 
       <v-btn

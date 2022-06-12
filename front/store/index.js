@@ -1,33 +1,26 @@
 export const state = () => ({
-  captions       : [],
-  videoId        : null,
-  url            : null,
-  captionLang    : null,
-  iframe         : null,
-  videoTitle     : null,
-  characterLimit : null,
-  characterCount : null
+  captions: [],
+  langList: [],
+  videoId : null,
+  url     : null,
+  labels  : [],
+  rates   : [],
 });
 
 export const getters = {
-  captions        : state => state.captions,
-  videoId         : state => state.videoId,
-  url             : state => state.url,
-  captionLang     : state => state.captionLang,
-  iframe          : state => state.iframe,
-  videoTitle      : state => state.videoTitle,
-  characterLimit  : state => state.characterLimit,
-  characterCount  : state => state.characterCount,
-  characterRemain : state => state.characterLimit - state.characterCount
+  captions: state => state.captions,
+  langList: state => state.langList,
+  videoId : state => state.videoId,
+  url     : state => state.url,
+  labels  : state => state.labels,
+  rates   : state => state.rates,
 }
 
 export const mutations = {
-  setCaptions       : (state, captions)       => state.captions       = captions,
-  setVideoId        : (state, videoId)        => state.videoId        = videoId,
-  setUrl            : (state, url)            => state.url            = url,
-  setCaptionLang    : (state, captionLang)    => state.captionLang    = captionLang,
-  setIframe         : (state, iframe)         => state.iframe         = iframe,
-  setVideoTitle     : (state, videoTitle)     => state.videoTitle     = videoTitle,
-  setCharacterLimit : (state, characterLimit) => state.characterLimit = characterLimit,
-  setCharacterCount : (state, characterCount) => state.characterCount = characterCount,
+  setCaptions: (state, captions) => state.captions = captions,
+  setLangList: (state, langList) => state.langList = langList,
+  setVideoId : (state, videoId)  => state.videoId  = videoId,
+  setUrl     : (state, url)      => state.url      = url,
+  setLabels  : (state, labels)   => state.labels   = labels,
+  setRates   : (state, rates)    => state.rates    = rates,
 }

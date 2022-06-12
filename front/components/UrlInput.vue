@@ -11,7 +11,7 @@
             v-model="url"
             :background-color="textField.bgColor"
             :flat="!textField.isFocus"
-            placeholder="URLを入力"
+            placeholder="YouTubeのURLを入力して下さい"
             dense solo clearable
             @focus="
               textField.isFocus = true
@@ -20,8 +20,7 @@
               textField.isFocus = false
               textField.bgColor = 'white'
               validateUrl(errors)
-              if (url) { langList = []; getLangList() }"
-            @click:clear="captionLang = null"
+              if (url) { getLangList() }"
           />
         </ValidationProvider>
       </v-col>
@@ -53,11 +52,11 @@
         <v-btn
           :disabled="!captionLang"
           :loading="loading.getCaptions"
-          :class="borderRadius"
+          class="rounded-lg"
           color="primary"
           @click="validate().then(passes(getCaptions))"
         >
-          字幕を取得する
+          字幕を表示
         </v-btn>
       </v-col>
     </v-row>
@@ -81,16 +80,9 @@ export default {
     },
     url: null,
     captionLang: null,
-    langList: [],
-    borderRadius: 'rounded-lg'
   }),
   computed: {
-    ...mapGetters(['videoId'])
-  },
-  watch: {
-    captionLang(value) {
-      this.$store.commit('setCaptionLang', value)
-    },
+    ...mapGetters(['videoId', 'langList'])
   },
   created() {
     this.url = 'https://www.youtube.com/watch?v=NoJXn-Fh6CU&t=19s'
@@ -98,6 +90,12 @@ export default {
     // this.captionLang = 'en-US'
     // this.getCaptions()
     // ------------------------------------------
+  },
+  watch: {
+    url() {
+      this.$store.commit('setLangList', [])
+      this.captionLang = null
+    }
   },
   methods: {
     async getLangList() {
@@ -111,9 +109,10 @@ export default {
       this.$store.commit('setUrl', extractUrl)
       
       try {
-        this.langList = await this.$axios.$get('langList', {params: { videoId }})
+        const langList = await this.$axios.$get('langList', {params: { videoId }})
+        this.$store.commit('setLangList', langList)
       } catch(e) {
-        this.$toast.error('動画が存在しません。')
+        this.$toast.error('字幕データがありません。')
       }
 
       this.loading.getLangList = false
@@ -122,20 +121,25 @@ export default {
       this.loading.getCaptions = true
       
       try {
-        var captions = await this.$axios.$get('captions', {params: {
+        var res = await this.$axios.$get('captions', {params: {
           videoId: this.videoId,
           lang: this.captionLang
         }})
       } catch(e) {
         this.$toast.error('字幕の取得に失敗しました。')
       }
-
-      for (const caption of captions) {
-        caption.calcTime = this.calcTime(caption.startSecond)
-      }
-      this.$store.commit('setCaptions', captions)
+      this.addCalcTime(res.captions)
+      this.addChartData(res.words)
       
       this.loading.getCaptions = false
+    },
+    addCalcTime(captions) {
+      captions.forEach(caption => caption.calcTime = this.calcTime(caption.startSecond))
+      this.$store.commit('setCaptions', captions)
+    },
+    addChartData(words) {
+      this.$store.commit('setLabels', Object.keys(words).map(key => key))
+      this.$store.commit('setRates', Object.keys(words).map(key => words[key]))
     },
     validateUrl(errorMessage) {
       if (errorMessage.length > 0) { this.$toast.error(errorMessage) }

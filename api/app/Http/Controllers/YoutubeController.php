@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\ToeflWord;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
@@ -52,7 +53,9 @@ class YoutubeController extends Controller
         
         $res = str_replace('<?xml version="1.0" encoding="utf-8" ?><transcript>', '', $res);
         $res = str_replace('</transcript>', '', $res);
+
         $captions = explode('</text>', $res);
+        $words = [];
         
         $captionsIndex = 0;
         foreach ($captions as $caption) {
@@ -75,16 +78,26 @@ class YoutubeController extends Controller
                 'startSecond' => $start[1],
                 'caption' => $caption
             ]]);
+
+            $words = array_merge($words, explode(' ', $caption));
             
             $captionsIndex++;
         }
 
-        return $captions;
+        $words = $this->calcUtilizationRate(array_count_values($words));
+
+        return ['captions' => $captions, 'words' => $words];
     }
 
-    public function getVideoInfo(Request $request)
+    private function calcUtilizationRate($words)
     {
-        return $this->getUrlContent("https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v={$request->videoId}&format=json");
+        $toeflWords = ToeflWord::pluck('text');
+        $includeWords = array_filter($words, function ($value, $word) use ($toeflWords) {
+            return $toeflWords->contains($word);
+        }, ARRAY_FILTER_USE_BOTH);
+        arsort($includeWords);
+
+        return $includeWords;
     }
 
     private function getUrlContent($url)

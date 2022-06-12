@@ -26,13 +26,12 @@ Route::get('email/verify/{id}', [VerificationController::class, 'verify'  ])->na
 Route::get('email/resend',      [VerificationController::class, 'resend'  ])->name('verification.resend');
 
 Route::get('captions',  [YoutubeController::class, 'getCaptions' ]);
+Route::get('sentence',  [YoutubeController::class, 'getSentence' ]);
 Route::get('langList',  [YoutubeController::class, 'getLangList' ]);
 Route::get('videoInfo', [YoutubeController::class, 'getVideoInfo']);
 
 Route::post('translate',       [DeepLController::class, 'translate'        ]);
-Route::post('character_count', [DeepLController::class, 'getCharacterCount']);
-
-Route::get('toefl/words', [ToeflWordController::class, 'getToeflWords']);
+Route::post('character/count', [DeepLController::class, 'getCharacterCount']);
 
 Route::group(['middleware' => ['session'], 'prefix' => 'oauth'], function () {
     Route::get('{provider}/redirect', [LoginController::class, 'socialRedirect'       ]);
