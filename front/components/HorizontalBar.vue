@@ -20,7 +20,7 @@ export default {
       options: {
         scales: {
           xAxes: [{
-            ticks: {min: 0, stepSize: 1},
+            ticks: {beginAtZero: true, stepSize: 1},
             position: 'top'
           }],
           yAxes: [{
