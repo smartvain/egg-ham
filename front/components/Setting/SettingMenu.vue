@@ -34,9 +34,8 @@
             @change-email="changeEmail"
           />
           <Password v-if="selectedItem === 1" />
-          <DeepL v-if="selectedItem === 2" />
-          <SiteLanguage v-if="selectedItem === 3" />
-          <DarkMode v-if="selectedItem === 4" />
+          <SiteLanguage v-if="selectedItem === 2" />
+          <DarkMode v-if="selectedItem === 3" />
         </v-card-text>
       </v-col>
     </v-row>
@@ -46,19 +45,17 @@
 <script>
 import MailAddress from '~/components/Setting/MailAddress.vue'
 import Password from '~/components/Setting/Password.vue'
-import DeepL from '~/components/Setting/DeepL.vue'
 import SiteLanguage from '~/components/Setting/SiteLanguage.vue'
 import DarkMode from '~/components/Setting/DarkMode.vue'
 
 export default {
   components: {
-    Password, MailAddress, DeepL, SiteLanguage, DarkMode
+    Password, MailAddress, SiteLanguage, DarkMode
   },
   data: () => ({
     settingList: [
       { text: 'メールアドレス' },
       { text: 'パスワード' },
-      { text: 'DeepL' },
       { text: 'サイト内言語' },
       { text: 'ダークモード' },
     ],
