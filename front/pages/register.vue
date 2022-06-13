@@ -8,7 +8,8 @@
       </h1>
 
       <p class="register-text text-subtitle-1">
-        YouTube再生、DEEPL翻訳、単語の保存が1ページでできるサイトです
+        EggHamはYouTube動画に含まれているTOEFL単語を探し出し、<br>
+        すぐに単語の意味を調べられるサイトです。
       </p>
 
       <v-btn
@@ -240,14 +241,14 @@ export default {
 .register-title {
   color: white;
   position: absolute;
-  top: 30%;
+  top: 25%;
   left: 10%;
 }
 
 .register-text {
   color: white;
   position: absolute;
-  top: 40%;
+  top: 35%;
   left: 10%;
 }
 
