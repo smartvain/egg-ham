@@ -70,14 +70,6 @@ import HorizontalBar from '~/components/HorizontalBar.vue'
 export default {
   name: 'IndexPage',
   components: { HorizontalBar },
-  data: () => ({
-    headers: [
-      { text: '時間', value: 'calcTime', width: 75 },
-      { text: '字幕', value: 'caption' },
-    ],
-    searchCaption: null,
-    height: 680,
-  }),
   beforeRouteEnter(to, from, next) {
     next( vm => {
       const labels = vm.$store.getters.labels
@@ -90,6 +82,14 @@ export default {
       }
     })
   },
+  data: () => ({
+    headers: [
+      { text: '時間', value: 'calcTime', width: 75 },
+      { text: '字幕', value: 'caption' },
+    ],
+    searchCaption: null,
+    height: 680,
+  }),
   computed: {
     ...mapGetters(['url', 'captions', 'labels']),
     isCaptions() {
