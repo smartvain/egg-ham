@@ -5,6 +5,7 @@ export const state = () => ({
   url     : null,
   labels  : [],
   rates   : [],
+  searchWord: ''
 });
 
 export const getters = {
@@ -14,6 +15,7 @@ export const getters = {
   url     : state => state.url,
   labels  : state => state.labels,
   rates   : state => state.rates,
+  searchWord: state => state.searchWord,
 }
 
 export const mutations = {
@@ -23,4 +25,5 @@ export const mutations = {
   setUrl     : (state, url)      => state.url      = url,
   setLabels  : (state, labels)   => state.labels   = labels,
   setRates   : (state, rates)    => state.rates    = rates,
+  setSearchWord: (state, searchWord)    => state.searchWord    = searchWord,
 }

@@ -7,7 +7,7 @@
           :height="height"
           outlined
         >
-          <HorizontalBar :search-caption.sync="searchCaption" :styles="horizontalBarStyle"/>
+          <HorizontalBar :search-word.sync="localSearchWord" :styles="horizontalBarStyle"/>
           <v-card-text v-if="!labels.length > 0" class="grey--text lighten-4 text-center text-subtitle-1 mt-16">
             検索したYouTube動画に含まれているTOEFL単語が表示されます。
           </v-card-text>
@@ -23,7 +23,7 @@
           <v-data-table
             :headers="headers"
             :items="captions"
-            :search="searchCaption"
+            :search="localSearchWord"
             :hide-default-header="!isCaptions"
             :items-per-page="-1"
             hide-default-footer fixed-header
@@ -33,9 +33,10 @@
                 <v-col cols="11">
                   <div v-show="isCaptions">
                     <v-text-field
-                      v-model="searchCaption"
+                      v-model="localSearchWord"
                       placeholder="字幕を検索"
                       dense clearable
+                      @input="$store.commit('setSearchWord', localSearchWord)"
                     />
                   </div>
                 </v-col>
@@ -43,7 +44,8 @@
               <v-row justify="center" class="my-0">
                 <v-col cols="11" align="right" class="py-0">
                   <v-btn
-                    :disabled="!searchCaption"
+                    v-if="captions.length > 0"
+                    :disabled="!localSearchWord"
                     color="primary"
                     @click="moveWeblio"
                   >
@@ -85,12 +87,14 @@ export default {
     next( vm => {
       const labels = vm.$store.getters.labels
       const rates = vm.$store.getters.rates
+      const searchWord = vm.$store.getters.searchWord
       if (labels.length > 0) {
         vm.$store.commit('setRates', [])
         vm.$store.commit('setRates', rates)
         vm.$store.commit('setLabels', [])
         vm.$store.commit('setLabels', labels)
       }
+      if (searchWord) {vm.localSearchWord = searchWord}
     })
   },
   data: () => ({
@@ -98,11 +102,11 @@ export default {
       { text: '時間', value: 'calcTime', width: 75 },
       { text: '字幕', value: 'caption' },
     ],
-    searchCaption: null,
+    localSearchWord: null,
     height: 680,
   }),
   computed: {
-    ...mapGetters(['url', 'captions', 'labels']),
+    ...mapGetters(['url', 'captions', 'labels', 'searchWord']),
     isCaptions() {
       return this.captions.length > 0
     },
@@ -110,9 +114,14 @@ export default {
       return { height: `${this.labels.length * 30}px`, position: 'relative' }
     }
   },
+  watch: {
+    localSearchWord(value) {
+      this.$store.commit('setSearchWord', value)
+    }
+  },
   methods: {
     moveWeblio() {
-      window.open(`https://ejje.weblio.jp/content/${this.searchCaption}`, '_blank')
+      window.open(`https://ejje.weblio.jp/content/${this.localSearchWord}`, '_blank')
     }
   }
 }

@@ -5,7 +5,7 @@ import { HorizontalBar } from 'vue-chartjs'
 export default {
   extends: HorizontalBar,
   props: {
-    searchCaption: { type: String, default: '' }
+    searchWord: { type: String, default: '' }
   },
   data() {
     return {
@@ -21,7 +21,7 @@ export default {
       options: {
         onClick: (evt, item) => {
           if (!item[0]) {return}
-          this.$emit('update:searchCaption', item[0]._model.label)
+          this.$emit('update:searchWord', item[0]._model.label)
         },
         scales: {
           xAxes: [{
