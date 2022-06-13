@@ -42,7 +42,18 @@
                 </v-col>
               </v-row>
               <v-row justify="center" class="my-0">
-                <v-col cols="11" align="right" class="py-0">
+                <v-col cols="4" align="right" class="py-0">
+                  <v-btn
+                    v-if="captions.length > 0"
+                    :disabled="!localSearchWord"
+                    :loading="loading.storeWord"
+                    color="primary"
+                    @click="storeWord"
+                  >
+                    単語帳に保存
+                  </v-btn>
+                </v-col>
+                <v-col cols="4" align="right" class="py-0">
                   <v-btn
                     v-if="captions.length > 0"
                     :disabled="!localSearchWord"
@@ -102,6 +113,9 @@ export default {
       { text: '時間', value: 'calcTime', width: 75 },
       { text: '字幕', value: 'caption' },
     ],
+    loading: {
+      storeWord: false
+    },
     localSearchWord: null,
     height: 680,
   }),
@@ -122,6 +136,23 @@ export default {
   methods: {
     moveWeblio() {
       window.open(`https://ejje.weblio.jp/content/${this.localSearchWord}`, '_blank')
+    },
+    async storeWord() {
+      this.loading.storeWord = true
+
+      try {
+        await this.$axios.$post('word', {
+          text        : this.searchWord,
+          video_title : '',
+          url         : this.url,
+          start_second: 0
+        })
+        this.$toast.show('単語を保存しました。')
+      } catch(e) {
+        this.$toast.error('単語の保存に失敗しました。')
+      }
+
+      this.loading.storeWord = false
     }
   }
 }
