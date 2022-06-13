@@ -34,7 +34,7 @@ export default {
         },
         tooltips: {
           callbacks: {
-            footer: () => '※ グラフをクリックでWeblio英和辞典を表示',
+            footer: () => '※ グラフをクリックで字幕内検索',
           }
         },
         animation: {
@@ -46,6 +46,9 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapGetters(['labels', 'rates']),
+  },
   watch: {
     labels(value) {
       this.chartData.labels = value
@@ -54,9 +57,6 @@ export default {
       this.chartData.datasets[0].data = value
       this.render()
     }
-  },
-  computed: {
-    ...mapGetters(['labels', 'rates']),
   },
   mounted() {
     this.render()
