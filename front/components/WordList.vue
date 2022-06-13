@@ -12,7 +12,7 @@
           <v-col cols="8">
             <v-text-field
               v-model="searchWord"
-              :placeholder="`${wordType.text}を検索`"
+              placeholder="単語を検索"
               dense
             />
           </v-col>
@@ -119,18 +119,6 @@
         </a>
       </template>
 
-      <template #[`item.word_type`]="{ item, index }">
-        <v-select
-          v-model="item.word_type"
-          :items="wordTypesArray"
-          :disabled="!editMode"
-          item-text="text"
-          item-value="value"
-          dense
-          @change="addWord(index)"
-        />
-      </template>
-
       <template #[`item.operation`]="{ item }">
         <v-btn
           icon
@@ -153,7 +141,6 @@ export default {
   mixins: [ Mixin ],
   props: {
     filteredItems: { type: Array, default: () => [] },
-    wordType: { type: Object, default: () => {} }
   },
   data: () => ({
     headers: [
@@ -162,7 +149,6 @@ export default {
       { text: '動画タイトル', value: 'video_title' },
       { text: 'URL', value: 'url' },
       { text: '時間', value: 'calcTime', width: 80 },
-      { text: '種別', value: 'word_type', sortable: false },
       { text: '操作', value: 'operation', sortable: false }
     ],
     loading: {

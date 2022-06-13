@@ -8,20 +8,8 @@
 
     <v-tabs-items v-model="tab">
       <v-tab-item>
-        <WordList
-          :filtered-items="filteredWords"
-          :word-type="wordTypes.word"
-        >
+        <WordList :filtered-items="words">
           単語
-        </WordList>
-      </v-tab-item>
-
-      <v-tab-item>
-        <WordList
-          :filtered-items="filteredIdioms"
-          :word-type="wordTypes.idiom"
-        >
-          慣用句
         </WordList>
       </v-tab-item>
 
@@ -42,23 +30,15 @@ export default {
   mixins: [ Mixin ],
   middleware: 'auth',
   async asyncData({ $axios }) {
-    return { words: await $axios.$get('words') }
+    return { words: await $axios.$get('word') }
   },
   data: () => ({
-    tabItems: [ '単語', '慣用句', '設定' ],
+    tabItems: [ '単語', '設定' ],
     tab: null
   }),
   fetch() {
     for (const word of this.words) {
       word.calcTime = this.calcTime(word.start_second)
-    }
-  },
-  computed: {
-    filteredWords() {
-      return this.words.filter(word => word.word_type === 1)
-    },
-    filteredIdioms() {
-      return this.words.filter(word => word.word_type === 2)
     }
   }
 }

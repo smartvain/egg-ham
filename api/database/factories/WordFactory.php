@@ -21,7 +21,6 @@ class WordFactory extends Factory
             'video_title'  => $faker->jobTitle,
             'url'          => $faker->url,
             'start_second' => $faker->numberBetween(1, 5000),
-            'word_type'    => $faker->numberBetween(1, 2),
         ];
     }
 }
