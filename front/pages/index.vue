@@ -75,14 +75,25 @@ export default {
     searchCaption: null,
     height: 680,
   }),
+  beforeRouteEnter(to, from, next) {
+    next( vm => {
+      const labels = vm.$store.getters.labels
+      const rates = vm.$store.getters.rates
+      if (labels.length > 0) {
+        vm.$store.commit('setRates', [])
+        vm.$store.commit('setRates', rates)
+        vm.$store.commit('setLabels', [])
+        vm.$store.commit('setLabels', labels)
+      }
+    })
+  },
   computed: {
     ...mapGetters(['url', 'captions', 'labels']),
     isCaptions() {
       return this.captions.length > 0
     },
     horizontalBarStyle() {
-      const height = this.labels.length > 0 ? `${this.labels.length * 30}px` : '100%'
-      return { height, position: 'relative' }
+      return { height: `${this.labels.length * 30}px`, position: 'relative' }
     }
   }
 }
