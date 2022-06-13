@@ -7,7 +7,10 @@
           :height="height"
           outlined
         >
-          <HorizontalBar :styles="horizontalBarStyle"/>
+          <HorizontalBar ref="chart" :styles="horizontalBarStyle"/>
+          <v-card-text v-if="!labels.length > 0" class="grey--text lighten-4 text-center text-subtitle-1 mt-16">
+            検索したYouTube動画に含まれているTOEFL単語が表示されます。
+          </v-card-text>
         </v-card>
       </v-col>
 
@@ -49,8 +52,8 @@
             </template>
 
             <template #no-data>
-              <v-card-text class="grey--text lighten-4 text-center text-subtitle-1 mt-16">
-                URLを入力後、字幕言語を選択すると<br>「字幕を取得する」ボタンをクリックできるようになります。
+              <v-card-text class="grey--text lighten-4 text-center text-subtitle-1 mt-12">
+                検索したYouTube動画の字幕が表示されます。
               </v-card-text>
             </template>
           </v-data-table>
