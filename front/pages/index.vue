@@ -40,6 +40,17 @@
                   </div>
                 </v-col>
               </v-row>
+              <v-row justify="center" class="my-0">
+                <v-col cols="11" align="right" class="py-0">
+                  <v-btn
+                    :disabled="!searchCaption"
+                    color="primary"
+                    @click="moveWeblio"
+                  >
+                    Weblio検索
+                  </v-btn>
+                </v-col>
+              </v-row>
             </template>
 
             <template #[`item.calcTime`]="{ item }">
@@ -97,6 +108,11 @@ export default {
     },
     horizontalBarStyle() {
       return { height: `${this.labels.length * 30}px`, position: 'relative' }
+    }
+  },
+  methods: {
+    moveWeblio() {
+      window.open(`https://ejje.weblio.jp/content/${this.searchCaption}`, '_blank')
     }
   }
 }
