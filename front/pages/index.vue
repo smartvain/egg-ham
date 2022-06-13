@@ -7,7 +7,7 @@
           :height="height"
           outlined
         >
-          <HorizontalBar ref="chart" :styles="horizontalBarStyle"/>
+          <HorizontalBar :search-caption.sync="searchCaption" :styles="horizontalBarStyle"/>
           <v-card-text v-if="!labels.length > 0" class="grey--text lighten-4 text-center text-subtitle-1 mt-16">
             検索したYouTube動画に含まれているTOEFL単語が表示されます。
           </v-card-text>

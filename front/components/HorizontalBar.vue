@@ -4,6 +4,9 @@ import { HorizontalBar } from 'vue-chartjs'
 
 export default {
   extends: HorizontalBar,
+  props: {
+    searchCaption: { type: String, default: '' }
+  },
   data() {
     return {
       chartData: {
@@ -18,7 +21,7 @@ export default {
       options: {
         onClick: (evt, item) => {
           if (!item[0]) {return}
-          window.open(`https://ejje.weblio.jp/content/${item[0]._model.label}`, '_blank')
+          this.$emit('update:searchCaption', item[0]._model.label)
         },
         scales: {
           xAxes: [{
