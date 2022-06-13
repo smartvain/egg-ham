@@ -41,9 +41,9 @@ Route::group(['middleware' => ['session'], 'prefix' => 'oauth'], function () {
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::get('user', [LoginController::class, 'user']);
     
-    Route::get('words',            [WordController::class, 'getWords'  ]);
-    Route::put('words',            [WordController::class, 'saveWords' ]);
-    Route::post('words',           [WordController::class, 'storeWords']);
+    Route::get('word',             [WordController::class, 'getWord'   ]);
+    Route::post('word',            [WordController::class, 'storeWord' ]);
+    Route::put('word',             [WordController::class, 'saveWord'  ]);
     Route::delete('word/{wordId}', [WordController::class, 'deleteWord']);
 });
 

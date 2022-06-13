@@ -14,19 +14,19 @@ class WordController extends Controller
         $this->word = $word;
     }
 
-    public function getWords()
+    public function getWord()
     {
         return Word::get();
     }
 
-    public function saveWords(Request $request)
+    public function storeWord(Request $request)
     {
-        $this->word->replace($request->words);
+        $this->word->store($request->input());
     }
 
-    public function storeWords(Request $request)
+    public function saveWord(Request $request)
     {
-        $this->word->store($request->all());
+        $this->word->replace($request->word);
     }
 
     public function deleteWord($wordId)

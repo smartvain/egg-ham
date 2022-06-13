@@ -19,14 +19,10 @@ class Word extends Model
         'word_type',
     ];
 
-    public function store($words)
+    public function store($word)
     {
-        DB::transaction(function () use ($words) {
-            foreach ($words as $word) {
-                $instance = new Word();
-                $instance->fill($word)->save();
-            }
-        });
+        $instance = new Word();
+        $instance->fill($word)->save();
     }
 
     public function replace($words)
