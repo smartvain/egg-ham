@@ -27,11 +27,26 @@
       label="新しいパスワード確認用"
       outlined
     />
+
+    <v-row>
+      <v-col cols="12" align="right">
+        <v-btn
+          color="primary"
+          :loading="loading"
+          @click="$emit('change-pass', {currentPass, newPass, confirmPass})"
+        >
+          変更する
+        </v-btn>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
 <script>
 export default {
+  props: {
+    loading: { type: Boolean, default: false }
+  },
   data: () => ({
     currentPass: null,
     newPass: null,

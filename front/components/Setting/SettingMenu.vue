@@ -33,7 +33,11 @@
             :loading="loading.changeEmail"
             @change-email="changeEmail"
           />
-          <Password v-if="selectedItem === 1" />
+          <Password
+            v-if="selectedItem === 1"
+            :loading="loading.changePass"
+            @change-pass="changePass"
+          />
           <SiteLanguage v-if="selectedItem === 2" />
           <DarkMode v-if="selectedItem === 3" />
         </v-card-text>
@@ -60,16 +64,21 @@ export default {
       { text: 'ダークモード' },
     ],
     loading: {
-      changeEmail: false
+      changeEmail: false,
+      changePass: false
     },
     selectedItem: null
   }),
   methods: {
-    changeEmail(email) {
+    changeEmail(e) {
       this.loading.changeEmail = true
 
+      const currentPass = e.currentPass
+      const email       = e.email
+
       try {
-        alert(email)
+        console.log(currentPass)
+        console.log(email)
         // const res = await this.$axios.$put('user/email', { email })
         // console.log(res)
         // this.$toast.show()
@@ -78,6 +87,26 @@ export default {
       }
 
       this.loading.changeEmail = false
+    },
+    changePass(e) {
+      this.loading.changePass = true
+      
+      const currentPass = e.currentPass
+      const newPass     = e.newPass
+      const confirmPass = e.confirmPass
+
+      try {
+        console.log(currentPass)
+        console.log(newPass)
+        console.log(confirmPass)
+        // const res = await this.$axios.$put('user/email', { email })
+        // console.log(res)
+        // this.$toast.show()
+      } catch (e) {
+        this.$toast.error(e.message)
+      }
+
+      this.loading.changePass = false
     }
   }
 }
