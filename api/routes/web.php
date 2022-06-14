@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ToeflWordController;
+use App\Http\Controllers\YoutubeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,7 +15,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', [ToeflWordController::class, 'insertToeflWords']);
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/insert/toefl/words', [ToeflWordController::class, 'insertToeflWords']);
+Route::get('/', [YoutubeController::class, 'getCaptions']);
