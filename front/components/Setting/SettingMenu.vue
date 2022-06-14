@@ -58,6 +58,7 @@ export default {
   },
   data: () => ({
     settingList: [
+      { text: 'アカウント情報' },
       { text: 'メールアドレス' },
       { text: 'パスワード' },
       { text: 'サイト内言語' },
