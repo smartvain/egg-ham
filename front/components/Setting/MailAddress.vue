@@ -16,7 +16,7 @@
     </v-btn>
     
     <v-text-field
-      v-model="email"
+      v-model="newEmail"
       class="mt-7"
       label="新しいメールアドレス"
       outlined
@@ -27,7 +27,7 @@
         <v-btn
           color="primary"
           :loading="loading"
-          @click="$emit('change-email', {currentPass, email})"
+          @click="$emit('change-email', {currentPass, newEmail})"
         >
           変更する
         </v-btn>
@@ -43,7 +43,7 @@ export default {
   },
   data: () => ({
     currentPass: null,
-    email: null
+    newEmail: null
   })
 }
 </script>

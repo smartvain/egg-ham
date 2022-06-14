@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\ChangeEmailController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\VerificationController;
@@ -40,6 +41,8 @@ Route::group(['middleware' => ['session'], 'prefix' => 'oauth'], function () {
 
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::get('user', [LoginController::class, 'user']);
+
+    Route::put('user/email', [ChangeEmailController::class, 'changeEmail']);
     
     Route::get('word',             [WordController::class, 'getWord'   ]);
     Route::post('word',            [WordController::class, 'storeWord' ]);

@@ -70,17 +70,15 @@ export default {
     selectedItem: null
   }),
   methods: {
-    changeEmail(e) {
+    async changeEmail(e) {
       this.loading.changeEmail = true
 
       const currentPass = e.currentPass
-      const email       = e.email
+      const newEmail    = e.newEmail
 
       try {
-        console.log(currentPass)
-        console.log(email)
-        // const res = await this.$axios.$put('user/email', { email })
-        // console.log(res)
+        const res = await this.$axios.$put('user/email', { currentPass, newEmail })
+        console.log(res)
         // this.$toast.show()
       } catch (e) {
         this.$toast.error(e.message)
