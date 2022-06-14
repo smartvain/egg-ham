@@ -24,9 +24,9 @@ class WordController extends Controller
         $this->word->store($request->input());
     }
 
-    public function saveWord(Request $request)
+    public function saveWords(Request $request)
     {
-        $this->word->replace($request->word);
+        $this->word->replace($request->words);
     }
 
     public function deleteWord($wordId)

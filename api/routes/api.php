@@ -43,7 +43,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     
     Route::get('word',             [WordController::class, 'getWord'   ]);
     Route::post('word',            [WordController::class, 'storeWord' ]);
-    Route::put('word',             [WordController::class, 'saveWord'  ]);
+    Route::put('words',            [WordController::class, 'saveWords' ]);
     Route::delete('word/{wordId}', [WordController::class, 'deleteWord']);
 });
 
