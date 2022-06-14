@@ -29,8 +29,8 @@ export default {
   components: { WordList, Setting },
   mixins: [ Mixin ],
   middleware: 'auth',
-  async asyncData({ $axios }) {
-    return { words: await $axios.$get('word') }
+  async asyncData({ $axios, $auth }) {
+    return { words: await $axios.$get('words', { params: {user_id: $auth.$state.user.id} }) }
   },
   data: () => ({
     tabItems: [ '単語', '設定' ],
