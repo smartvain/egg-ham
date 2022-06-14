@@ -51,7 +51,7 @@
           v-if="editMode"
           v-model="item.text"
           dense
-          @change="addWord(index)"
+          @change="addEditedWord(index)"
         />
 
         <div v-else>
@@ -64,7 +64,7 @@
           v-if="editMode"
           v-model="item.mean"
           dense
-          @change="addWord(index)"
+          @change="addEditedWord(index)"
         />
 
         <div v-else>
@@ -77,7 +77,7 @@
           v-if="editMode"
           v-model="item.video_title"
           dense
-          @change="addWord(index)"
+          @change="addEditedWord(index)"
         />
 
         <div v-else>
@@ -90,7 +90,7 @@
           v-if="editMode"
           v-model="item.url"
           dense
-          @change="addWord(index)"
+          @change="addEditedWord(index)"
         />
 
         <a
@@ -171,7 +171,7 @@ export default {
       
       this.loading.saveWords = false
     },
-    addWord(index) {
+    addEditedWord(index) {
       const word = this.filteredItems[index]
       for (const item of this.editedWords) {
         if (item.id === word.id) { return }
