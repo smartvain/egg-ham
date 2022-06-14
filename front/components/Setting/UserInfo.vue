@@ -10,7 +10,7 @@
             dense outlined
             class="d-inline-block"
             v-model="userName"
-            @input.once="isEdited = true"
+            @input="isEdited = true"
           />
         </span>
         
