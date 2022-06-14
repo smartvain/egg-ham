@@ -16,6 +16,7 @@ class WordFactory extends Factory
         $faker = $this->faker;
         
         return [
+            'user_id'      => $faker->numberBetween(1, 20),
             'text'         => $faker->sentence(),
             'mean'         => $faker->sentence(),
             'video_title'  => $faker->jobTitle,

@@ -15,6 +15,7 @@ class CreateWordsTable extends Migration
     {
         Schema::create('words', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->string('text');
             $table->string('mean')->nullable();
             $table->string('video_title')->nullable();
