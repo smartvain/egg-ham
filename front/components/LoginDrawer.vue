@@ -84,9 +84,10 @@
               v-model="password"
               append-icon="mdi-lock"
               placeholder="パスワード"
-              type="password"
+              :type="passwordType"
               outlined dense
               :error-messages="errors"
+              @click:append="passwordType = passwordType === 'password' ? 'text' : 'password'"
             />
           </ValidationProvider>
 
@@ -156,6 +157,7 @@ export default {
       twitterLogin: false
     },
     width: window.innerWidth,
+    passwordType: 'password'
   }),
   computed: {
     _drawer: {

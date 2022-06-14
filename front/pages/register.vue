@@ -59,10 +59,11 @@
                 v-model="form.password"
                 append-icon="mdi-lock"
                 label="パスワード"
-                type="password"
                 counter="20"
                 outlined dense
+                :type="passType"
                 :error-messages="errors"
+                @click:append="passType = passType === 'password' ? 'text' : 'password'"
               />
             </ValidationProvider>
 
@@ -78,10 +79,11 @@
                 v-model="form.confirm"
                 append-icon="mdi-lock"
                 label="パスワード確認用"
-                type="password"
                 counter="20"
                 outlined dense
+                :type="confirmPassType"
                 :error-messages="errors"
+                @click:append="confirmPassType = confirmPassType === 'password' ? 'text' : 'password'"
               />
             </ValidationProvider>
 
@@ -158,7 +160,9 @@ export default {
       googleLogin: false
     },
     inputMt: 'mt-3',
-    isRequested: false
+    isRequested: false,
+    passType: 'password',
+    confirmPassType: 'password'
   }),
   // created() {
   //   console.log(this.$auth.loggedIn)
