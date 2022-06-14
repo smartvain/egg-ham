@@ -113,6 +113,12 @@
           <v-icon>mdi-delete-empty</v-icon>
         </v-btn>
       </template>
+
+      <template #no-data>
+        <v-card-text class="grey--text lighten-4 text-center text-subtitle-1 my-12">
+          保存された単語がありません。
+        </v-card-text>
+      </template>
     </v-data-table>
   </v-card>
 </template>
@@ -132,7 +138,7 @@ export default {
       { text: '意味', value: 'mean' },
       { text: '動画タイトル', value: 'video_title' },
       { text: 'URL', value: 'url' },
-      { text: '操作', value: 'operation', sortable: false }
+      { text: '削除', value: 'operation', sortable: false }
     ],
     loading: {
       deleteWord: false,
