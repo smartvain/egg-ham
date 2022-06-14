@@ -14,9 +14,9 @@ class WordController extends Controller
         $this->word = $word;
     }
 
-    public function getWord()
+    public function getWords(Request $request)
     {
-        return Word::get();
+        return Word::where('user_id', $request->user_id)->get();
     }
 
     public function storeWord(Request $request)
