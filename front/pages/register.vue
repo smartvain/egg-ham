@@ -57,13 +57,13 @@
               <v-text-field
                 :class="inputMt"
                 v-model="form.password"
-                append-icon="mdi-lock"
                 label="パスワード"
                 counter="20"
                 outlined dense
-                :type="passType"
+                :append-icon="passwordIcon"
+                :type="passwordType"
                 :error-messages="errors"
-                @click:append="passType = passType === 'password' ? 'text' : 'password'"
+                @click:append="togglePasswordVisualization"
               />
             </ValidationProvider>
 
@@ -77,13 +77,13 @@
               <v-text-field
                 :class="inputMt"
                 v-model="form.confirm"
-                append-icon="mdi-lock"
                 label="パスワード確認用"
                 counter="20"
                 outlined dense
-                :type="confirmPassType"
+                :append-icon="confirmPasswordIcon"
+                :type="confirmPasswordType"
                 :error-messages="errors"
-                @click:append="confirmPassType = confirmPassType === 'password' ? 'text' : 'password'"
+                @click:append="toggleConfirmPasswordVisualization"
               />
             </ValidationProvider>
 
@@ -161,8 +161,10 @@ export default {
     },
     inputMt: 'mt-3',
     isRequested: false,
-    passType: 'password',
-    confirmPassType: 'password'
+    passwordIcon: 'mdi-eye-off',
+    passwordType: 'password',
+    confirmPasswordIcon: 'mdi-eye-off',
+    confirmPasswordType: 'password'
   }),
   // created() {
   //   console.log(this.$auth.loggedIn)
@@ -215,6 +217,14 @@ export default {
 
       this.loading.googleLogin = false
     },
+    togglePasswordVisualization() {
+      this.passwordType = this.passwordType === 'password' ? 'text' : 'password'
+      this.passwordIcon = this.passwordType === 'password' ? 'mdi-eye-off' : 'mdi-eye'
+    },
+    toggleConfirmPasswordVisualization() {
+      this.confirmPasswordType = this.confirmPasswordType === 'password' ? 'text' : 'password'
+      this.confirmPasswordIcon = this.confirmPasswordType === 'password' ? 'mdi-eye-off' : 'mdi-eye'
+    }
   }
 }
 </script>

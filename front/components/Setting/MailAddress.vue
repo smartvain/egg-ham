@@ -5,7 +5,10 @@
     <v-text-field
       v-model="currentPass"
       label="現在のパスワード"
+      :append-icon="currentPasswordIcon"
+      :type="currentPasswordType"
       outlined
+      @click:append="toggleCurrentPasswordVisualization"
     />
 
     <v-btn
@@ -43,8 +46,16 @@ export default {
   },
   data: () => ({
     currentPass: null,
-    newEmail: null
-  })
+    newEmail: null,
+    currentPasswordIcon: 'mdi-eye-off',
+    currentPasswordType: 'password',
+  }),
+  methods: {
+    toggleCurrentPasswordVisualization() {
+      this.currentPasswordType = this.currentPasswordType === 'password' ? 'text' : 'password'
+      this.currentPasswordIcon = this.currentPasswordType === 'password' ? 'mdi-eye-off' : 'mdi-eye'
+    },
+  }
 }
 </script>
 

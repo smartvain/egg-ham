@@ -82,12 +82,12 @@
           >
             <v-text-field
               v-model="password"
-              append-icon="mdi-lock"
               placeholder="パスワード"
-              :type="passwordType"
               outlined dense
+              :append-icon="passwordIcon"
+              :type="passwordType"
               :error-messages="errors"
-              @click:append="passwordType = passwordType === 'password' ? 'text' : 'password'"
+              @click:append="togglePasswordVisualization"
             />
           </ValidationProvider>
 
@@ -157,6 +157,7 @@ export default {
       twitterLogin: false
     },
     width: window.innerWidth,
+    passwordIcon: 'mdi-eye-off',
     passwordType: 'password'
   }),
   computed: {
@@ -241,6 +242,10 @@ export default {
         this.$toast.show('ログアウトに失敗しました')
       }
     },
+    togglePasswordVisualization() {
+      this.passwordType = this.passwordType === 'password' ? 'text' : 'password'
+      this.passwordIcon = this.passwordType === 'password' ? 'mdi-eye-off' : 'mdi-eye'
+    }
   }
 }
 </script>

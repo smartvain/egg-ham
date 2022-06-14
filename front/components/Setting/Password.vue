@@ -5,7 +5,10 @@
     <v-text-field
       v-model="currentPass"
       label="現在のパスワード"
+      :append-icon="currentPasswordIcon"
+      :type="currentPasswordType"
       outlined
+      @click:append="toggleCurrentPasswordVisualization"
     />
 
     <v-btn
@@ -19,13 +22,19 @@
       v-model="newPass"
       class="mt-7"
       label="新しいパスワード"
+      :append-icon="newPasswordIcon"
+      :type="newPasswordType"
       outlined
+      @click:append="toggleNewPasswordVisualization"
     />
 
     <v-text-field
       v-model="confirmPass"
       label="新しいパスワード確認用"
+      :append-icon="confirmPasswordIcon"
+      :type="confirmPasswordType"
       outlined
+      @click:append="toggleConfirmPasswordVisualization"
     />
 
     <v-row>
@@ -50,8 +59,28 @@ export default {
   data: () => ({
     currentPass: null,
     newPass: null,
-    confirmPass: null
-  })
+    confirmPass: null,
+    currentPasswordIcon: 'mdi-eye-off',
+    currentPasswordType: 'password',
+    newPasswordIcon: 'mdi-eye-off',
+    newPasswordType: 'password',
+    confirmPasswordIcon: 'mdi-eye-off',
+    confirmPasswordType: 'password'
+  }),
+  methods: {
+    toggleCurrentPasswordVisualization() {
+      this.currentPasswordType = this.currentPasswordType === 'password' ? 'text' : 'password'
+      this.currentPasswordIcon = this.currentPasswordType === 'password' ? 'mdi-eye-off' : 'mdi-eye'
+    },
+    toggleNewPasswordVisualization() {
+      this.newPasswordType = this.newPasswordType === 'password' ? 'text' : 'password'
+      this.newPasswordIcon = this.newPasswordType === 'password' ? 'mdi-eye-off' : 'mdi-eye'
+    },
+    toggleConfirmPasswordVisualization() {
+      this.confirmPasswordType = this.confirmPasswordType === 'password' ? 'text' : 'password'
+      this.confirmPasswordIcon = this.confirmPasswordType === 'password' ? 'mdi-eye-off' : 'mdi-eye'
+    },
+  }
 }
 </script>
 
