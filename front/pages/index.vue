@@ -44,7 +44,7 @@
               <v-row justify="center" class="my-0">
                 <v-col cols="4" align="right" class="py-0">
                   <v-btn
-                    v-if="captions.length > 0"
+                    v-if="$auth.loggedIn && captions.length > 0"
                     :disabled="!localSearchWord"
                     :loading="loading.storeWord"
                     color="primary"
