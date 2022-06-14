@@ -36,11 +36,6 @@ export default {
     tabItems: [ '単語', '設定' ],
     tab: null
   }),
-  fetch() {
-    for (const word of this.words) {
-      word.calcTime = this.calcTime(word.start_second)
-    }
-  }
 }
 </script>
 

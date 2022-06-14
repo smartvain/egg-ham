@@ -20,7 +20,6 @@ class WordFactory extends Factory
             'mean'         => $faker->sentence(),
             'video_title'  => $faker->jobTitle,
             'url'          => $faker->url,
-            'start_second' => $faker->numberBetween(1, 5000),
         ];
     }
 }

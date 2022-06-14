@@ -102,22 +102,6 @@
         </a>
       </template>
 
-      <template #[`item.calcTime`]="{ item, index }">
-        <v-text-field
-          v-if="editMode"
-          v-model="item.calcTime"
-          dense
-          @change="addWord(index)"
-        />
-
-        <a
-          v-else
-          :href="`${url}&t=${item.start_second}s`"
-          target="subwindow"
-        >
-          {{ item.calcTime }}
-        </a>
-      </template>
 
       <template #[`item.operation`]="{ item }">
         <v-btn
@@ -148,7 +132,6 @@ export default {
       { text: '意味', value: 'mean' },
       { text: '動画タイトル', value: 'video_title' },
       { text: 'URL', value: 'url' },
-      { text: '時間', value: 'calcTime', width: 80 },
       { text: '操作', value: 'operation', sortable: false }
     ],
     loading: {
@@ -178,10 +161,6 @@ export default {
     async saveWords() {
       this.loading.saveWords = true
       
-      for (const word of this.editedWords) {
-        word.start_second = this.calcSeconds(word.calcTime)
-      }
-
       try {
         await this.$axios.$put('words', { words: this.editedWords })
         this.editedWords = []
