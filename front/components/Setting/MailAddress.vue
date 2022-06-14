@@ -1,21 +1,38 @@
 <template>
   <div>
     <v-card-title>メールアドレス変更</v-card-title>
-    
+
     <v-text-field
-      v-model="email"
-      label="新しいメールアドレス"
+      v-model="currentPass"
+      label="現在のパスワード"
       outlined
     />
 
     <v-btn
-      color="primary"
-      rounded absolute right
-      :loading="loading"
-      @click="$emit('change-email', email)"
+      plain small
     >
-      変更する
+      パスワードを忘れましたか？
+      <v-icon>mdi-chevron-right</v-icon>
     </v-btn>
+    
+    <v-text-field
+      v-model="email"
+      class="mt-7"
+      label="新しいメールアドレス"
+      outlined
+    />
+
+    <v-row>
+      <v-col cols="12" align="right">
+        <v-btn
+          color="primary"
+          :loading="loading"
+          @click="$emit('change-email', {currentPass, email})"
+        >
+          変更する
+        </v-btn>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
@@ -25,6 +42,7 @@ export default {
     loading: { type: Boolean, default: false }
   },
   data: () => ({
+    currentPass: null,
     email: null
   })
 }
