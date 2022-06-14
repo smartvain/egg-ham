@@ -142,6 +142,7 @@ export default {
 
       try {
         await this.$axios.$post('word', {
+          user_id     : this.$auth.user.id,
           text        : this.searchWord,
           video_title : this.videoTitle,
           url         : this.url,
