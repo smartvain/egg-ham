@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\DeepLController;
 use App\Http\Controllers\ToeflWordController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\WordController;
 use App\Http\Controllers\YoutubeController;
 use Illuminate\Support\Facades\Route;
@@ -42,6 +43,7 @@ Route::group(['middleware' => ['session'], 'prefix' => 'oauth'], function () {
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::get('user', [LoginController::class, 'user']);
 
+    Route::put('user/name',  [UserController::class,        'changeName' ]);
     Route::put('user/email', [ChangeEmailController::class, 'changeEmail']);
     
     Route::get('words',            [WordController::class, 'getWords'  ]);

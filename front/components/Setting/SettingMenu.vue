@@ -28,18 +28,24 @@
 
       <v-col cols="8" class="pl-0">
         <v-card-text>
-          <MailAddress
+          <UserInfo
             v-if="selectedItem === 0"
+            :loading="loading.changeUserInfo"
+            @change-user-info="changeUserInfo"
+          >
+          </UserInfo>
+          <MailAddress
+            v-if="selectedItem === 1"
             :loading="loading.changeEmail"
             @change-email="changeEmail"
           />
           <Password
-            v-if="selectedItem === 1"
+            v-if="selectedItem === 2"
             :loading="loading.changePass"
             @change-pass="changePass"
           />
-          <SiteLanguage v-if="selectedItem === 2" />
-          <DarkMode v-if="selectedItem === 3" />
+          <SiteLanguage v-if="selectedItem === 3" />
+          <DarkMode v-if="selectedItem === 4" />
         </v-card-text>
       </v-col>
     </v-row>
@@ -47,6 +53,7 @@
 </template>
 
 <script>
+import UserInfo from '~/components/Setting/UserInfo.vue'
 import MailAddress from '~/components/Setting/MailAddress.vue'
 import Password from '~/components/Setting/Password.vue'
 import SiteLanguage from '~/components/Setting/SiteLanguage.vue'
@@ -54,23 +61,36 @@ import DarkMode from '~/components/Setting/DarkMode.vue'
 
 export default {
   components: {
-    Password, MailAddress, SiteLanguage, DarkMode
+    UserInfo, MailAddress, Password, SiteLanguage, DarkMode
   },
   data: () => ({
     settingList: [
       { text: 'アカウント情報' },
-      { text: 'メールアドレス' },
-      { text: 'パスワード' },
+      { text: 'メールアドレス変更' },
+      { text: 'パスワード変更' },
       { text: 'サイト内言語' },
       { text: 'ダークモード' },
     ],
     loading: {
+      changeUserInfo: false,
       changeEmail: false,
       changePass: false
     },
     selectedItem: null
   }),
   methods: {
+    async changeUserInfo(e) {
+      this.loading.changeUserInfo = true
+      
+      try {
+        const res = await this.$axios.$put('user/name', { name: e.name, id: this.$auth.user.id })
+        this.$toast.show(res.message)
+      } catch (e) {
+        this.$toast.error(e.message)
+      }
+
+      this.loading.changeUserInfo = false
+    },
     async changeEmail(e) {
       this.loading.changeEmail = true
 

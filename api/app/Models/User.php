@@ -51,6 +51,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->create($form);
     }
 
+    public function replace($userInfo)
+    {
+        return $this->find($userInfo['id'])->fill($userInfo)->save();
+    }
+
     public function sendEmailVerificationNotification()
     {
         $this->notify(new VerifyEmailNotification);
