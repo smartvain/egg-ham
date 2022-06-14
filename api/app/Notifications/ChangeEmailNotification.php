@@ -2,12 +2,14 @@
 
 namespace App\Notifications;
 
+use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Lang;
 
-class ChangeEmailNotification extends Notification
+class ChangeEmailNotification extends VerifyEmail
 {
     use Queueable;
 
@@ -40,10 +42,17 @@ class ChangeEmailNotification extends Notification
      */
     public function toMail($notifiable)
     {
+        $verificationUrl = $this->verificationUrl($notifiable);
+
+        if (static::$toMailCallback) {
+            return call_user_func(static::$toMailCallback, $notifiable, $verificationUrl);
+        }
+
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+            ->subject(Lang::get('mail.change_email.subject'))
+            ->line(Lang::get('mail.change_email.line_01'))
+            ->action(Lang::get('mail.change_email.action'), $verificationUrl)
+            ->line(Lang::get('mail.change_email.line_02'));
     }
 
     /**
