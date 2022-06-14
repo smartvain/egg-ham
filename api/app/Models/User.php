@@ -56,8 +56,8 @@ class User extends Authenticatable implements MustVerifyEmail
         $this->notify(new VerifyEmailNotification);
     }
 
-    public function changeEmailVerificationNotification()
+    public function changeEmailVerificationNotification($oldUserId)
     {
-        $this->notify(new ChangeEmailNotification);
+        $this->notify(new ChangeEmailNotification($oldUserId));
     }
 }

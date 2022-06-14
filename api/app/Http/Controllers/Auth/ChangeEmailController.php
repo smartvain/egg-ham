@@ -42,8 +42,9 @@ class ChangeEmailController extends Controller
         } elseif ($user->email_verified_at === null) {
             $message = $errorMessage['unverified'];
         } else {
+            $oldUserId = $user->id;
             $user->email = $newEmail;
-            $this->user->createUser($user->toArray())->changeEmailVerificationNotification();
+            $this->user->createUser($user->toArray())->changeEmailVerificationNotification($oldUserId);
             $message = $successMessage;
         }
 

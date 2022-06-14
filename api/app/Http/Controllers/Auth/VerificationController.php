@@ -10,6 +10,7 @@ class VerificationController extends Controller
 {
     public function verify($userId, Request $request)
     {
+        $oldUserId = $request->oldUserId;
         $user = User::find($userId);
 
         $defaultMessage = 'メール認証に失敗しました。もう一度お試しください。';
@@ -25,6 +26,10 @@ class VerificationController extends Controller
             return response()->json(compact('message'), 401);
         } else if (!$user->hasVerifiedEmail()) {
             $user->markEmailAsVerified();
+        }
+
+        if ($oldUserId) {
+            User::find($oldUserId)->delete();
         }
     
         return redirect(config('app.home_url'))->with('message', $message);
