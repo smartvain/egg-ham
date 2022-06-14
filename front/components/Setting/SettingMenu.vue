@@ -77,9 +77,8 @@ export default {
       const newEmail    = e.newEmail
 
       try {
-        const res = await this.$axios.$put('user/email', { currentPass, newEmail })
-        console.log(res)
-        // this.$toast.show()
+        const res = await this.$axios.$put('user/email', { currentPass, newEmail, oldEmail: this.$auth.user.email })
+        this.$toast.show(res.message)
       } catch (e) {
         this.$toast.error(e.message)
       }
