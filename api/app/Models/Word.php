@@ -10,13 +10,8 @@ class Word extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'text',
-        'mean',
-        'video_title',
-        'url',
-        'start_second',
-        'word_type',
+    protected $guarded = [
+        'id'
     ];
 
     public function store($word)
