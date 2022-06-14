@@ -89,6 +89,10 @@ class YoutubeController extends Controller
         return ['captions' => $captions, 'words' => $words];
     }
 
+    public function getVideoInfo(Request $request) {
+        return $this->getUrlContent("https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v={$request->videoId}&format=json");
+    }
+
     private function calcUtilizationRate($words)
     {
         $toeflWords = ToeflWord::pluck('text');

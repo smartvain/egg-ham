@@ -120,7 +120,7 @@ export default {
     height: 680,
   }),
   computed: {
-    ...mapGetters(['url', 'captions', 'labels', 'searchWord']),
+    ...mapGetters(['url', 'captions', 'labels', 'searchWord', 'videoTitle']),
     isCaptions() {
       return this.captions.length > 0
     },
@@ -143,9 +143,8 @@ export default {
       try {
         await this.$axios.$post('word', {
           text        : this.searchWord,
-          video_title : '',
+          video_title : this.videoTitle,
           url         : this.url,
-          start_second: 0
         })
         this.$toast.show('単語を保存しました。')
       } catch(e) {

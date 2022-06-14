@@ -95,9 +95,17 @@ export default {
     url() {
       this.$store.commit('setLangList', [])
       this.captionLang = null
+    },
+    videoId(value) {
+      if (!value) { return }
+      this.getVideoInfo(value)
     }
   },
   methods: {
+    async getVideoInfo(videoId) {
+      const res = await this.$axios.$get('videoInfo', { params: { videoId }})
+      this.$store.commit('setVideoTitle', res.title)
+    },
     async getLangList() {
       this.loading.getLangList = true
 
