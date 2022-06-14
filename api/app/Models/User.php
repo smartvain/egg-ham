@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Notifications\ChangeEmailNotification;
+use App\Notifications\VerifyEmailNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -47,5 +49,15 @@ class User extends Authenticatable implements MustVerifyEmail
     public function createUser($form)
     {
         return $this->create($form);
+    }
+
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new VerifyEmailNotification);
+    }
+
+    public function changeEmailVerificationNotification()
+    {
+        $this->notify(new ChangeEmailNotification);
     }
 }
