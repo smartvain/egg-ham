@@ -5,6 +5,16 @@
       :items="filteredItems"
       :items-per-page="10"
       :search="searchWord"
+      :footer-props="{
+        showFirstLastPage: true,
+        firstIcon: 'mdi-chevron-double-left',
+        lastIcon: 'mdi-chevron-double-right',
+        itemsPerPageText: '表示件数：',
+        itemsPerPageAllText: '全て',
+        itemsPerPageOptions: [
+          10, 20, 30, -1
+        ]
+      }"
       fixed-header
     >
       <template #top>
@@ -119,6 +129,13 @@
           保存された単語がありません。
         </v-card-text>
       </template>
+
+      <template v-slot:[`footer.page-text`]="{ pageStart, pageStop, itemsLength }">
+        <div v-if="itemsLength !== 0">
+          {{ itemsLength }}件中： {{ pageStart }} 〜 {{ pageStop }}
+        </div>
+        <span v-else>ー</span>
+      </template>
     </v-data-table>
   </v-card>
 </template>
@@ -158,8 +175,9 @@ export default {
       try {
         await this.$axios.$delete(`word/${wordId}`)
         await this.$nuxt.refresh()
+        this.$toast.show('単語を削除しました。')
       } catch (e) {
-        this.$toast.error('削除に失敗しました。')
+        this.$toast.error('単語の削除に失敗しました。')
       }
 
       this.loading.deleteWord = false
