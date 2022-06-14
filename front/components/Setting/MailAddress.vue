@@ -22,6 +22,7 @@
       v-model="newEmail"
       class="mt-7"
       label="新しいメールアドレス"
+      append-icon="mdi-email"
       outlined
     />
 
