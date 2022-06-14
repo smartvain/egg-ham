@@ -20,6 +20,7 @@
 import { VueLoading } from 'vue-loading-template'
 
 export default {
+  layout: 'oauth',
   components: {
     VueLoading
   },
