@@ -40,6 +40,7 @@
             @change-email="changeEmail"
           />
           <Password
+            ref="password"
             v-if="selectedItem === 2"
             :loading="loading.changePass"
             @change-pass="changePass"
@@ -106,7 +107,7 @@ export default {
 
       this.loading.changeEmail = false
     },
-    changePass(e) {
+    async changePass(e) {
       this.loading.changePass = true
       
       const currentPass = e.currentPass
@@ -114,12 +115,16 @@ export default {
       const confirmPass = e.confirmPass
 
       try {
-        console.log(currentPass)
-        console.log(newPass)
-        console.log(confirmPass)
-        // const res = await this.$axios.$put('user/email', { email })
-        // console.log(res)
-        // this.$toast.show()
+        const res = await this.$axios.$put('user/password', {
+          currentPass,
+          newPass,
+          confirmPass,
+          email: this.$auth.user.email
+        })
+        if (res.isSuccess) {
+          this.$refs.password.initPasswords()
+        }
+        this.$toast.show(res.message)
       } catch (e) {
         this.$toast.error(e.message)
       }

@@ -80,6 +80,11 @@ export default {
       this.confirmPasswordType = this.confirmPasswordType === 'password' ? 'text' : 'password'
       this.confirmPasswordIcon = this.confirmPasswordType === 'password' ? 'mdi-eye-off' : 'mdi-eye'
     },
+    initPasswords() {
+      this.currentPass = null
+      this.newPass     = null
+      this.confirmPass = null
+    }
   }
 }
 </script>

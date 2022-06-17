@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\ChangeEmailController;
+use App\Http\Controllers\Auth\ChangePasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\VerificationController;
@@ -43,9 +44,10 @@ Route::group(['middleware' => ['session'], 'prefix' => 'oauth'], function () {
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::get('user', [LoginController::class, 'user']);
 
-    Route::put('user/name',  [UserController::class,        'changeName' ]);
-    Route::put('user/theme', [UserController::class,        'changeTheme']);
-    Route::put('user/email', [ChangeEmailController::class, 'changeEmail']);
+    Route::put('user/name',     [UserController::class,           'changeName'    ]);
+    Route::put('user/theme',    [UserController::class,           'changeTheme'   ]);
+    Route::put('user/email',    [ChangeEmailController::class,    'changeEmail'   ]);
+    Route::put('user/password', [ChangePasswordController::class, 'changePassword']);
     
     Route::get('words',            [WordController::class, 'getWords'  ]);
     Route::post('word',            [WordController::class, 'storeWord' ]);
