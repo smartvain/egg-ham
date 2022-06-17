@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 
 class ChangeEmailController extends Controller
 {
@@ -30,7 +29,7 @@ class ChangeEmailController extends Controller
         $errorMessage   = [
             'email'      => 'ユーザーが存在しません',
             'password'   => 'パスワードが違います。',
-            'unverified' => 'まずはメールアドレスを認証してください。'
+            'unverified' => '先にメールアドレスを認証してください。'
         ];
         
         $message = $defaultMessage;
