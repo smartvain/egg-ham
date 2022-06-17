@@ -44,6 +44,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::get('user', [LoginController::class, 'user']);
 
     Route::put('user/name',  [UserController::class,        'changeName' ]);
+    Route::put('user/theme', [UserController::class,        'changeTheme']);
     Route::put('user/email', [ChangeEmailController::class, 'changeEmail']);
     
     Route::get('words',            [WordController::class, 'getWords'  ]);
