@@ -15,10 +15,10 @@
             dense solo clearable
             @focus="
               textField.isFocus = true
-              textField.bgColor = '#EBF6FF'"
+              textField.bgColor = $vuetify.theme.dark ? 'light-blue darken-2' : 'light-blue lighten-5'"
             @blur="
               textField.isFocus = false
-              textField.bgColor = 'white'
+              textField.bgColor = null
               validateUrl(errors)
               if (url) { getLangList() }"
           />
@@ -71,7 +71,7 @@ export default {
   mixins: [ Mixin ],
   data: () => ({
     textField: {
-      bgColor: 'white',
+      bgColor: null,
       isFocus: false
     },
     loading: {
@@ -84,13 +84,6 @@ export default {
   computed: {
     ...mapGetters(['videoId', 'langList'])
   },
-  created() {
-    this.url = 'https://www.youtube.com/watch?v=NoJXn-Fh6CU&t=19s'
-    // this.videoId = 'NoJXn-Fh6CU'
-    // this.captionLang = 'en-US'
-    // this.getCaptions()
-    // ------------------------------------------
-  },
   watch: {
     url() {
       this.$store.commit('setLangList', [])
@@ -100,6 +93,13 @@ export default {
       if (!value) { return }
       this.getVideoInfo(value)
     }
+  },
+  created() {
+    this.url = 'https://www.youtube.com/watch?v=NoJXn-Fh6CU&t=19s'
+    // this.videoId = 'NoJXn-Fh6CU'
+    // this.captionLang = 'en-US'
+    // this.getCaptions()
+    // ------------------------------------------
   },
   methods: {
     async getVideoInfo(videoId) {
