@@ -228,14 +228,6 @@ export default {
 
       this.loading.twitterLogin = false
     },
-    logout() {
-      try {
-        this.$auth.logout()
-        this.$toast.show('ログアウトしました')
-      } catch (e) {
-        this.$toast.show('ログアウトに失敗しました')
-      }
-    },
     togglePasswordVisualization() {
       this.passwordType = this.passwordType === 'password' ? 'text' : 'password'
       this.passwordIcon = this.passwordType === 'password' ? 'mdi-eye-off' : 'mdi-eye'

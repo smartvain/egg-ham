@@ -62,15 +62,15 @@
 </template>
 
 <script>
+import AuthMixin from '~/mixins/auth.js'
 import UrlInput from '~/components/UrlInput.vue'
 import LoginDrawer from '~/components/LoginDrawer.vue'
 import AboutDialog from '~/components/AboutDialog.vue'
 
 export default {
   name: 'DefaultLayout',
-  components: {
-    UrlInput, LoginDrawer, AboutDialog
-  },
+  components: { UrlInput, LoginDrawer, AboutDialog },
+  mixins: [ AuthMixin ],
   data: () => ({
     pages: [
       { title: 'トップ', path: '/' },
@@ -89,16 +89,6 @@ export default {
   watch: {
     darkMode(value) {
       this.$vuetify.theme.dark = value
-    }
-  },
-  methods: {
-    logout() {
-      try {
-        this.$auth.logout()
-        this.$toast.show('ログアウトしました。')
-      } catch (e) {
-        this.$toast.show('ログアウトに失敗しました。時間をおいて再度お試し下さい。')
-      }
     }
   }
 }
