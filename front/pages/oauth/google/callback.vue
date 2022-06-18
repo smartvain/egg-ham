@@ -13,6 +13,7 @@
       />
     </v-col>
   </v-row>
+  <router-link ref="redirect" :to="$route.query.redirect ? $route.query.redirect : '/'" />
 </v-container>
 </template>
 
@@ -32,7 +33,7 @@ export default {
       const user = await this.getUser()
       this.$auth.setUser(user)
       
-      this.$router.replace('/')
+      this.$refs.redirect.$el.click()
     } catch (e) {
       this.$toast.error(e.message)
     }
