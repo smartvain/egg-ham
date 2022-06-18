@@ -21,15 +21,12 @@ class RegisterController extends Controller
         $form = $request->all();
         $user = $this->user->where('email', $form['email'])->first();
         
-        $defaultMessage = 'アカウント作成に失敗しました。もう一度お試しください。';
         $successMessage = '入力されたメールアドレスに確認メールを送信しました。';
         $errorMessage   = [
             'registered' => 'このメールアドレスはすでに登録されています。確認メールを再送信しました。',
             'mismatch'   => 'パスワードが一致しませんでした。'
         ];
         
-        $message = $defaultMessage;
-
         if ($user) {
             $user->sendEmailVerificationNotification();
             $message = $errorMessage['registered'];
