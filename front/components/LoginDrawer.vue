@@ -1,7 +1,7 @@
 <template>
   <v-navigation-drawer
     v-model="_show"
-    :width="width <= 767 ? '100%' : '27%'"
+    :width="screenWidth <= 767 ? '100%' : '27%'"
     right temporary fixed
   >
     <v-card class="px-2" height="100%" flat>
@@ -24,7 +24,7 @@
           height="48px"
           :loading="loading.twitterLogin"
           rounded dark depressed block
-          @click="twitterLogin()"
+          @click="twitterLogin"
         >
           <v-img
             class="mr-4"
@@ -40,7 +40,7 @@
           height="48px"
           :loading="loading.googleLogin"
           rounded outlined block
-          @click="googleLogin()"
+          @click="googleLogin"
         >
           <v-img
             class="mr-4"
@@ -50,9 +50,7 @@
           Googleでログイン
         </v-btn>
 
-        <p class="text-center mt-5 text-subtitle-1">
-          メールアドレスでログイン
-        </p>
+        <p class="text-center mt-5 text-subtitle-1">メールアドレスでログイン</p>
         
         <ValidationObserver v-slot="{ passes, validate }">
           <ValidationProvider
@@ -121,18 +119,16 @@
           class="pa-0 mb-8"
           absolute bottom right plain small
         >
-          パスワードをお忘れの方
-          <v-icon>mdi-chevron-right</v-icon>
+          パスワードをお忘れの方<v-icon>mdi-chevron-right</v-icon>
         </v-btn>
 
         <v-btn
           v-if="$auth.loggedIn"
           class="pa-0"
           absolute bottom right plain small
-          @click="logout()"
+          @click="logout"
         >
-          ログアウト
-          <v-icon>mdi-logout</v-icon>
+          ログアウト<v-icon>mdi-logout</v-icon>
         </v-btn>
       </v-card-text>
     </v-card>
@@ -140,7 +136,10 @@
 </template>
 
 <script>
+import AuthMixin from '~/mixins/auth.js'
+
 export default {
+  mixins: [ AuthMixin ],
   props: {
     show: { type: Boolean, default: false }
   },
@@ -153,7 +152,7 @@ export default {
       googleLogin: false,
       twitterLogin: false
     },
-    width: window.innerWidth,
+    screenWidth: window.innerWidth,
     passwordIcon: 'mdi-eye-off',
     passwordType: 'password'
   }),
@@ -164,7 +163,7 @@ export default {
     }
   },
   mounted() {
-    window.addEventListener('resize', () => this.width = window.innerWidth)
+    window.addEventListener('resize', () => this.screenWidth = window.innerWidth)
     console.log('loginUser: ', this.$auth.user)
     if (!this.$auth.loggedIn) {
       this.email = 'example@eggham.com'
