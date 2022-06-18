@@ -15,17 +15,15 @@
 
       <v-menu offset-y>
         <template #activator="{ on, attrs }">
-          <v-btn icon>
+          <v-btn icon v-bind="attrs" v-on="on">
             <v-img
               v-if="$auth.loggedIn"
               :src="$auth.user.avatar ? $auth.user.avatar : require('~/assets/img/default_user.png')"
               class="rounded-circle"
               max-width="43"
-              v-bind="attrs"
-              v-on="on"
             />
 
-            <v-icon v-else v-bind="attrs" v-on="on">mdi-dots-vertical</v-icon>
+            <v-icon v-else>mdi-dots-vertical</v-icon>
           </v-btn>
         </template>
 
