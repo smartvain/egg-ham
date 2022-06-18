@@ -21,10 +21,8 @@
 import { VueLoading } from 'vue-loading-template'
 
 export default {
+  components: { VueLoading },
   layout: 'oauth',
-  components: {
-    VueLoading
-  },
   async mounted() {
     try {
       const token = await this.getToken()
