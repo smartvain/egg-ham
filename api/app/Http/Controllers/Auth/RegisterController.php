@@ -27,11 +27,11 @@ class RegisterController extends Controller
             'mismatch'   => 'パスワードが一致しませんでした。'
         ];
         
-        if ($user) {
+        if ($form['password'] !== $form['confirm']) {
+            $message = $errorMessage['mismatch'];
+        } elseif ($user) {
             $user->sendEmailVerificationNotification();
             $message = $errorMessage['registered'];
-        } else if ($form['password'] !== $form['confirm']) {
-            $message = $errorMessage['mismatch'];
         } else {
             $message          = $successMessage;
             $form['password'] = Hash::make($form['password']);
