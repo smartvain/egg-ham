@@ -130,6 +130,12 @@
         </v-card-text>
       </template>
 
+      <template #no-results>
+        <v-card-text class="grey--text lighten-4 text-center text-subtitle-1 my-12">
+          単語が見つかりません。
+        </v-card-text>
+      </template>
+
       <template v-slot:[`footer.page-text`]="{ pageStart, pageStop, itemsLength }">
         <div v-if="itemsLength !== 0">
           {{ itemsLength }}件中： {{ pageStart }} 〜 {{ pageStop }}
