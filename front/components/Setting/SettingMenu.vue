@@ -40,13 +40,12 @@
             @change-email="changeEmail"
           />
           <Password
-            ref="password"
             v-if="selectedItem === 2"
+            ref="password"
             :loading="loading.changePass"
             @change-pass="changePass"
           />
           <SiteLanguage v-if="selectedItem === 3" />
-          <DarkMode v-if="selectedItem === 4" />
         </v-card-text>
       </v-col>
     </v-row>
@@ -58,11 +57,10 @@ import UserInfo from '~/components/Setting/UserInfo.vue'
 import MailAddress from '~/components/Setting/MailAddress.vue'
 import Password from '~/components/Setting/Password.vue'
 import SiteLanguage from '~/components/Setting/SiteLanguage.vue'
-import DarkMode from '~/components/Setting/DarkMode.vue'
 
 export default {
   components: {
-    UserInfo, MailAddress, Password, SiteLanguage, DarkMode
+    UserInfo, MailAddress, Password, SiteLanguage
   },
   data: () => ({
     settingList: [
@@ -70,7 +68,6 @@ export default {
       { text: 'メールアドレス変更' },
       { text: 'パスワード変更' },
       { text: 'サイト内言語' },
-      { text: 'ダークモード' },
     ],
     loading: {
       changeUserInfo: false,
