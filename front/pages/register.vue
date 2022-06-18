@@ -37,8 +37,8 @@
               mode="passive"
             >
               <v-text-field
-                :class="inputMt"
                 v-model="form.email"
+                :class="inputMt"
                 append-icon="mdi-email"
                 label="メールアドレス"
                 type="text"
@@ -55,8 +55,8 @@
               mode="passive"
             >
               <v-text-field
-                :class="inputMt"
                 v-model="form.password"
+                :class="inputMt"
                 label="パスワード"
                 counter="20"
                 outlined dense
@@ -68,15 +68,15 @@
             </ValidationProvider>
 
             <ValidationProvider
-              vid="confirmPass"
               v-slot="{ errors }"
+              vid="confirmPass"
               rules="required|max:20"
               name="パスワード確認用"
               mode="passive"
             >
               <v-text-field
-                :class="inputMt"
                 v-model="form.confirm"
+                :class="inputMt"
                 label="パスワード確認用"
                 counter="20"
                 outlined dense
