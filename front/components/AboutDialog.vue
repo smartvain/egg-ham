@@ -42,12 +42,9 @@
       </v-card-text>
 
       <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn
-          color="primary"
-          text
-          @click="$emit('update:show', false)"
-        >
+        <v-spacer />
+        
+        <v-btn color="primary" text @click="$emit('update:show', false)">
           閉じる
         </v-btn>
       </v-card-actions>
