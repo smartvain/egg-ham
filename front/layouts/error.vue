@@ -1,13 +1,16 @@
 <template>
-  <v-app dark>
-    <h1 v-if="error.statusCode === 404">
-      {{ pageNotFound }}
-    </h1>
-    <h1 v-else>
-      {{ otherError }}
-    </h1>
-    <NuxtLink to="/"> Home page </NuxtLink>
-  </v-app>
+  <v-container fill-height>
+    <v-row justify="center" align-content="center">
+      <v-col cols="12" align="center">
+        <h1 v-if="error.statusCode === 404" class="grey--text">
+          {{ error.statusCode }}<br>{{ pageNotFound }}
+        </h1>
+        <h1 v-else class="grey--text">
+          {{ otherError }}
+        </h1>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -22,8 +25,8 @@ export default {
   },
   data() {
     return {
-      pageNotFound: '404 Not Found',
-      otherError: 'An error occurred',
+      pageNotFound: 'ページが存在しません。',
+      otherError: '予期しないエラーが発生しました。',
     }
   },
   head() {
