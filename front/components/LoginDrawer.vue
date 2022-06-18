@@ -1,14 +1,11 @@
 <template>
   <v-navigation-drawer
-    v-model="_drawer"
+    v-model="_show"
     :width="width <= 767 ? '100%' : '27%'"
     right temporary fixed
   >
     <v-card class="px-2" height="100%" flat>
-      <v-btn
-        icon right fixed
-        @click="_drawer = false"
-      >
+      <v-btn icon right fixed @click="$emit('update:show', false)">
         <v-icon>mdi-close</v-icon>
       </v-btn>
 
@@ -145,7 +142,7 @@
 <script>
 export default {
   props: {
-    drawer: { type: Boolean, default: false }
+    show: { type: Boolean, default: false }
   },
   data: () => ({
     email: null,
@@ -161,13 +158,9 @@ export default {
     passwordType: 'password'
   }),
   computed: {
-    _drawer: {
-      get() {
-        return this.drawer
-      },
-      set(value) {
-        this.$emit('close', value)
-      }
+    _show: {
+      get() { return this.show },
+      set() {}
     }
   },
   mounted() {
@@ -192,8 +185,9 @@ export default {
           email: this.email,
           password: this.password
         }})
-        this._drawer = false
         this.$toast.show(res.data.message)
+
+        this.$emit('update:show', false)
       } catch (e) {
         this.$toast.error('ログインに失敗しました。もう一度お試しください。')
       }
