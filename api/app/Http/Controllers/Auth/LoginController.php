@@ -12,24 +12,25 @@ class LoginController extends Controller
 {
     public function login(Request $request)
     {
-        $user = User::where('email', $request->email)->first();
+        $email    = $request->email;
+        $password = $request->password;
+
+        $user = User::where('email', $email)->first();
         
-        $defaultMessage = '正常にログインが行われませんでした。もう一度お試しください。';
-        $successMessage = 'ログインに成功しました。';
+        $successMessage = 'ログインしました。';
         $errorMessage   = [
             'email'      => 'このメールアドレスは登録されていません。',
             'password'   => 'パスワードが違います。',
-            'unverified' => 'まずはメールアドレスを認証してください。'
+            'unverified' => '先にメールアドレスを認証してください。'
         ];
 
-        $message = $defaultMessage;
-        $token   = null;
+        $token = null;
         
         if (!$user) {
             $message = $errorMessage['email'];
-        } else if (!Hash::check($request->password, $user->password)) {
+        } elseif (!Hash::check($password, $user->password)) {
             $message = $errorMessage['password'];
-        } else if ($user->email_verified_at === null) {
+        } elseif ($user->email_verified_at === null) {
             $message = $errorMessage['unverified'];
         } else {
             $message = $successMessage;
