@@ -7,7 +7,6 @@ export const state = () => ({
   labels    : [],
   rates     : [],
   searchWord: null,
-  theme     : false
 });
 
 export const getters = {
@@ -19,7 +18,6 @@ export const getters = {
   labels    : state => state.labels,
   rates     : state => state.rates,
   searchWord: state => state.searchWord,
-  theme     : state => state.theme,
 }
 
 export const mutations = {
@@ -31,5 +29,4 @@ export const mutations = {
   setLabels    : (state, labels)     => state.labels     = labels,
   setRates     : (state, rates)      => state.rates      = rates,
   setSearchWord: (state, searchWord) => state.searchWord = searchWord,
-  setTheme     : (state, theme)      => state.theme      = theme,
 }
