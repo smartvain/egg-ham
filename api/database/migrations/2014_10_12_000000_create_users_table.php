@@ -22,7 +22,6 @@ class CreateUsersTable extends Migration
             $table->string('avatar')->nullable();
             $table->string('provider_id')->nullable(); // required for twitter login
             $table->string('provider_name')->nullable(); // required for twitter login
-            $table->tinyInteger('theme')->default(0);
             $table->rememberToken();
             $table->timestamps();
 
