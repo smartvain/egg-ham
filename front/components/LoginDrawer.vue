@@ -24,7 +24,7 @@
           height="48px"
           :loading="loading.twitterLogin"
           rounded dark depressed block
-          @click="twitterLogin"
+          @click="beforeLogin(twitterLogin)"
         >
           <v-img
             class="mr-4"
@@ -40,7 +40,7 @@
           height="48px"
           :loading="loading.googleLogin"
           rounded outlined block
-          @click="googleLogin"
+          @click="beforeLogin(googleLogin)"
         >
           <v-img
             class="mr-4"
@@ -97,7 +97,7 @@
               class="primary"
               rounded block
               :loading="loading.login"
-              @click="validate().then(passes(login))"
+              @click="validate().then(passes(beforeLogin(login)))"
             >
               <span class="text-subtitle-1 font-weight-bold">ログイン</span>
             </v-btn>
@@ -172,11 +172,6 @@ export default {
   },
   methods: {
     async login() {
-      if (this.$auth.loggedIn) {
-        this.$toast.show('すでにログインしています。')
-        return
-      }
-      
       this.loading.login = true
       
       try {
@@ -194,11 +189,6 @@ export default {
       this.loading.login = false
     },
     async googleLogin() {
-      if (this.$auth.loggedIn) {
-        this.$toast.show('すでにログインしています。')
-        return
-      }
-      
       this.loading.googleLogin = true
 
       try {
@@ -210,11 +200,6 @@ export default {
       this.loading.googleLogin = false
     },
     twitterLogin() {
-      if (this.$auth.loggedIn) {
-        this.$toast.show('すでにログインしています。')
-        return
-      }
-      
       this.loading.twitterLogin = true
 
       // try {
@@ -226,6 +211,13 @@ export default {
       // }
 
       this.loading.twitterLogin = false
+    },
+    beforeLogin(callback) {
+      if (this.$auth.loggedIn) {
+        this.$toast.show('すでにログインしています。')
+        return
+      }
+      callback()
     },
     togglePasswordVisualization() {
       this.passwordType = this.passwordType === 'password' ? 'text' : 'password'
