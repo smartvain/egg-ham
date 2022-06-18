@@ -55,9 +55,9 @@ class LoginController extends Controller
         $provider = 'google';
         $socialUser = Socialite::driver($provider)->stateless()->user();
         $user = User::firstOrCreate(['email' => $socialUser->getEmail()], [
-            'name' => $socialUser->getName(),
-            'avatar' => $socialUser->getAvatar(),
-            'provider_id' => $socialUser->getId(),
+            'name'          => $socialUser->getName(),
+            'avatar'        => $socialUser->getAvatar(),
+            'provider_id'   => $socialUser->getId(),
             'provider_name' => $provider
         ]);
 
@@ -76,9 +76,9 @@ class LoginController extends Controller
         $provider = 'twitter';
         $socialUser = Socialite::driver($provider)->user();
         $user = User::firstOrCreate(['email' => $socialUser->getEmail()], [
-            'name' => $socialUser->getName(),
-            'avatar' => $socialUser->getAvatar(),
-            'provider_id' => $socialUser->getId(),
+            'name'          => $socialUser->getName(),
+            'avatar'        => $socialUser->getAvatar(),
+            'provider_id'   => $socialUser->getId(),
             'provider_name' => $provider
         ]);
 
