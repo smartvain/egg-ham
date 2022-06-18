@@ -24,7 +24,7 @@
           height="48px"
           :loading="loading.twitterLogin"
           rounded dark depressed block
-          @click="beforeLogin(twitterLogin)"
+          @click="beforeSnsLogin(twitterLogin)"
         >
           <v-img
             class="mr-4"
@@ -40,7 +40,7 @@
           height="48px"
           :loading="loading.googleLogin"
           rounded outlined block
-          @click="beforeLogin(googleLogin)"
+          @click="beforeSnsLogin(googleLogin)"
         >
           <v-img
             class="mr-4"
@@ -52,7 +52,7 @@
 
         <p class="text-center mt-5 text-subtitle-1">メールアドレスでログイン</p>
         
-        <ValidationObserver v-slot="{ passes, validate }">
+        <ValidationObserver ref="loginValidation">
           <ValidationProvider
             v-slot="{ errors }"
             rules="required|max:20"
@@ -97,7 +97,7 @@
               class="primary"
               rounded block
               :loading="loading.login"
-              @click="validate().then(passes(beforeLogin(login)))"
+              @click="beforeLogin(login)"
             >
               <span class="text-subtitle-1 font-weight-bold">ログイン</span>
             </v-btn>
@@ -212,7 +212,17 @@ export default {
 
       this.loading.twitterLogin = false
     },
-    beforeLogin(callback) {
+    async beforeLogin(callback) {
+      const isValid = await this.$refs.loginValidation.validate()
+      if (!isValid) { return }
+
+      if (this.$auth.loggedIn) {
+        this.$toast.show('すでにログインしています。')
+        return
+      }
+      callback()
+    },
+    beforeSnsLogin(callback) {
       if (this.$auth.loggedIn) {
         this.$toast.show('すでにログインしています。')
         return
