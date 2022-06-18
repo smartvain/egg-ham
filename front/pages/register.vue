@@ -166,6 +166,9 @@ export default {
     confirmPasswordIcon: 'mdi-eye-off',
     confirmPasswordType: 'password'
   }),
+  head() {
+    return { title: 'アカウント作成' }
+  },
   // created() {
   //   console.log(this.$auth.loggedIn)
   //   if (!this.$auth.loggedIn) {

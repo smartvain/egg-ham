@@ -36,6 +36,9 @@ export default {
     tabItems: [ '単語', '設定' ],
     tab: null
   }),
+  head() {
+    return { title: 'マイページ' }
+  },
 }
 </script>
 

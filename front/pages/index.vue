@@ -119,6 +119,9 @@ export default {
     localSearchWord: null,
     height: 680,
   }),
+  head() {
+    return { title: 'トップページ' }
+  },
   computed: {
     ...mapGetters(['url', 'captions', 'labels', 'searchWord', 'videoTitle']),
     isCaptions() {

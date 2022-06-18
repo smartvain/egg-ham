@@ -23,6 +23,9 @@ import { VueLoading } from 'vue-loading-template'
 export default {
   components: { VueLoading },
   layout: 'oauth',
+  head() {
+    return { title: '認証中' }
+  },
   async mounted() {
     try {
       const token = await this.getToken()
