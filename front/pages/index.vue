@@ -80,6 +80,12 @@
                 検索したYouTube動画の字幕が表示されます。
               </v-card-text>
             </template>
+
+            <template #no-results>
+              <v-card-text class="grey--text lighten-4 text-center text-subtitle-1 my-12">
+                字幕が見つかりません。
+              </v-card-text>
+            </template>
           </v-data-table>
         </v-card>
       </v-col>
