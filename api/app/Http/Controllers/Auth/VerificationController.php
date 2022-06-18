@@ -14,25 +14,30 @@ class VerificationController extends Controller
         $user = User::find($userId);
 
         $defaultMessage = 'メール認証に失敗しました。もう一度お試しください。';
-        $successMessage = 'メール認証しました。';
+        $successMessage = 'メール認証に成功しました。';
         $errorMessage   = [
-            'expired' => '期限切れのURLです。'
+            'verified' => 'このメールアドレスはすでに確認済みです。',
+            'expired'  => '期限切れのURLです。'
         ];
 
         $message = $defaultMessage;
 
+        $isVerified = $user->hasVerifiedEmail();
         if (!$request->hasValidSignature()) {
             $message = $errorMessage['expired'];
-            return response()->json(compact('message'), 401);
-        } else if (!$user->hasVerifiedEmail()) {
+        } elseif ($isVerified) {
+            $message = $errorMessage['verified'];
+        } elseif (!$isVerified) {
+            $message = $successMessage;
             $user->markEmailAsVerified();
+            if ($oldUserId) {
+                User::find($oldUserId)->delete();
+            }
         }
-
-        if ($oldUserId) {
-            User::find($oldUserId)->delete();
-        }
-    
-        return redirect(config('app.home_url'))->with('message', $message);
+        
+        $redirectUrl = config('app.home_url') . '/oauth/email/verify';
+        $param1 = "message={$message}";
+        return redirect($redirectUrl . '?' . $param1);
     }
     
     public function resend(Request $request)
