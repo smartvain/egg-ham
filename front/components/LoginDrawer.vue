@@ -183,7 +183,7 @@ export default {
 
         this.$emit('update:show', false)
       } catch (e) {
-        this.$toast.error('ログインに失敗しました。もう一度お試しください。')
+        console.log(e.message)
       }
 
       this.loading.login = false
@@ -194,7 +194,7 @@ export default {
       try {
         await this.$auth.loginWith('google')
       } catch (e) {
-        this.$toast.error(e.message)
+        console.log(e.message)
       }
 
       this.loading.googleLogin = false
@@ -207,7 +207,7 @@ export default {
       //   const redirectUrl = await this.$axios.$get('oauth/twitter/redirect')
       //   window.location.href = redirectUrl
       // } catch (e) {
-      //   this.$toast.error(e.message)
+      //   console.log(e.message)
       // }
 
       this.loading.twitterLogin = false
@@ -220,8 +220,9 @@ export default {
       callback()
     },
     togglePasswordVisualization() {
-      this.passwordType = this.passwordType === 'password' ? 'text' : 'password'
-      this.passwordIcon = this.passwordType === 'password' ? 'mdi-eye-off' : 'mdi-eye'
+      const isPasswordType = this.passwordType === 'password'
+      this.passwordType = isPasswordType ? 'text' : 'password'
+      this.passwordIcon = isPasswordType ? 'mdi-eye-off' : 'mdi-eye'
     }
   }
 }
