@@ -52,56 +52,59 @@
 
         <p class="text-center mt-5 text-subtitle-1">メールアドレスでログイン</p>
         
-        <ValidationObserver ref="loginValidation">
-          <ValidationProvider
-            v-slot="{ errors }"
-            rules="required|max:20"
-            name="メールアドレス"
-            mode="passive"
-          >
-            <v-text-field
-              v-model="email"
-              append-icon="mdi-email"
-              placeholder="メールアドレス"
-              type="text"
-              outlined dense
-              :error-messages="errors"
-            />
-          </ValidationProvider>
-
-          <ValidationProvider
-            v-slot="{ errors }"
-            rules="required|max:20"
-            name="パスワード"
-            mode="passive"
-          >
-            <v-text-field
-              v-model="password"
-              placeholder="パスワード"
-              outlined dense
-              :append-icon="passwordIcon"
-              :type="passwordType"
-              :error-messages="errors"
-              @click:append="togglePasswordVisualization"
-            />
-          </ValidationProvider>
-
-          <v-checkbox v-model="remember" class="mt-n2">
-            <template #label>
-              <span class="text-caption">ログインしたままにする</span>
-            </template>
-          </v-checkbox>
-
-          <div class="text-center">
-            <v-btn
-              class="primary"
-              rounded block
-              :loading="loading.login"
-              @click="beforeLogin(login)"
+        <ValidationObserver ref="loginValidation" @submit.prevent>
+          <form>
+            <ValidationProvider
+              v-slot="{ errors }"
+              rules="required|max:20"
+              name="メールアドレス"
+              mode="passive"
             >
-              <span class="text-subtitle-1 font-weight-bold">ログイン</span>
-            </v-btn>
-          </div>
+              <v-text-field
+                v-model="email"
+                append-icon="mdi-email"
+                placeholder="メールアドレス"
+                type="text"
+                outlined dense
+                :error-messages="errors"
+              />
+            </ValidationProvider>
+
+            <ValidationProvider
+              v-slot="{ errors }"
+              rules="required|max:20"
+              name="パスワード"
+              mode="passive"
+            >
+              <v-text-field
+                v-model="password"
+                placeholder="パスワード"
+                outlined dense
+                :append-icon="passwordIcon"
+                :type="passwordType"
+                :error-messages="errors"
+                @click:append="togglePasswordVisualization"
+              />
+            </ValidationProvider>
+
+            <v-checkbox v-model="remember" class="mt-n2">
+              <template #label>
+                <span class="text-caption">ログインしたままにする</span>
+              </template>
+            </v-checkbox>
+
+            <div class="text-center">
+              <v-btn
+                class="primary"
+                type="submit"
+                rounded block
+                :loading="loading.login"
+                @click="beforeLogin(login)"
+              >
+                <span class="text-subtitle-1 font-weight-bold">ログイン</span>
+              </v-btn>
+            </div>
+          </form>
         </ValidationObserver>
         
         <v-divider class="my-4" />
