@@ -21,8 +21,8 @@ class UserController extends Controller
 
     public function changeName(Request $request)
     {
-        $isSuccess = $this->user->replace($request->input());
-        $message = $isSuccess ? '名前の変更に成功しました。' : '名前の変更に失敗しました。';
+        $isSuccess = $this->user->changeUserInfo($request->user()->id, $request->input());
+        $message = $isSuccess ? '名前を変更しました。' : '名前の変更に失敗しました。';
         return compact('message');
     }
 }
