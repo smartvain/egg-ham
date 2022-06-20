@@ -21,7 +21,7 @@ class ChangePasswordController extends Controller
         $currentPass = $request->currentPass;
         $newPass     = $request->newPass;
         $confirmPass = $request->confirmPass;
-        $email       = $request->email;
+        $email       = $request->user()->email;
         
         $user = User::where('email', $email)->first();
         
@@ -45,10 +45,7 @@ class ChangePasswordController extends Controller
             $message = $errorMessage['confirmPass'];
             $isSuccess = false;
         } else {
-            $this->user->replace([
-                'id'       => $user->id,
-                'password' => Hash::make($newPass)
-            ]);
+            $this->user->changeUserInfo($user->id, ['password' => Hash::make($newPass)]);
             $message = $successMessage;
             $isSuccess = true;
         }
