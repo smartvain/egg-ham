@@ -20,30 +20,25 @@ class ChangeEmailController extends Controller
     {
         $currentPass = $request->currentPass;
         $newEmail    = $request->newEmail;
-        $oldEmail    = $request->oldEmail;
         
-        $user = User::where('email', $oldEmail)->first();
+        $user = $this->user->find($request->user()->id);
         
-        $defaultMessage = '正常に処理が行われませんでした。もう一度お試しください。';
-        $successMessage = '変更したメールアドレスに確認メールを送信しました。認証すると新しいメールアドレスでログインが可能になります。';
+        $successMessage = '変更したメールアドレスに確認メールを送信しました。';
         $errorMessage   = [
-            'email'      => 'ユーザーが存在しません',
+            'not_exist'  => 'ユーザーが存在しません。',
             'password'   => 'パスワードが違います。',
             'unverified' => '先にメールアドレスを認証してください。'
         ];
         
-        $message = $defaultMessage;
-        
         if (!$user) {
-            $message = $errorMessage['email'];
+            $message = $errorMessage['not_exist'];
         } elseif (!Hash::check($currentPass, $user->password)) {
             $message = $errorMessage['password'];
-        } elseif ($user->email_verified_at === null) {
+        } elseif (!$user->hasVerifiedEmail()) {
             $message = $errorMessage['unverified'];
         } else {
-            $oldUserId = $user->id;
             $user->email = $newEmail;
-            $this->user->createUser($user->toArray())->changeEmailVerificationNotification($oldUserId);
+            $this->user->createUser($user->toArray())->changeEmailVerificationNotification($user->id);
             $message = $successMessage;
         }
 
