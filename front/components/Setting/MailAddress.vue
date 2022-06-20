@@ -8,14 +8,11 @@
       :append-icon="currentPasswordIcon"
       :type="currentPasswordType"
       outlined
-      @click:append="toggleCurrentPasswordVisualization"
+      @click:append="togglePasswordVisualization"
     />
 
-    <v-btn
-      plain small
-    >
-      パスワードを忘れましたか？
-      <v-icon>mdi-chevron-right</v-icon>
+    <v-btn plain small>
+      パスワードを忘れましたか？<v-icon>mdi-chevron-right</v-icon>
     </v-btn>
     
     <v-text-field
@@ -52,9 +49,10 @@ export default {
     currentPasswordType: 'password',
   }),
   methods: {
-    toggleCurrentPasswordVisualization() {
-      this.currentPasswordType = this.currentPasswordType === 'password' ? 'text' : 'password'
-      this.currentPasswordIcon = this.currentPasswordType === 'password' ? 'mdi-eye-off' : 'mdi-eye'
+    togglePasswordVisualization() {
+      const isPasswordType = this.currentPasswordType === 'password'
+      this.currentPasswordType = isPasswordType ? 'text' : 'password'
+      this.currentPasswordIcon = isPasswordType ? 'mdi-eye-off' : 'mdi-eye'
     },
   }
 }
