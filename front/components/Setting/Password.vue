@@ -11,11 +11,8 @@
       @click:append="toggleCurrentPasswordVisualization"
     />
 
-    <v-btn
-      plain small
-    >
-      パスワードを忘れましたか？
-      <v-icon>mdi-chevron-right</v-icon>
+    <v-btn plain small>
+      パスワードを忘れましたか？<v-icon>mdi-chevron-right</v-icon>
     </v-btn>
 
     <v-text-field
@@ -69,16 +66,19 @@ export default {
   }),
   methods: {
     toggleCurrentPasswordVisualization() {
-      this.currentPasswordType = this.currentPasswordType === 'password' ? 'text' : 'password'
-      this.currentPasswordIcon = this.currentPasswordType === 'password' ? 'mdi-eye-off' : 'mdi-eye'
+      const isCurrentPasswordType = this.currentPasswordType === 'password'
+      this.currentPasswordType    = isCurrentPasswordType ? 'text' : 'password'
+      this.currentPasswordIcon    = isCurrentPasswordType ? 'mdi-eye-off' : 'mdi-eye'
     },
     toggleNewPasswordVisualization() {
-      this.newPasswordType = this.newPasswordType === 'password' ? 'text' : 'password'
-      this.newPasswordIcon = this.newPasswordType === 'password' ? 'mdi-eye-off' : 'mdi-eye'
+      const isNewPasswordType = this.newPasswordType === 'password'
+      this.newPasswordType    = isNewPasswordType ? 'text' : 'password'
+      this.newPasswordIcon    = isNewPasswordType ? 'mdi-eye-off' : 'mdi-eye'
     },
     toggleConfirmPasswordVisualization() {
-      this.confirmPasswordType = this.confirmPasswordType === 'password' ? 'text' : 'password'
-      this.confirmPasswordIcon = this.confirmPasswordType === 'password' ? 'mdi-eye-off' : 'mdi-eye'
+      const isConfirmPasswordType = this.confirmPasswordType === 'password'
+      this.confirmPasswordType    = isConfirmPasswordType ? 'text' : 'password'
+      this.confirmPasswordIcon    = isConfirmPasswordType ? 'mdi-eye-off' : 'mdi-eye'
     },
     initPasswords() {
       this.currentPass = null
