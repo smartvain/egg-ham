@@ -25,12 +25,4 @@ class UserController extends Controller
         $message = $isSuccess ? '名前の変更に成功しました。' : '名前の変更に失敗しました。';
         return compact('message');
     }
-    
-    public function changeTheme(Request $request)
-    {
-        $isSuccess = $this->user->replace($request->input());
-        $message = $isSuccess ? 'カラーテーマを変更しました。' : 'カラーテーマの変更に失敗しました。';
-        return compact('message');
-        
-    }
 }
