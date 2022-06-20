@@ -8,41 +8,50 @@ use Illuminate\Http\Request;
 
 class VerificationController extends Controller
 {
+    private $user;
+    
+    public function __construct(User $user)
+    {
+        $this->user = $user;
+    }
+    
     public function verify($userId, Request $request)
     {
         $oldUserId = $request->oldUserId;
-        $user = User::find($userId);
+        $user = $this->user->find($userId);
 
-        $defaultMessage = 'メール認証に失敗しました。もう一度お試しください。';
-        $successMessage = 'メール認証に成功しました。';
-        $errorMessage   = [
-            'verified' => 'このメールアドレスはすでに確認済みです。',
-            'expired'  => '期限切れのURLです。'
-        ];
+        $messages = $this->getVerifyMessages();
 
-        $message = $defaultMessage;
+        $message = $messages['default'];
+        // $email = null;
+        // $pass = null;
 
         $isVerified = $user->hasVerifiedEmail();
         if (!$request->hasValidSignature()) {
-            $message = $errorMessage['expired'];
+            $message = $messages['error']['expired'];
         } elseif ($isVerified) {
-            $message = $errorMessage['verified'];
+            $message = $messages['error']['verified'];
         } elseif (!$isVerified) {
-            $message = $successMessage;
+            $message = $messages['success'];
             $user->markEmailAsVerified();
             if ($oldUserId) {
-                User::find($oldUserId)->delete();
+                // $email = $user->email;
+                // $pass = $user->password;
+                $this->user->find($oldUserId)->delete();
             }
         }
         
         $redirectUrl = config('app.home_url') . '/oauth/email/verify';
         $param1 = "message={$message}";
-        return redirect($redirectUrl . '?' . $param1);
+        // $param2 = "&email={$email}";
+        // $param3 = "&token={$pass}";
+
+        return redirect("{$redirectUrl}?{$param1}");
     }
     
     public function resend(Request $request)
     {
-        $user = User::where('email', $request->email)->first();
+        $user = $this->user->where('email', $request->email)->first();
         
         $defaultMessage = '確認メールの再送信に失敗しました。もう一度お試しください。';
         $successMessage = '入力されたメールアドレスに確認メールを再送信しました。';
@@ -60,5 +69,17 @@ class VerificationController extends Controller
         }
     
         return compact('message');
+    }
+
+    private function getVerifyMessages()
+    {
+        return [
+            'default' => 'メール認証に失敗しました。もう一度お試しください。',
+            'success' => 'メール認証に成功しました。',
+            'error'   => [
+                'verified' => 'このメールアドレスはすでに確認済みです。',
+                'expired'  => '期限切れのURLです。'
+            ]
+        ];
     }
 }
