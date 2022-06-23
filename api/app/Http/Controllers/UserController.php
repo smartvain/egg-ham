@@ -22,13 +22,13 @@ class UserController extends Controller
     public function changeName(Request $request)
     {
         $isSuccess = $this->user->changeUserInfo($request->user()->id, $request->input());
-        $messages = $this->getMessages();
+        $messages  = $this->getMessages();
         
         if (!$isSuccess) {
-            $status = 'error';
+            $status  = 'error';
             $message = $messages[$status];
         } else {
-            $status = 'success';
+            $status  = 'success';
             $message = $messages[$status];
         }
 

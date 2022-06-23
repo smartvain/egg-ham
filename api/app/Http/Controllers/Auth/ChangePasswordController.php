@@ -25,17 +25,17 @@ class ChangePasswordController extends Controller
         $user        = $this->user->find($request->user()->id);
         
         if (!$user) {
-            $status = 'non_existent_user';
+            $status  = 'non_existent_user';
             $message = $messages['error'][$status];
         } elseif (!Hash::check($currentPass, $user->password)) {
-            $status = 'mismatch_current_pass';
+            $status  = 'mismatch_current_pass';
             $message = $messages['error'][$status];
         } elseif ($newPass !== $confirmPass) {
-            $status = 'mismatch_confirm_pass';
+            $status  = 'mismatch_confirm_pass';
             $message = $messages['error'][$status];
         } else {
             $this->user->changeUserInfo($user->id, ['password' => Hash::make($newPass)]);
-            $status = 'success';
+            $status  = 'success';
             $message = $messages[$status];
         }
 
