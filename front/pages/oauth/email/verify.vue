@@ -12,6 +12,7 @@
       />
     </v-col>
   </v-row>
+
   <router-link ref="redirect" :to="$route.query.redirect ? $route.query.redirect : '/'" />
 </v-container>
 </template>
@@ -25,10 +26,27 @@ export default {
   head() {
     return { title: '認証中' }
   },
-  mounted() {
-    console.log(this.$route.query)
+  async mounted() {
     this.$toast.show(this.$route.query.message)
+
+    if (this.$route.query.token) {
+      this.$auth.setUserToken(this.$route.query.token)
+      
+      try {
+        const user = await this.getUser()
+        this.$auth.setUser(user)
+      } catch (e) {
+        this.$toast.error(e.message)
+      }
+    }
+
     this.$refs.redirect.$el.click()
+  },
+  methods: {
+    async getUser() {
+      const res = await this.$axios.$get('user')
+      return res.user
+    }
   }
 }
 </script>
