@@ -22,7 +22,24 @@ class UserController extends Controller
     public function changeName(Request $request)
     {
         $isSuccess = $this->user->changeUserInfo($request->user()->id, $request->input());
-        $message = $isSuccess ? '名前を変更しました。' : '名前の変更に失敗しました。';
-        return compact('message');
+        $messages = $this->getMessages();
+        
+        if (!$isSuccess) {
+            $status = 'error';
+            $message = $messages[$status];
+        } else {
+            $status = 'success';
+            $message = $messages[$status];
+        }
+
+        return compact('message', 'status');
+    }
+
+    private function getMessages()
+    {
+        return [
+            'success' => '名前を変更しました。',
+            'error'   => '名前の変更に失敗しました。'
+        ];
     }
 }

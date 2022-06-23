@@ -20,31 +20,41 @@ class ChangeEmailController extends Controller
     {
         $currentPass = $request->currentPass;
         $newEmail    = $request->newEmail;
-        
-        $user = $this->user->find($request->user()->id);
-        
-        $successMessage = '変更したメールアドレスに確認メールを送信しました。';
-        $errorMessage   = [
-            'not_exist'  => 'ユーザーが存在しません。',
-            'exist'      => 'すでに登録されているメールアドレスです。',
-            'password'   => 'パスワードが違います。',
-            'unverified' => '先にメールアドレスを認証してください。'
-        ];
+        $messages    = $this->getMessages();
+        $user        = $this->user->find($request->user()->id);
         
         if (!$user) {
-            $message = $errorMessage['not_exist'];
+            $status  = 'non_existent_user';
+            $message = $messages['error'][$status];
         } elseif ($user->email === $newEmail) {
-            $message = $errorMessage['exist'];
+            $status  = 'registered_email';
+            $message = $messages['error'][$status];
         } elseif (!Hash::check($currentPass, $user->password)) {
-            $message = $errorMessage['password'];
+            $status  = 'mismatch_password';
+            $message = $messages['error'][$status];
         } elseif (!$user->hasVerifiedEmail()) {
-            $message = $errorMessage['unverified'];
+            $status  = 'unverified_email';
+            $message = $messages['error'][$status];
         } else {
             $user->email = $newEmail;
             $this->user->createUser($user->toArray())->changeEmailVerificationNotification($user->id);
-            $message = $successMessage;
+            $status  = 'success';
+            $message = $messages[$status];
         }
 
-        return compact('message');
+        return compact('message', 'status');
+    }
+
+    private function getMessages()
+    {
+        return [
+            'success' => '変更したメールアドレスに確認メールを送信しました。',
+            'error'   => [
+                'non_existent_user' => 'ユーザーが存在しません。',
+                'registered_email'  => 'すでに登録されているメールアドレスです。',
+                'mismatch_password' => 'パスワードが違います。',
+                'unverified_email'  => '先にメールアドレスを認証してください。'
+            ]
+        ];
     }
 }

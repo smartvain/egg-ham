@@ -21,35 +21,36 @@ class ChangePasswordController extends Controller
         $currentPass = $request->currentPass;
         $newPass     = $request->newPass;
         $confirmPass = $request->confirmPass;
-        $email       = $request->user()->email;
-        
-        $user = User::where('email', $email)->first();
-        
-        $defaultMessage = '正常に処理が行われませんでした。もう一度お試しください。';
-        $successMessage = 'パスワードの変更に成功しました。';
-        $errorMessage   = [
-            'email'       => 'ユーザーが存在しません。',
-            'currentPass' => '現在のパスワードが違います。',
-            'confirmPass' => '確認パスワードが違います。',
-        ];
-        
-        $message = $defaultMessage;
+        $messages    = $this->getMessages();
+        $user        = $this->user->find($request->user()->id);
         
         if (!$user) {
-            $message = $errorMessage['email'];
-            $isSuccess = false;
+            $status = 'non_existent_user';
+            $message = $messages['error'][$status];
         } elseif (!Hash::check($currentPass, $user->password)) {
-            $message = $errorMessage['currentPass'];
-            $isSuccess = false;
+            $status = 'mismatch_current_pass';
+            $message = $messages['error'][$status];
         } elseif ($newPass !== $confirmPass) {
-            $message = $errorMessage['confirmPass'];
-            $isSuccess = false;
+            $status = 'mismatch_confirm_pass';
+            $message = $messages['error'][$status];
         } else {
             $this->user->changeUserInfo($user->id, ['password' => Hash::make($newPass)]);
-            $message = $successMessage;
-            $isSuccess = true;
+            $status = 'success';
+            $message = $messages[$status];
         }
 
-        return ['message' => $message, 'isSuccess' => $isSuccess];
+        return compact('message', 'status');
+    }
+
+    private function getMessages()
+    {
+        return [
+            'success' => 'パスワードの変更に成功しました。',
+            'error'   => [
+                'non_existent_user'     => 'ユーザーが存在しません。',
+                'mismatch_current_pass' => '現在のパスワードが違います。',
+                'mismatch_confirm_pass' => '確認パスワードが合いません。'
+            ]
+        ];
     }
 }
