@@ -34,11 +34,11 @@ export default {
 
       const user = await this.getUser()
       this.$auth.setUser(user)
-      
-      this.$refs.redirect.$el.click()
     } catch (e) {
       this.$toast.error(e.message)
     }
+    
+    this.$refs.redirect.$el.click()
   },
   methods: {
     async getToken() {
