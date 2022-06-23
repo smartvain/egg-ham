@@ -5,17 +5,12 @@
         <v-list flat>
           <v-card-title class="text-h5 font-weight-bold">設定</v-card-title>
 
-          <v-list-item-group
-            v-model="selectedItem"
-            color="primary"
-          >
-            <v-list-item
-              v-for="(list, index) in settingList"
-              :key="index"
-            >
+          <v-list-item-group v-model="selectedItem" color="primary">
+            <v-list-item v-for="(list, index) in settingList" :key="index">
               <v-list-item-content>
-                <v-list-item-title v-text="list.text"></v-list-item-title>
+                <v-list-item-title v-text="list.text" />
               </v-list-item-content>
+
               <v-list-item-icon>
                 <v-icon>mdi-chevron-right</v-icon>
               </v-list-item-icon>
@@ -24,7 +19,7 @@
         </v-list>
       </v-col>
 
-      <v-divider class="" vertical/>
+      <v-divider vertical />
 
       <v-col cols="8" class="pl-0">
         <v-card-text>
@@ -32,8 +27,7 @@
             v-if="selectedItem === 0"
             :loading="loading.changeUserInfo"
             @change-user-info="changeUserInfo"
-          >
-          </UserInfo>
+          />
           <MailAddress
             v-if="selectedItem === 1"
             :loading="loading.changeEmail"
