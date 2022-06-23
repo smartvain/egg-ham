@@ -71,29 +71,36 @@ export default {
     selectedItem: null
   }),
   methods: {
+    async getUser() {
+      const res = await this.$axios.$get('user')
+      return res.user
+    },
     async changeUserInfo(e) {
       this.loading.changeUserInfo = true
       
       try {
-        const res = await this.$axios.$put('user/name', { name: e.name, id: this.$auth.user.id })
+        const res = await this.$axios.$put('user/name', { name: e.name })
         this.$toast.show(res.message)
       } catch (e) {
-        this.$toast.error(e.message)
+        console.log(e.message)
       }
+
+      const user = await this.getUser()
+      this.$auth.setUser(user)
 
       this.loading.changeUserInfo = false
     },
     async changeEmail(e) {
       this.loading.changeEmail = true
 
-      const currentPass = e.currentPass
-      const newEmail    = e.newEmail
-
       try {
-        const res = await this.$axios.$put('user/email', { currentPass, newEmail, oldEmail: this.$auth.user.email })
+        const res = await this.$axios.$put('user/email', {
+          currentPass: e.currentPass,
+          newEmail   : e.newEmail,
+        })
         this.$toast.show(res.message)
       } catch (e) {
-        this.$toast.error(e.message)
+        console.log(e.message)
       }
 
       this.loading.changeEmail = false
@@ -101,23 +108,16 @@ export default {
     async changePass(e) {
       this.loading.changePass = true
       
-      const currentPass = e.currentPass
-      const newPass     = e.newPass
-      const confirmPass = e.confirmPass
-
       try {
         const res = await this.$axios.$put('user/password', {
-          currentPass,
-          newPass,
-          confirmPass,
-          email: this.$auth.user.email
+          currentPass: e.currentPass,
+          newPass    : e.newPass,
+          confirmPass: e.confirmPass,
         })
-        if (res.isSuccess) {
-          this.$refs.password.initPasswords()
-        }
+        if (res.isSuccess) { this.$refs.password.initPasswords() }
         this.$toast.show(res.message)
       } catch (e) {
-        this.$toast.error(e.message)
+        console.log(e.message)
       }
 
       this.loading.changePass = false
