@@ -26,12 +26,15 @@ class ChangeEmailController extends Controller
         $successMessage = '変更したメールアドレスに確認メールを送信しました。';
         $errorMessage   = [
             'not_exist'  => 'ユーザーが存在しません。',
+            'exist'      => 'すでに登録されているメールアドレスです。',
             'password'   => 'パスワードが違います。',
             'unverified' => '先にメールアドレスを認証してください。'
         ];
         
         if (!$user) {
             $message = $errorMessage['not_exist'];
+        } elseif ($user->email === $newEmail) {
+            $message = $errorMessage['exist'];
         } elseif (!Hash::check($currentPass, $user->password)) {
             $message = $errorMessage['password'];
         } elseif (!$user->hasVerifiedEmail()) {
