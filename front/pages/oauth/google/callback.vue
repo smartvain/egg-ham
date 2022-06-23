@@ -29,11 +29,8 @@ export default {
   },
   async mounted() {
     try {
-      const token = await this.getToken()
-      this.$auth.setUserToken(token)
-
-      const user = await this.getUser()
-      this.$auth.setUser(user)
+      this.$auth.setUserToken(await this.getToken())
+      this.$auth.setUser(await this.getUser())
     } catch (e) {
       this.$toast.error(e.message)
     }
@@ -41,9 +38,12 @@ export default {
     this.$refs.redirect.$el.click()
   },
   methods: {
+    showMessage(status, message) {
+      status === 'success' ? this.$toast.show(message) : this.$toast.error(message)
+    },
     async getToken() {
       const res = await this.$axios.$get('oauth/google/callback', { params: this.$route.query })
-      this.$toast.show(res.message)
+      this.showMessage('success', res.message)
       return res.token
     },
     async getUser() {
