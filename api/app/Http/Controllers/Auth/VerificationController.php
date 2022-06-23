@@ -17,14 +17,11 @@ class VerificationController extends Controller
     
     public function verify($userId, Request $request)
     {
-        $oldUserId = $request->oldUserId;
         $user = $this->user->find($userId);
 
         $messages = $this->getVerifyMessages();
-
-        $message = $messages['default'];
-        // $email = null;
-        // $pass = null;
+        $message  = $messages['default'];
+        $token    = null;
 
         $isVerified = $user->hasVerifiedEmail();
         if (!$request->hasValidSignature()) {
@@ -32,21 +29,19 @@ class VerificationController extends Controller
         } elseif ($isVerified) {
             $message = $messages['error']['verified'];
         } elseif (!$isVerified) {
-            $message = $messages['success'];
             $user->markEmailAsVerified();
-            if ($oldUserId) {
-                // $email = $user->email;
-                // $pass = $user->password;
-                $this->user->find($oldUserId)->delete();
+            if ($request->oldUserId) {
+                $token = $user->createToken('change_email')->plainTextToken;
+                $this->user->find($request->oldUserId)->delete();
             }
+            $message = $messages['success'];
         }
         
         $redirectUrl = config('app.home_url') . '/oauth/email/verify';
         $param1 = "message={$message}";
-        // $param2 = "&email={$email}";
-        // $param3 = "&token={$pass}";
+        $param2 = "&token={$token}";
 
-        return redirect("{$redirectUrl}?{$param1}");
+        return redirect("{$redirectUrl}?{$param1}{$param2}");
     }
     
     public function resend(Request $request)
