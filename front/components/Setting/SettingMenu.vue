@@ -25,8 +25,8 @@
         <v-card-text>
           <UserInfo
             v-if="selectedItem === 0"
-            :loading="loading.changeUserInfo"
-            @change-user-info="changeUserInfo"
+            :loading="loading.changeName"
+            @change-user-info="changeName"
           />
           <MailAddress
             v-if="selectedItem === 1"
@@ -64,31 +64,34 @@ export default {
       { text: 'サイト内言語' },
     ],
     loading: {
-      changeUserInfo: false,
+      changeName: false,
       changeEmail: false,
       changePass: false
     },
     selectedItem: null
   }),
   methods: {
+    showMessage(status, message) {
+      status === 'success' ? this.$toast.show(message) : this.$toast.error(message)
+    },
     async getUser() {
       const res = await this.$axios.$get('user')
       return res.user
     },
-    async changeUserInfo(e) {
-      this.loading.changeUserInfo = true
+    async changeName(e) {
+      this.loading.changeName = true
       
       try {
         const res = await this.$axios.$put('user/name', { name: e.name })
-        this.$toast.show(res.message)
+        
+        this.$auth.setUser(await this.getUser())
+
+        this.showMessage(res.status, res.message)
       } catch (e) {
         console.log(e.message)
       }
 
-      const user = await this.getUser()
-      this.$auth.setUser(user)
-
-      this.loading.changeUserInfo = false
+      this.loading.changeName = false
     },
     async changeEmail(e) {
       this.loading.changeEmail = true
@@ -98,7 +101,8 @@ export default {
           currentPass: e.currentPass,
           newEmail   : e.newEmail,
         })
-        this.$toast.show(res.message)
+
+        this.showMessage(res.status, res.message)
       } catch (e) {
         console.log(e.message)
       }
@@ -114,8 +118,10 @@ export default {
           newPass    : e.newPass,
           confirmPass: e.confirmPass,
         })
-        if (res.isSuccess) { this.$refs.password.initPasswords() }
-        this.$toast.show(res.message)
+        
+        if (res.status === 'success') { this.$refs.password.initPasswords() }
+
+        this.showMessage(res.status, res.message)
       } catch (e) {
         console.log(e.message)
       }
