@@ -27,15 +27,17 @@ export default {
   head() {
     return { title: '認証中' }
   },
-  async mounted() {
-    try {
-      this.$auth.setUserToken(await this.getToken())
-      this.$auth.setUser(await this.getUser())
-    } catch (e) {
-      this.$toast.error(e.message)
-    }
-    
-    this.$refs.redirect.$el.click()
+  mounted() {
+    this.$nextTick(async () => {
+      try {
+        this.$auth.setUserToken(await this.getToken())
+        this.$auth.setUser(await this.getUser())
+      } catch (e) {
+        console.log(e.message)
+      }
+      
+      this.$refs.redirect.$el.click()
+    })
   },
   methods: {
     showMessage(status, message) {
