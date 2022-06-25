@@ -14,30 +14,70 @@ class LoginController extends Controller
     {
         $email    = $request->email;
         $password = $request->password;
-
-        $user = User::where('email', $email)->first();
-        
-        $successMessage = 'ログインしました。';
-        $errorMessage   = [
-            'email'      => 'このメールアドレスは登録されていません。',
-            'password'   => 'パスワードが違います。',
-            'unverified' => '先にメールアドレスを認証してください。'
-        ];
-
-        $token = null;
+        $user     = User::where('email', $email)->first();
+        $messages = $this->getLoginMessages();
+        $token    = null;
         
         if (!$user) {
-            $message = $errorMessage['email'];
+            $status  = 'non_existent_email';
+            $message = $messages['error'][$status];
         } elseif (!Hash::check($password, $user->password)) {
-            $message = $errorMessage['password'];
+            $status  = 'mismatch_password';
+            $message = $messages['error'][$status];
         } elseif ($user->email_verified_at === null) {
-            $message = $errorMessage['unverified'];
+            $status  = 'unverified';
+            $message = $messages['error'][$status];
         } else {
-            $message = $successMessage;
             $token   = $user->createToken('normal')->plainTextToken;
+            $status  = 'success';
+            $message = $messages['success'];
         }
 
-        return [ 'token' => $token, 'message' => $message ];
+        return compact('token', 'message', 'status');
+    }
+
+    public function handleGoogleCallback()
+    {
+        $provider   = 'google';
+        $socialUser = Socialite::driver($provider)->stateless()->user();
+        $messages   = $this->getGoogleLoginMessages();
+        $user = User::firstOrCreate(['email' => $socialUser->getEmail()], [
+            'name'          => $socialUser->getName(),
+            'avatar'        => $socialUser->getAvatar(),
+            'provider_id'   => $socialUser->getId(),
+            'provider_name' => $provider
+        ]);
+
+        $user->markEmailAsVerified();
+
+        $token = $user->createToken($provider)->plainTextToken;
+
+        return [
+            'token'   => $token,
+            'message' => $messages['success']
+        ];
+    }
+
+    public function handleTwitterCallback()
+    {
+        $provider   = 'twitter';
+        $socialUser = Socialite::driver($provider)->user();
+        $messages   = $this->getTwitterLoginMessages();
+        $user = User::firstOrCreate(['email' => $socialUser->getEmail()], [
+            'name'          => $socialUser->getName(),
+            'avatar'        => $socialUser->getAvatar(),
+            'provider_id'   => $socialUser->getId(),
+            'provider_name' => $provider
+        ]);
+
+        $user->markEmailAsVerified();
+
+        $token = $user->createToken($provider)->plainTextToken;
+
+        return [
+            'token'   => $token,
+            'message' => $messages['success']
+        ];
     }
 
     public function user(Request $request)
@@ -50,45 +90,31 @@ class LoginController extends Controller
         return Socialite::driver($provider)->redirect()->getTargetUrl();
     }
 
-    public function handleGoogleCallback()
+    private function getLoginMessages()
     {
-        $provider = 'google';
-        $socialUser = Socialite::driver($provider)->stateless()->user();
-        $user = User::firstOrCreate(['email' => $socialUser->getEmail()], [
-            'name'          => $socialUser->getName(),
-            'avatar'        => $socialUser->getAvatar(),
-            'provider_id'   => $socialUser->getId(),
-            'provider_name' => $provider
-        ]);
-
-        $user->markEmailAsVerified();
-
-        $token = $user->createToken($provider)->plainTextToken;
-
         return [
-            'token'   => $token,
-            'message' => 'Googleでのログインに成功しました。'
+            'success' => 'ログインしました。',
+            'error'   => [
+                'email'      => 'このメールアドレスは登録されていません。',
+                'password'   => 'パスワードが違います。',
+                'unverified' => '先にメールアドレスを認証してください。'
+            ]
         ];
     }
 
-    public function handleTwitterCallback()
+    private function getGoogleLoginMessages()
     {
-        $provider = 'twitter';
-        $socialUser = Socialite::driver($provider)->user();
-        $user = User::firstOrCreate(['email' => $socialUser->getEmail()], [
-            'name'          => $socialUser->getName(),
-            'avatar'        => $socialUser->getAvatar(),
-            'provider_id'   => $socialUser->getId(),
-            'provider_name' => $provider
-        ]);
-
-        $user->markEmailAsVerified();
-
-        $token = $user->createToken($provider)->plainTextToken;
-
         return [
-            'token'   => $token,
-            'message' => 'Twitterでのログインに成功しました。'
+            'success' => 'Googleでのログインに成功しました。',
+            'error'   => 'Google認証中にエラーが発生しました。時間をおいてもう一度お試し下さい。'
+        ];
+    }
+
+    private function getTwitterLoginMessages()
+    {
+        return [
+            'success' => 'Twitterでのログインに成功しました。',
+            'error'   => 'Twitter認証中にエラーが発生しました。時間をおいてもう一度お試し下さい。'
         ];
     }
 }
