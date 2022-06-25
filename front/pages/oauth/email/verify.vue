@@ -26,23 +26,24 @@ export default {
   head() {
     return { title: '認証中' }
   },
-  async mounted() {
-    this.$toast.show(this.$route.query.message)
-
-    if (this.$route.query.token) {
-      this.$auth.setUserToken(this.$route.query.token)
-      
+  mounted() {
+    this.$nextTick(async () => {
+      this.showMessage(this.$route.query.status, this.$route.query.message)
+  
       try {
-        const user = await this.getUser()
-        this.$auth.setUser(user)
+        this.$auth.setUserToken(this.$route.query.token)
+        this.$auth.setUser(await this.getUser())
       } catch (e) {
-        this.$toast.error(e.message)
+        console.log(e.message)
       }
-    }
-
-    this.$refs.redirect.$el.click()
+  
+      this.$refs.redirect.$el.click()
+    })
   },
   methods: {
+    showMessage(status, message) {
+      status === 'success' ? this.$toast.show(message) : this.$toast.error(message)
+    },
     async getUser() {
       const res = await this.$axios.$get('user')
       return res.user
