@@ -27,18 +27,18 @@ export default {
     return { title: '認証中' }
   },
   mounted() {
+    this.showMessage(this.$route.query.status, this.$route.query.message)
+
     this.$nextTick(async () => {
-      this.showMessage(this.$route.query.status, this.$route.query.message)
-  
       try {
         this.$auth.setUserToken(this.$route.query.token)
         this.$auth.setUser(await this.getUser())
       } catch (e) {
         console.log(e.message)
       }
-  
-      this.$refs.redirect.$el.click()
     })
+  
+    this.$refs.redirect.$el.click()
   },
   methods: {
     showMessage(status, message) {
