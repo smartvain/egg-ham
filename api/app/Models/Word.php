@@ -14,6 +14,13 @@ class Word extends Model
         'id'
     ];
 
+    protected $hidden = [
+        'id',
+        'user_id',
+        'created_at',
+        'updated_at'
+    ];
+
     public function store($word)
     {
         $this->fill($word)->save();
