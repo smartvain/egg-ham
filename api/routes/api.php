@@ -36,9 +36,8 @@ Route::post('translate',       [DeepLController::class, 'translate'        ]);
 Route::post('character/count', [DeepLController::class, 'getCharacterCount']);
 
 Route::group(['middleware' => ['session'], 'prefix' => 'oauth'], function () {
-    Route::get('{provider}/redirect', [LoginController::class, 'socialRedirect'       ]);
-    Route::get('google/callback',     [LoginController::class, 'handleGoogleCallback' ]);
-    Route::get('twitter/callback',    [LoginController::class, 'handleTwitterCallback']);
+    Route::get('{provider}/redirect', [LoginController::class, 'socialRedirect'   ]);
+    Route::get('{provider}/callback', [LoginController::class, 'handleSnsCallback']);
 });
 
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {

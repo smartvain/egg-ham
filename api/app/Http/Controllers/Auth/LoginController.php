@@ -36,11 +36,16 @@ class LoginController extends Controller
         return compact('token', 'message', 'status');
     }
 
-    public function handleGoogleCallback()
+    public function handleSnsCallback($provider, Request $request)
     {
-        $provider   = 'google';
-        $socialUser = Socialite::driver($provider)->stateless()->user();
-        $messages   = $this->getGoogleLoginMessages();
+        if ($provider === 'google') {
+            $socialUser = Socialite::driver($provider)->stateless()->user();
+            $messages   = $this->getGoogleLoginMessages();
+        } elseif ($provider === 'twitter') {
+            $socialUser = Socialite::driver($provider)->user();
+            $messages   = $this->getTwitterLoginMessages();
+        }
+
         $user = User::firstOrCreate(['email' => $socialUser->getEmail()], [
             'name'          => $socialUser->getName(),
             'avatar'        => $socialUser->getAvatar(),
@@ -49,35 +54,11 @@ class LoginController extends Controller
         ]);
 
         $user->markEmailAsVerified();
-
-        $token = $user->createToken($provider)->plainTextToken;
-
-        return [
-            'token'   => $token,
-            'message' => $messages['success']
-        ];
-    }
-
-    public function handleTwitterCallback()
-    {
-        $provider   = 'twitter';
-        $socialUser = Socialite::driver($provider)->user();
-        $messages   = $this->getTwitterLoginMessages();
-        $user = User::firstOrCreate(['email' => $socialUser->getEmail()], [
-            'name'          => $socialUser->getName(),
-            'avatar'        => $socialUser->getAvatar(),
-            'provider_id'   => $socialUser->getId(),
-            'provider_name' => $provider
-        ]);
-
-        $user->markEmailAsVerified();
-
-        $token = $user->createToken($provider)->plainTextToken;
-
-        return [
-            'token'   => $token,
-            'message' => $messages['success']
-        ];
+        $token   = $user->createToken($provider)->plainTextToken;
+        $status  = 'success';
+        $message = $messages[$status];
+        
+        return compact('token', 'message', 'status');
     }
 
     public function user(Request $request)
