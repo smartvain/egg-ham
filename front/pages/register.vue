@@ -26,115 +26,118 @@
         <v-card-text>
           <v-card-title class="text-h5 font-weight-bold">アカウント作成</v-card-title>
 
-          <ValidationObserver v-slot="{ passes, validate }">
-            <ValidationProvider
-              v-slot="{ errors }"
-              rules="required|max:20"
-              name="メールアドレス"
-              mode="passive"
-            >
-              <v-text-field
-                v-model="form.email"
+          <ValidationObserver v-slot="{ passes, validate }" @submit.prevent>
+            <form>
+              <ValidationProvider
+                v-slot="{ errors }"
+                rules="required|max:20"
+                name="メールアドレス"
+                mode="passive"
+              >
+                <v-text-field
+                  v-model="form.email"
+                  :class="inputMt"
+                  append-icon="mdi-email"
+                  label="メールアドレス"
+                  type="text"
+                  counter="20"
+                  outlined dense
+                  :error-messages="errors"
+                />
+              </ValidationProvider>
+
+              <ValidationProvider
+                v-slot="{ errors }"
+                rules="required|max:20|confirmed:confirmPass"
+                name="パスワード"
+                mode="passive"
+              >
+                <v-text-field
+                  v-model="form.password"
+                  :class="inputMt"
+                  label="パスワード"
+                  counter="20"
+                  outlined dense
+                  :append-icon="passwordIcon"
+                  :type="passwordType"
+                  :error-messages="errors"
+                  @click:append="togglePasswordVisualization"
+                />
+              </ValidationProvider>
+
+              <ValidationProvider
+                v-slot="{ errors }"
+                vid="confirmPass"
+                rules="required|max:20"
+                name="パスワード確認用"
+                mode="passive"
+              >
+                <v-text-field
+                  v-model="form.confirm"
+                  :class="inputMt"
+                  label="パスワード確認用"
+                  counter="20"
+                  outlined dense
+                  :append-icon="confirmPasswordIcon"
+                  :type="confirmPasswordType"
+                  :error-messages="errors"
+                  @click:append="toggleConfirmPasswordVisualization"
+                />
+              </ValidationProvider>
+
+              <v-btn
+                type="submit"
+                color="primary"
+                class="font-weight-bold"
                 :class="inputMt"
-                append-icon="mdi-email"
-                label="メールアドレス"
-                type="text"
-                counter="20"
-                outlined dense
-                :error-messages="errors"
-              />
-            </ValidationProvider>
-
-            <ValidationProvider
-              v-slot="{ errors }"
-              rules="required|max:20|confirmed:confirmPass"
-              name="パスワード"
-              mode="passive"
-            >
-              <v-text-field
-                v-model="form.password"
-                :class="inputMt"
-                label="パスワード"
-                counter="20"
-                outlined dense
-                :append-icon="passwordIcon"
-                :type="passwordType"
-                :error-messages="errors"
-                @click:append="togglePasswordVisualization"
-              />
-            </ValidationProvider>
-
-            <ValidationProvider
-              v-slot="{ errors }"
-              vid="confirmPass"
-              rules="required|max:20"
-              name="パスワード確認用"
-              mode="passive"
-            >
-              <v-text-field
-                v-model="form.confirm"
-                :class="inputMt"
-                label="パスワード確認用"
-                counter="20"
-                outlined dense
-                :append-icon="confirmPasswordIcon"
-                :type="confirmPasswordType"
-                :error-messages="errors"
-                @click:append="toggleConfirmPasswordVisualization"
-              />
-            </ValidationProvider>
-
-            <v-btn
-              class="font-weight-bold"
-              color="primary"
-              :class="inputMt"
-              :loading="loading.register"
-              rounded
-              @click="!isRequested ? validate().then(passes(register)) : validate().then(passes(resend))"
-            >
-              <span>{{ !isRequested ? 'アカウントを作成' : 'メールをもう一度送る' }}</span>
-            </v-btn>
-            
-            <v-row align-content="center" justify="center" class="my-3">
-              <v-col cols="5" class="mt-3"><v-divider /></v-col>
-
-              <v-col cols="2">
-                <span class="text-subtitle-1">または</span>
-              </v-col>
-
-              <v-col cols="5" class="mt-3"><v-divider /></v-col>
-            </v-row>
-
-            <v-btn
-              class="text-capitalize caption"
-              color="#00ACEE"
-              height="48px"
-              rounded dark depressed block
-            >
-              <v-img
-                class="mr-4"
-                :src="require('~/assets/img/twitter_logo_white.png')"
-                max-width="24"
-              />
-              twitterでログイン
-            </v-btn>
-
-            <v-btn
-              class="text-capitalize caption mt-5"
-              style="border-color: #979797"
-              height="48px"
-              :loading="loading.googleLogin"
-              rounded outlined block
-              @click="googleLogin()"
-            >
-              <v-img
-                class="mr-4"
-                src="https://madeby.google.com/static/images/google_g_logo.svg"
-                max-width="24"
-              />
-              Googleでログイン
-            </v-btn>
+                :loading="loading.register"
+                rounded
+                @click="!isRequested ? validate().then(passes(register)) : validate().then(passes(resend))"
+              >
+                <span>{{ !isRequested ? 'アカウントを作成' : 'メールをもう一度送る' }}</span>
+              </v-btn>
+            </form>
           </ValidationObserver>
+            
+          <v-row align-content="center" justify="center" class="my-3">
+            <v-col cols="5" class="mt-3"><v-divider /></v-col>
+
+            <v-col cols="2">
+              <span class="text-subtitle-1">または</span>
+            </v-col>
+
+            <v-col cols="5" class="mt-3"><v-divider /></v-col>
+          </v-row>
+
+          <v-btn
+            class="text-capitalize caption"
+            color="#00ACEE"
+            height="48px"
+            rounded dark depressed block
+          >
+            <v-img
+              class="mr-4"
+              :src="require('~/assets/img/twitter_logo_white.png')"
+              max-width="24"
+            />
+            twitterでログイン
+          </v-btn>
+
+          <v-btn
+            class="text-capitalize caption mt-5"
+            style="border-color: #979797"
+            height="48px"
+            :loading="loading.googleLogin"
+            rounded outlined block
+            @click="googleLogin()"
+          >
+            <v-img
+              class="mr-4"
+              src="https://madeby.google.com/static/images/google_g_logo.svg"
+              max-width="24"
+            />
+            Googleでログイン
+          </v-btn>
         </v-card-text>
       </v-card>
     </v-col>
