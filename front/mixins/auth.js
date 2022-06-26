@@ -34,7 +34,7 @@ export default {
     logout() {
       try {
         this.$auth.logout()
-        this.$toast.error('ログアウトしました。')
+        this.$toast.show('ログアウトしました。')
       } catch (e) {
         this.$toast.error('ログアウトに失敗しました。時間をおいて再度お試し下さい。')
       }
