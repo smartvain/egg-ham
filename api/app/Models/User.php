@@ -47,6 +47,11 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    public function words()
+    {
+        return $this->hasMany(Word::class);
+    }
+    
     public function createUser($form)
     {
         return $this->create($form);
