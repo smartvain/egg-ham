@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Word;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -35,8 +36,15 @@ class VerificationController extends Controller
             $user->markEmailAsVerified();
 
             if ($this->isAfterChangingEmail($request)) {
+                $oldUser = $this->user->find($request->oldUserId);
+                $words   = $oldUser->words->each(function ($word) use ($user) {
+                    $word->user_id = $user->id;
+                });
+                $word = new Word();
+                $word->replace($words->toArray());
+                $oldUser->delete();
+
                 $token = $user->createToken('change_email')->plainTextToken;
-                $this->user->find($request->oldUserId)->delete();
             }
 
             $status  = 'success';
