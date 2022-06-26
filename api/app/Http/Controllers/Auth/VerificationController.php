@@ -41,7 +41,7 @@ class VerificationController extends Controller
                     $word->user_id = $user->id;
                 });
                 $word = new Word();
-                $word->replace($words->toArray());
+                $word->changeWordsInfo($words->toArray());
                 $oldUser->delete();
 
                 $token = $user->createToken('change_email')->plainTextToken;
