@@ -19,7 +19,7 @@ class Word extends Model
         $this->fill($word)->save();
     }
 
-    public function changeWordsInfo($words)
+    public function replace($words)
     {
         DB::transaction(function () use ($words) {
             foreach ($words as $word) {
