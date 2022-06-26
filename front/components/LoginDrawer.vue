@@ -57,7 +57,7 @@
           <form>
             <ValidationProvider
               v-slot="{ errors }"
-              rules="required|max:20"
+              rules="required|_email|max:20"
               name="メールアドレス"
               mode="passive"
             >
@@ -73,7 +73,7 @@
 
             <ValidationProvider
               v-slot="{ errors }"
-              rules="required|max:20"
+              rules="required|min:8|max:20"
               name="パスワード"
               mode="passive"
             >
@@ -123,7 +123,8 @@
           class="pa-0 mb-8"
           absolute bottom right plain small
         >
-          パスワードをお忘れの方<v-icon>mdi-chevron-right</v-icon>
+          パスワードをお忘れの方
+          <v-icon>mdi-chevron-right</v-icon>
         </v-btn>
 
         <v-btn
@@ -132,7 +133,8 @@
           absolute bottom right plain small
           @click="logout"
         >
-          ログアウト<v-icon>mdi-logout</v-icon>
+          ログアウト
+          <v-icon>mdi-logout</v-icon>
         </v-btn>
       </v-card-text>
     </v-card>
