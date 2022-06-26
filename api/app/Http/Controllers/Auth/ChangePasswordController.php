@@ -49,7 +49,7 @@ class ChangePasswordController extends Controller
             'error'   => [
                 'non_existent_user'     => 'ユーザーが存在しません。',
                 'mismatch_current_pass' => '現在のパスワードが違います。',
-                'mismatch_confirm_pass' => '確認パスワードが合いません。'
+                'mismatch_confirm_pass' => '確認パスワードが一致しませんでした。'
             ]
         ];
     }
