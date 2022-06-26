@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RegisterRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
@@ -16,16 +16,13 @@ class RegisterController extends Controller
         $this->user = $user;
     }
 
-    public function __invoke(Request $request)
+    public function __invoke(RegisterRequest $request)
     {
         $form     = $request->all();
         $user     = $this->user->where('email', $form['email'])->first();
         $messages = $this->getMessages();
         
-        if ($form['password'] !== $form['confirm']) {
-            $status  = 'mismatch_confirm_pass';
-            $message = $messages['error'][$status];
-        } elseif ($user) {
+        if ($user) {
             $status  = 'registered';
             $message = $messages['error'][$status];
         } else {
@@ -43,8 +40,7 @@ class RegisterController extends Controller
         return [
             'success' => '入力されたメールアドレスに確認メールを送信しました。',
             'error'   => [
-                'mismatch_confirm_pass' => '確認パスワードが一致しませんでした。',
-                'registered'            => "このメールアドレスはすでに登録されています。\r\n確認メールを再送信しますか？",
+                'registered' => "このメールアドレスはすでに登録されています。\r\n確認メールを再送信しますか？",
             ]
         ];
     }

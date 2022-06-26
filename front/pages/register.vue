@@ -73,7 +73,7 @@
                 mode="passive"
               >
                 <v-text-field
-                  v-model="form.confirm"
+                  v-model="form.password_confirmation"
                   :class="inputMt"
                   label="パスワード確認用"
                   counter="20"
@@ -158,7 +158,7 @@ export default {
       name: null,
       email: null,
       password: null,
-      confirm: null,
+      password_confirmation: null,
     },
     loading: {
       register: false,
