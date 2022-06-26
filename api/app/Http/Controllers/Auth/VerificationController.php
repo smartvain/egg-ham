@@ -60,7 +60,7 @@ class VerificationController extends Controller
 
     public function resend(Request $request)
     {
-        $user     = $this->user->find($request->user()->id);
+        $user     = $this->user->where('email', $request->email)->first();
         $messages = $this->getResendMessages();
 
         if ($user->hasVerifiedEmail()) {
