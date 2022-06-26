@@ -21,7 +21,7 @@ class Word extends Model
 
     public function store($word)
     {
-        $this->fill($word)->save();
+        $this->create($word);
     }
 
     public function replace($words)

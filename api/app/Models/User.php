@@ -64,6 +64,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->find($userId)->fill($userInfo)->save();
     }
 
+    public function remove($user)
+    {
+        $user->delete();
+    }
+
     public function sendEmailVerificationNotification()
     {
         $this->notify(new VerifyEmailNotification);

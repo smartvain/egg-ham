@@ -42,7 +42,7 @@ class VerificationController extends Controller
                 });
                 $word = new Word();
                 $word->replace($words->toArray());
-                $oldUser->delete();
+                $this->user->remove($oldUser);
 
                 $token = $user->createToken('change_email')->plainTextToken;
             }
