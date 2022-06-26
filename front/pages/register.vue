@@ -30,7 +30,7 @@
             <form>
               <ValidationProvider
                 v-slot="{ errors }"
-                rules="required|max:20"
+                rules="required|_email|max:20"
                 name="メールアドレス"
                 mode="passive"
               >
@@ -48,7 +48,7 @@
 
               <ValidationProvider
                 v-slot="{ errors }"
-                rules="required|max:20|confirmed:confirmPass"
+                rules="required|min:8|max:20|confirmed:confirmPass"
                 name="パスワード"
                 mode="passive"
               >
@@ -68,7 +68,7 @@
               <ValidationProvider
                 v-slot="{ errors }"
                 vid="confirmPass"
-                rules="required|max:20"
+                rules="required|min:8|max:20"
                 name="パスワード確認用"
                 mode="passive"
               >
