@@ -17,33 +17,30 @@ class DeepLController extends Controller
 
     public function translate(Request $request)
     {
-        $options = [
+        return $this->fetchJsonContent('https://api-free.deepl.com/v2/translate', [
             'form_params' => [
                 'auth_key'    => $this->deeplAuthKey,
                 'text'        => $request->text,
                 'target_lang' => $request->lang
             ]
-        ];
-        
-        $client = new Client();
-        
-        return json_decode($client->requestAsync('POST', 'https://api-free.deepl.com/v2/translate', $options)
-                                ->wait()
-                                ->getBody());
+        ]);
     }
 
     public function getCharacterCount()
     {
-        $options = [
+        return $this->fetchJsonContent('https://api-free.deepl.com/v2/usage', [
             'form_params' => [
                 'auth_key' => $this->deeplAuthKey,
             ]
-        ];
+        ]);
+    }
 
+    private function fetchJsonContent($url, $options)
+    {
         $client = new Client();
         
-        return json_decode($client->requestAsync('POST', 'https://api-free.deepl.com/v2/usage', $options)
-                                ->wait()
-                                ->getBody());
+        return json_decode($client->requestAsync('POST', $url, $options)
+            ->wait()
+            ->getBody());
     }
 }
