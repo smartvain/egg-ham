@@ -16,28 +16,37 @@ class RegisterController extends Controller
         $this->user = $user;
     }
 
-    public function register(Request $request)
+    public function __invoke(Request $request)
     {
-        $form = $request->all();
-        $user = $this->user->where('email', $form['email'])->first();
-        
-        $successMessage = '入力されたメールアドレスに確認メールを送信しました。';
-        $errorMessage   = [
-            'registered' => 'このメールアドレスはすでに登録されています。確認メールを再送信しました。',
-            'mismatch'   => 'パスワードが一致しませんでした。'
-        ];
+        $form     = $request->all();
+        $user     = $this->user->where('email', $form['email'])->first();
+        $messages = $this->getMessages();
         
         if ($form['password'] !== $form['confirm']) {
-            $message = $errorMessage['mismatch'];
+            $status  = 'mismatch_confirm_pass';
+            $message = $messages['error'][$status];
         } elseif ($user) {
             $user->sendEmailVerificationNotification();
-            $message = $errorMessage['registered'];
+            $status  = 'registered';
+            $message = $messages['error'][$status];
         } else {
-            $message          = $successMessage;
             $form['password'] = Hash::make($form['password']);
             $this->user->store($form)->sendEmailVerificationNotification();
+            $status  = 'success';
+            $message = $messages[$status];
         }
         
-        return compact('message');
+        return compact('message', 'status');
+    }
+
+    private function getMessages()
+    {
+        return [
+            'success' => '入力されたメールアドレスに確認メールを送信しました。',
+            'error'   => [
+                'mismatch_confirm_pass' => '確認パスワードが一致しませんでした。',
+                'registered'            => 'このメールアドレスはすでに登録されています。確認メールを再送信しました。',
+            ]
+        ];
     }
 }
