@@ -202,11 +202,6 @@ export default {
       }
       callback()
     },
-    togglePasswordVisualization() {
-      const isPasswordType = this.passwordType === 'password'
-      this.passwordType = isPasswordType ? 'text' : 'password'
-      this.passwordIcon = isPasswordType ? 'mdi-eye-off' : 'mdi-eye'
-    },
     hideDrawer(e) {
       if(e.target.className === "v-overlay__scrim") {
         this.$emit('update:show', false);

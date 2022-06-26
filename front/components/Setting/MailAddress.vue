@@ -8,7 +8,7 @@
       :append-icon="currentPasswordIcon"
       :type="currentPasswordType"
       outlined
-      @click:append="togglePasswordVisualization"
+      @click:append="toggleCurrentPasswordVisualization"
     />
 
     <v-btn plain small>
@@ -38,7 +38,10 @@
 </template>
 
 <script>
+import Mixin from '~/mixins/mixin.js'
+
 export default {
+  mixins: [ Mixin ],
   props: {
     loading: { type: Boolean, default: false }
   },
@@ -47,14 +50,7 @@ export default {
     newEmail: null,
     currentPasswordIcon: 'mdi-eye-off',
     currentPasswordType: 'password',
-  }),
-  methods: {
-    togglePasswordVisualization() {
-      const isPasswordType = this.currentPasswordType === 'password'
-      this.currentPasswordType = isPasswordType ? 'text' : 'password'
-      this.currentPasswordIcon = isPasswordType ? 'mdi-eye-off' : 'mdi-eye'
-    },
-  }
+  })
 }
 </script>
 

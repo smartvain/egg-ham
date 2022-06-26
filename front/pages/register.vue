@@ -209,16 +209,6 @@ export default {
       }
 
       this.loading.register = false
-    },
-    togglePasswordVisualization() {
-      const isPasswordType = this.passwordType === 'password'
-      this.passwordType = isPasswordType ? 'text' : 'password'
-      this.passwordIcon = isPasswordType ? 'mdi-eye-off' : 'mdi-eye'
-    },
-    toggleConfirmPasswordVisualization() {
-      const isConfirmPasswordType = this.confirmPasswordType === 'password'
-      this.confirmPasswordType = isConfirmPasswordType ? 'text' : 'password'
-      this.confirmPasswordIcon = isConfirmPasswordType ? 'mdi-eye-off' : 'mdi-eye'
     }
   }
 }

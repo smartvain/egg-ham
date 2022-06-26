@@ -49,7 +49,10 @@
 </template>
 
 <script>
+import Mixin from '~/mixins/mixin.js'
+
 export default {
+  mixins: [ Mixin ],
   props: {
     loading: { type: Boolean, default: false }
   },
@@ -65,21 +68,6 @@ export default {
     confirmPasswordType: 'password'
   }),
   methods: {
-    toggleCurrentPasswordVisualization() {
-      const isCurrentPasswordType = this.currentPasswordType === 'password'
-      this.currentPasswordType    = isCurrentPasswordType ? 'text' : 'password'
-      this.currentPasswordIcon    = isCurrentPasswordType ? 'mdi-eye-off' : 'mdi-eye'
-    },
-    toggleNewPasswordVisualization() {
-      const isNewPasswordType = this.newPasswordType === 'password'
-      this.newPasswordType    = isNewPasswordType ? 'text' : 'password'
-      this.newPasswordIcon    = isNewPasswordType ? 'mdi-eye-off' : 'mdi-eye'
-    },
-    toggleConfirmPasswordVisualization() {
-      const isConfirmPasswordType = this.confirmPasswordType === 'password'
-      this.confirmPasswordType    = isConfirmPasswordType ? 'text' : 'password'
-      this.confirmPasswordIcon    = isConfirmPasswordType ? 'mdi-eye-off' : 'mdi-eye'
-    },
     initPasswords() {
       this.currentPass = null
       this.newPass     = null
