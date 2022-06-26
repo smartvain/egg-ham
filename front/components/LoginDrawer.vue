@@ -174,6 +174,9 @@ export default {
     }
   },
   methods: {
+    showMessage(status, message) {
+      status === 'success' ? this.$toast.show(message) : this.$toast.error(message)
+    },
     async login() {
       this.loading.login = true
       
@@ -182,8 +185,7 @@ export default {
           email: this.email,
           password: this.password
         }})
-        this.$toast.show(res.data.message)
-
+        this.showMessage(res.data.status, res.data.message)
         this.$emit('update:show', false)
       } catch (e) {
         console.log(e.message)
