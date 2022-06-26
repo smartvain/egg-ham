@@ -15,5 +15,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/insert/toefl/words', [ToeflWordController::class, 'insertToeflWords']);
-Route::get('/', [YoutubeController::class, 'getCaptions']);
+Route::get('/insert/toefl/words', ToeflWordController::class);

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class ToeflWord extends Model
 {
@@ -18,4 +19,13 @@ class ToeflWord extends Model
         'created_at',
         'updated_at'
     ];
+
+    public function store($words)
+    {
+        DB::transaction(function () use ($words) {
+            foreach ($words as $word) {
+                $this->firstOrCreate(['text' => $word[1]]);
+            }
+        });
+    }
 }

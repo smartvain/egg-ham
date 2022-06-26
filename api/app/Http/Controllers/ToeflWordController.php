@@ -4,65 +4,41 @@ namespace App\Http\Controllers;
 
 use App\Models\ToeflWord;
 use GuzzleHttp\Client;
-use Illuminate\Support\Facades\DB;
 
 class ToeflWordController extends Controller
 {
-    public function getToeflWords()
-    {
-        return ToeflWord::get();
-    }
+    private $toeflWord;
     
-    public function insertToeflWords()
+    public function __construct(ToeflWord $toeflWord)
     {
-        $words = $this->fetchToeflWords();
-
-        DB::transaction(function () use ($words) {
-            foreach ($words as $word) {
-                $existWord = ToeflWord::where('text', $word[2])->first();
-                if ($existWord) {continue;}
-
-                $toeflWord = new ToeflWord();
-                $toeflWord->fill([
-                    'text' => $word[2],
-                    'url'  => $word[1]
-                ])->save();
-            }
-        });
-    }
-    
-    private function fetchToeflWords()
-    {
-        $res = $this->fetchUrlContent('https://uwl.weblio.jp/toefl-word-list');
-        $table = $this->extractToeflWordTable($res);
-        $words = $this->extractToeflWord(current(current($table)));
-
-        return $words;
+        $this->toeflWord = $toeflWord;
     }
 
-    private function fetchUrlContent($url)
+    public function __invoke()
     {
         $client = new Client();
-        
-        return $client->requestAsync('GET', $url)
-                    ->wait()
-                    ->getBody()
-                    ->getContents();
-    }
+        $res    = $client->requestAsync('GET', 'https://uwl.weblio.jp/toefl-word-list')
+            ->wait()
+            ->getBody()
+            ->getContents();
 
-    private function extractToeflWordTable($content)
+        $el    = $this->extractToeflWordsElement($res);
+        $words = $this->extractToeflWords(current(current($el)));
+        
+        $this->toeflWord->store($words);
+    }
+    
+    private function extractToeflWordsElement($content)
     {
         $regex = '/<table>.*<\/table>/';
         preg_match_all($regex, $content, $matches);
-
         return $matches;
     }
 
-    private function extractToeflWord($table)
+    private function extractToeflWords($el)
     {
-        $regex = '/<a title=".*?意味" href="([^"]*)"[^>]*>(.*?)<\/a>/';
-        preg_match_all($regex, $table, $matches, PREG_SET_ORDER);
-
+        $regex = '/<a title=".*?意味" href="[^"]*"[^>]*>(.*?)<\/a>/';
+        preg_match_all($regex, $el, $matches, PREG_SET_ORDER);
         return $matches;
     }
 }
