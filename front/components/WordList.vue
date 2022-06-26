@@ -148,10 +148,8 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import Mixin from '~/mixins/mixin.js'
 
 export default {
-  mixins: [ Mixin ],
   props: {
     filteredItems: { type: Array, default: () => [] },
   },

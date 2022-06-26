@@ -65,10 +65,8 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import Mixin from '~/mixins/mixin.js'
 
 export default {
-  mixins: [ Mixin ],
   data: () => ({
     textField: {
       bgColor: null,
@@ -148,6 +146,19 @@ export default {
     addChartData(words) {
       this.$store.commit('setLabels', Object.keys(words).map(key => key))
       this.$store.commit('setRates', Object.keys(words).map(key => words[key]))
+    },
+    calcTime(seconds) {
+      let hour = String(Math.floor(seconds / 3600))
+      let min  = String(Math.floor(seconds % 3600 / 60))
+      let rem  = String(Math.floor(seconds % 60))
+      if (hour < 10) { hour = hour.padStart(2, '0') }
+      if (min < 10) { min = min.padStart(2, '0') }
+      if (rem < 10) { rem = rem.padStart(2, '0') }
+
+      let time = `${hour}:${min}:${rem}`
+      if (hour === '00') { time = `${min}:${rem}` }
+
+      return time
     },
     validateUrl(errorMessage) {
       if (errorMessage.length > 0) { this.$toast.error(errorMessage) }

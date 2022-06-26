@@ -23,11 +23,9 @@
 <script>
 import WordList from '~/components/WordList.vue'
 import Setting from '~/components/Setting/SettingMenu.vue'
-import Mixin from '~/mixins/mixin.js'
 
 export default {
   components: { WordList, Setting },
-  mixins: [ Mixin ],
   middleware: 'auth',
   async asyncData({ $axios, $auth }) {
     return { words: await $axios.$get('words', { params: {user_id: $auth.$state.user.id} }) }
