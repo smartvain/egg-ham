@@ -92,9 +92,21 @@
                 :class="inputMt"
                 :loading="loading.register"
                 rounded
-                @click="!isRequested ? validate().then(passes(register)) : validate().then(passes(resend))"
+                @click="validate().then(passes(register))"
               >
-                <span>{{ !isRequested ? 'アカウントを作成' : 'メールをもう一度送る' }}</span>
+                アカウントを作成
+              </v-btn>
+
+              <v-btn
+                v-if="isRequested"
+                color="primary"
+                class="font-weight-bold ml-3"
+                :class="inputMt"
+                :loading="loading.register"
+                rounded
+                @click="validate().then(passes(resend))"
+              >
+                <span>メールをもう一度送る</span>
               </v-btn>
             </form>
           </ValidationObserver>
@@ -185,7 +197,7 @@ export default {
 
         if (res.status === 'registered') {
           if (confirm(res.message)) {
-            this.resend()
+            await this.resend()
           }
         } else {
           this.showMessage(res.status, res.message)
