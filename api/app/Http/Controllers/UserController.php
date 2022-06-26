@@ -14,11 +14,6 @@ class UserController extends Controller
         $this->user = $user;
     }
     
-    public function getUsers()
-    {
-        return $this->user->get();
-    }
-
     public function changeName(Request $request)
     {
         $isSuccess = $this->user->replace($request->user()->id, $request->input());
@@ -39,7 +34,7 @@ class UserController extends Controller
     {
         return [
             'success' => '名前を変更しました。',
-            'error'   => '名前の変更に失敗しました。'
+            'error'   => '名前の変更に失敗しました。時間をおいてもう一度お試し下さい。'
         ];
     }
 }
