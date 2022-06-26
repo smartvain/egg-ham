@@ -140,9 +140,10 @@
 
 <script>
 import AuthMixin from '~/mixins/auth.js'
+import Mixin from '~/mixins/mixin.js'
 
 export default {
-  mixins: [ AuthMixin ],
+  mixins: [ AuthMixin, Mixin ],
   props: {
     show: { type: Boolean, default: false }
   },
@@ -174,9 +175,6 @@ export default {
     }
   },
   methods: {
-    showMessage(status, message) {
-      status === 'success' ? this.$toast.show(message) : this.$toast.error(message)
-    },
     async login() {
       this.loading.login = true
       

@@ -20,8 +20,10 @@
 
 <script>
 import { VueLoading } from 'vue-loading-template'
+import Mixin from '~/mixins/mixin.js'
 
 export default {
+  mixins: [ Mixin ],
   components: { VueLoading },
   layout: 'oauth',
   head() {
@@ -40,9 +42,6 @@ export default {
     })
   },
   methods: {
-    showMessage(status, message) {
-      status === 'success' ? this.$toast.show(message) : this.$toast.error(message)
-    },
     async getToken() {
       const res = await this.$axios.$get('oauth/google/callback', { params: this.$route.query })
       this.showMessage('success', res.message)

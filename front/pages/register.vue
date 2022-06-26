@@ -146,8 +146,10 @@
 </template>
 
 <script>
+import Mixin from '~/mixins/mixin.js'
 
 export default {
+  mixins: [ Mixin ],
   data: () => ({
     form: {
       name: null,
@@ -170,9 +172,6 @@ export default {
     return { title: 'アカウント作成' }
   },
   methods: {
-    showMessage(status, message) {
-      status === 'success' ? this.$toast.show(message) : this.$toast.error(message)
-    },
     async register() {
       this.loading.register = true
       

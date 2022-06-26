@@ -18,8 +18,10 @@
 
 <script>
 import { VueLoading } from 'vue-loading-template'
+import Mixin from '~/mixins/mixin.js'
 
 export default {
+  mixins: [ Mixin ],
   components: { VueLoading },
   layout: 'oauth',
   head() {
@@ -47,9 +49,6 @@ export default {
     async getUser() {
       const res = await this.$axios.$get('user')
       return res.user
-    },
-    showMessage(message) {
-      this.$toast.show(message)
     }
   }
 }

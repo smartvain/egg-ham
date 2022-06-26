@@ -51,8 +51,10 @@ import UserInfo from '~/components/Setting/UserInfo.vue'
 import MailAddress from '~/components/Setting/MailAddress.vue'
 import Password from '~/components/Setting/Password.vue'
 import SiteLanguage from '~/components/Setting/SiteLanguage.vue'
+import Mixin from '~/mixins/mixin.js'
 
 export default {
+  mixins: [ Mixin ],
   components: {
     UserInfo, MailAddress, Password, SiteLanguage
   },
@@ -71,9 +73,6 @@ export default {
     selectedItem: null
   }),
   methods: {
-    showMessage(status, message) {
-      status === 'success' ? this.$toast.show(message) : this.$toast.error(message)
-    },
     async getUser() {
       const res = await this.$axios.$get('user')
       return res.user
