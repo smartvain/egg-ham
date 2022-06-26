@@ -182,8 +182,16 @@ export default {
       this.form.name = this.form.email
       try {
         const res = await this.$axios.$post('register', this.form)
-        this.isRequested = true
-        this.showMessage(res.status, res.message)
+
+        if (res.status === 'registered') {
+          if (confirm(res.message)) {
+            this.resend()
+          }
+        } else {
+          this.showMessage(res.status, res.message)
+          this.isRequested = true
+        }
+        
       } catch (e) {
         console.log(e.message)
       }

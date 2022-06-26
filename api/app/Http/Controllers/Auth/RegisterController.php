@@ -26,7 +26,6 @@ class RegisterController extends Controller
             $status  = 'mismatch_confirm_pass';
             $message = $messages['error'][$status];
         } elseif ($user) {
-            $user->sendEmailVerificationNotification();
             $status  = 'registered';
             $message = $messages['error'][$status];
         } else {
@@ -45,7 +44,7 @@ class RegisterController extends Controller
             'success' => '入力されたメールアドレスに確認メールを送信しました。',
             'error'   => [
                 'mismatch_confirm_pass' => '確認パスワードが一致しませんでした。',
-                'registered'            => 'このメールアドレスはすでに登録されています。確認メールを再送信しました。',
+                'registered'            => 'このメールアドレスはすでに登録されています。確認メールを再送信しますか？',
             ]
         ];
     }
