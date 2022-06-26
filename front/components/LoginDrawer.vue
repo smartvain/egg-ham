@@ -191,43 +191,12 @@ export default {
 
       this.loading.login = false
     },
-    async googleLogin() {
-      this.loading.googleLogin = true
-
-      try {
-        await this.$auth.loginWith('google')
-      } catch (e) {
-        console.log(e.message)
-      }
-
-      this.loading.googleLogin = false
-    },
-    twitterLogin() {
-      this.loading.twitterLogin = true
-
-      // try {
-      //   // await this.$auth.loginWith('twitter')
-      //   const redirectUrl = await this.$axios.$get('oauth/twitter/redirect')
-      //   window.location.href = redirectUrl
-      // } catch (e) {
-      //   console.log(e.message)
-      // }
-
-      this.loading.twitterLogin = false
-    },
     async beforeLogin(callback) {
       const isValid = await this.$refs.loginValidation.validate()
       if (!isValid) { return }
 
       if (this.$auth.loggedIn) {
-        this.$toast.show('すでにログインしています。')
-        return
-      }
-      callback()
-    },
-    beforeSnsLogin(callback) {
-      if (this.$auth.loggedIn) {
-        this.$toast.show('すでにログインしています。')
+        this.$toast.error('すでにログインしています。')
         return
       }
       callback()

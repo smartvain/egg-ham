@@ -113,7 +113,9 @@
             class="text-capitalize caption"
             color="#00ACEE"
             height="48px"
+            :loading="loading.twitterLogin"
             rounded dark depressed block
+            @click="beforeSnsLogin(twitterLogin)"
           >
             <v-img
               class="mr-4"
@@ -129,7 +131,7 @@
             height="48px"
             :loading="loading.googleLogin"
             rounded outlined block
-            @click="googleLogin()"
+            @click="beforeSnsLogin(googleLogin)"
           >
             <v-img
               class="mr-4"
@@ -146,10 +148,11 @@
 </template>
 
 <script>
+import AuthMixin from '~/mixins/auth.js'
 import Mixin from '~/mixins/mixin.js'
 
 export default {
-  mixins: [ Mixin ],
+  mixins: [ AuthMixin, Mixin ],
   data: () => ({
     form: {
       name: null,
@@ -159,7 +162,8 @@ export default {
     },
     loading: {
       register: false,
-      googleLogin: false
+      googleLogin: false,
+      twitterLogin: false
     },
     inputMt: 'mt-3',
     isRequested: false,
@@ -197,22 +201,6 @@ export default {
       }
 
       this.loading.register = false
-    },
-    async googleLogin() {
-      if (this.$auth.loggedIn) {
-        this.$toast.show('すでにログインしています。')
-        return
-      }
-      
-      this.loading.googleLogin = true
-
-      try {
-        await this.$auth.loginWith('google')
-      } catch (e) {
-        this.$toast.error(e.message)
-      }
-
-      this.loading.googleLogin = false
     },
     togglePasswordVisualization() {
       const isPasswordType = this.passwordType === 'password'
