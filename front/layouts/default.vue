@@ -28,7 +28,7 @@
         </template>
 
         <v-list>
-          <v-list-item @click="about = true">
+          <v-list-item @click="about = !dbout">
             <v-list-item-title>サイト概要</v-list-item-title>
           </v-list-item>
 
@@ -36,7 +36,7 @@
             <v-list-item-title>{{ page.title }}</v-list-item-title>
           </v-list-item>
 
-          <v-list-item @click="drawer = true">
+          <v-list-item @click="drawer = !drawer">
             <v-list-item-title>ログイン</v-list-item-title>
           </v-list-item>
 

@@ -3,6 +3,7 @@
     v-model="_show"
     :width="screenWidth <= 767 ? '100%' : '27%'"
     right temporary fixed
+    v-click-outside="hideDrawer"
   >
     <v-card class="px-2" height="100%" flat>
       <v-btn icon right fixed @click="$emit('update:show', false)">
@@ -205,6 +206,11 @@ export default {
       const isPasswordType = this.passwordType === 'password'
       this.passwordType = isPasswordType ? 'text' : 'password'
       this.passwordIcon = isPasswordType ? 'mdi-eye-off' : 'mdi-eye'
+    },
+    hideDrawer(e) {
+      if(e.target.className === "v-overlay__scrim") {
+        this.$emit('update:show', false);
+      }
     }
   }
 }
