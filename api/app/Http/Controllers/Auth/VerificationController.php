@@ -87,7 +87,7 @@ class VerificationController extends Controller
             'success' => 'メール認証に成功しました。',
             'error'   => [
                 'expired'  => '期限切れのURLです。',
-                'verified' => 'このメールアドレスはすでに確認済みです。'
+                'verified' => 'このメールアドレスはすでに認証済みです。'
             ]
         ];
     }
@@ -97,7 +97,7 @@ class VerificationController extends Controller
         return [
             'success' => '入力されたメールアドレスに確認メールを再送信しました。',
             'error'   => [
-                'verified' => 'このメールアドレスはすでに確認済みです。'
+                'verified' => 'このメールアドレスはすでに認証済みです。'
             ]
         ];
     }
