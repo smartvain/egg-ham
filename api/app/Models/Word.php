@@ -16,8 +16,7 @@ class Word extends Model
 
     public function store($word)
     {
-        $instance = new Word();
-        $instance->fill($word)->save();
+        $this->fill($word)->save();
     }
 
     public function changeWordsInfo($words)

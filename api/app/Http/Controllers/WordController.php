@@ -26,12 +26,11 @@ class WordController extends Controller
 
     public function saveWords(Request $request)
     {
-        $this->word->changeWordsInfo($request->words);
+        $this->word->replace($request->words);
     }
 
-    public function deleteWord($wordId)
+    public function removeWord($wordId)
     {
-        $word = $this->word->find($wordId);
-        $this->word->remove($word);
+        $this->word->remove($this->word->find($wordId));
     }
 }
