@@ -170,6 +170,9 @@ export default {
     return { title: 'アカウント作成' }
   },
   methods: {
+    showMessage(status, message) {
+      status === 'success' ? this.$toast.show(message) : this.$toast.error(message)
+    },
     async register() {
       this.loading.register = true
       
@@ -177,9 +180,9 @@ export default {
       try {
         const res = await this.$axios.$post('register', this.form)
         this.isRequested = true
-        this.$toast.show(res.message)
+        this.showMessage(res.status, res.message)
       } catch (e) {
-        this.$toast.error('アカウント登録に失敗しました。もう一度お試しください。')
+        console.log(e.message)
       }
 
       this.loading.register = false
@@ -189,10 +192,9 @@ export default {
       
       try {
         const res = await this.$axios.$get('email/resend', { params: this.form })
-        console.log(res)
-        this.$toast.show(res.message)
+        this.showMessage(res.status, res.message)
       } catch (e) {
-        this.$toast.error('リクエスト失敗')
+        console.log(e.message)
       }
 
       this.loading.register = false
