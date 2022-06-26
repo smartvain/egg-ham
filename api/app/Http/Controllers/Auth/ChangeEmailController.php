@@ -16,7 +16,7 @@ class ChangeEmailController extends Controller
         $this->user = $user;
     }
     
-    public function changeEmail(Request $request)
+    public function __invoke(Request $request)
     {
         $currentPass = $request->currentPass;
         $newEmail    = $request->newEmail;

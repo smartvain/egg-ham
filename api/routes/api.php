@@ -44,9 +44,9 @@ Route::group(['middleware' => ['session'], 'prefix' => 'oauth'], function () {
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::get('user', [LoginController::class, 'user']);
 
-    Route::put('user/name',     [UserController::class,           'changeName'    ]);
-    Route::put('user/email',    [ChangeEmailController::class,    'changeEmail'   ]);
-    Route::put('user/password', [ChangePasswordController::class, 'changePassword']);
+    Route::put('user/name',     [UserController::class, 'changeName']);
+    Route::put('user/email',    ChangeEmailController::class);
+    Route::put('user/password', ChangePasswordController::class);
     
     Route::get('words',            [WordController::class, 'getWords'  ]);
     Route::post('word',            [WordController::class, 'storeWord' ]);

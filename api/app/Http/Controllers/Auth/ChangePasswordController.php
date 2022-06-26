@@ -16,7 +16,7 @@ class ChangePasswordController extends Controller
         $this->user = $user;
     }
     
-    public function changePassword(Request $request)
+    public function __invoke(Request $request)
     {
         $currentPass = $request->currentPass;
         $newPass     = $request->newPass;
