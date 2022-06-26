@@ -54,10 +54,10 @@ import SiteLanguage from '~/components/Setting/SiteLanguage.vue'
 import Mixin from '~/mixins/mixin.js'
 
 export default {
-  mixins: [ Mixin ],
   components: {
     UserInfo, MailAddress, Password, SiteLanguage
   },
+  mixins: [ Mixin ],
   data: () => ({
     settingList: [
       { text: 'アカウント情報' },

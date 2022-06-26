@@ -22,8 +22,8 @@ import { VueLoading } from 'vue-loading-template'
 import Mixin from '~/mixins/mixin.js'
 
 export default {
-  mixins: [ Mixin ],
   components: { VueLoading },
+  mixins: [ Mixin ],
   layout: 'oauth',
   head() {
     return { title: '認証中' }

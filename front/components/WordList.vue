@@ -136,7 +136,7 @@
         </v-card-text>
       </template>
 
-      <template v-slot:[`footer.page-text`]="{ pageStart, pageStop, itemsLength }">
+      <template #[`footer.page-text`]="{ pageStart, pageStop, itemsLength }">
         <div v-if="itemsLength !== 0">
           {{ itemsLength }}件中： {{ pageStart }} 〜 {{ pageStop }}
         </div>

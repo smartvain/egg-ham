@@ -1,9 +1,9 @@
 <template>
   <v-navigation-drawer
     v-model="_show"
+    v-click-outside="hideDrawer"
     :width="screenWidth <= 767 ? '100%' : '27%'"
     right temporary fixed
-    v-click-outside="hideDrawer"
   >
     <v-card class="px-2" height="100%" flat>
       <v-btn icon right fixed @click="$emit('update:show', false)">
