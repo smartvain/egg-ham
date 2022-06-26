@@ -36,6 +36,8 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $hidden = [
         'remember_token',
+        'created_at',
+        'updated_at'
     ];
 
     /**
@@ -52,12 +54,12 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Word::class);
     }
     
-    public function createUser($form)
+    public function store($form)
     {
         return $this->create($form);
     }
 
-    public function changeUserInfo($userId, $userInfo)
+    public function replace($userId, $userInfo)
     {
         return $this->find($userId)->fill($userInfo)->save();
     }

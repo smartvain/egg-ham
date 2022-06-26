@@ -35,7 +35,7 @@ class RegisterController extends Controller
         } else {
             $message          = $successMessage;
             $form['password'] = Hash::make($form['password']);
-            $this->user->createUser($form)->sendEmailVerificationNotification();
+            $this->user->store($form)->sendEmailVerificationNotification();
         }
         
         return compact('message');

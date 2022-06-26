@@ -34,7 +34,7 @@ class ChangePasswordController extends Controller
             $status  = 'mismatch_confirm_pass';
             $message = $messages['error'][$status];
         } else {
-            $this->user->changeUserInfo($user->id, ['password' => Hash::make($newPass)]);
+            $this->user->replace($user->id, ['password' => Hash::make($newPass)]);
             $status  = 'success';
             $message = $messages[$status];
         }

@@ -16,12 +16,12 @@ class UserController extends Controller
     
     public function getUsers()
     {
-        return User::get();
+        return $this->user->get();
     }
 
     public function changeName(Request $request)
     {
-        $isSuccess = $this->user->changeUserInfo($request->user()->id, $request->input());
+        $isSuccess = $this->user->replace($request->user()->id, $request->input());
         $messages  = $this->getMessages();
         
         if (!$isSuccess) {

@@ -37,7 +37,7 @@ class ChangeEmailController extends Controller
             $message = $messages['error'][$status];
         } else {
             $user->email = $newEmail;
-            $this->user->createUser($user->toArray())->changeEmailVerificationNotification($user->id);
+            $this->user->store($user->toArray())->changeEmailVerificationNotification($user->id);
             $status  = 'success';
             $message = $messages[$status];
         }
