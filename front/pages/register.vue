@@ -1,11 +1,10 @@
 <template>
 <v-container fill-height>
-  <span class="bg"></span>
+  <span class="bg" />
+
   <v-row>
     <v-col cols="6">
-      <h1 class="register-title text-h3 font-weight-bold">
-        EggHamへようこそ。
-      </h1>
+      <h1 class="register-title text-h3 font-weight-bold">EggHamへようこそ。</h1>
 
       <p class="register-text text-subtitle-1">
         EggHamはYouTube動画に含まれているTOEFL単語を探し出し、<br>
@@ -25,9 +24,7 @@
     <v-col cols="6" align="center">
       <v-card class="px-8" elevation="5" height="600">
         <v-card-text>
-          <v-card-title class="text-h5 font-weight-bold">
-            アカウント作成
-          </v-card-title>
+          <v-card-title class="text-h5 font-weight-bold">アカウント作成</v-card-title>
 
           <ValidationObserver v-slot="{ passes, validate }">
             <ValidationProvider
@@ -169,13 +166,6 @@ export default {
   head() {
     return { title: 'アカウント作成' }
   },
-  // created() {
-  //   console.log(this.$auth.loggedIn)
-  //   if (!this.$auth.loggedIn) {
-  //     this.email = 'example@eggham.com'
-  //     this.password = 'hogehoge'
-  //   }
-  // },
   methods: {
     async register() {
       this.loading.register = true
@@ -221,12 +211,14 @@ export default {
       this.loading.googleLogin = false
     },
     togglePasswordVisualization() {
-      this.passwordType = this.passwordType === 'password' ? 'text' : 'password'
-      this.passwordIcon = this.passwordType === 'password' ? 'mdi-eye-off' : 'mdi-eye'
+      const isPasswordType = this.passwordType === 'password'
+      this.passwordType = isPasswordType ? 'text' : 'password'
+      this.passwordIcon = isPasswordType ? 'mdi-eye-off' : 'mdi-eye'
     },
     toggleConfirmPasswordVisualization() {
-      this.confirmPasswordType = this.confirmPasswordType === 'password' ? 'text' : 'password'
-      this.confirmPasswordIcon = this.confirmPasswordType === 'password' ? 'mdi-eye-off' : 'mdi-eye'
+      const isConfirmPasswordType = this.confirmPasswordType === 'password'
+      this.confirmPasswordType = isConfirmPasswordType ? 'text' : 'password'
+      this.confirmPasswordIcon = isConfirmPasswordType ? 'mdi-eye-off' : 'mdi-eye'
     }
   }
 }
