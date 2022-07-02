@@ -64,7 +64,7 @@
           color="primary"
           :loading="loading"
           :disabled="!isEdited"
-          @click="$emit('change-user-info', { name: userName }); isEdited = false"
+          @click="$emit('change-name', { name: userName }); isEdited = false"
         >
           変更内容を保存
         </v-btn>

@@ -23,11 +23,14 @@
 
       <v-col cols="8" class="pl-0">
         <v-card-text>
-          <UserInfo
-            v-if="selectedItem === 0"
-            :loading="loading.changeName"
-            @change-user-info="changeName"
-          />
+          <ValidationObserver ref="changeNameValidation" @submit.prevent>
+            <UserInfo
+              v-if="selectedItem === 0"
+              :loading="loading.changeName"
+              @change-name="changeName"
+            />
+          </ValidationObserver>
+
           <ValidationObserver ref="changeEmailValidation" @submit.prevent>
             <MailAddress
               v-if="selectedItem === 1"
@@ -35,12 +38,15 @@
               @change-email="changeEmail"
             />
           </ValidationObserver>
-          <Password
-            v-if="selectedItem === 2"
-            ref="password"
-            :loading="loading.changePass"
-            @change-pass="changePass"
-          />
+
+          <ValidationObserver ref="changePassValidation" @submit.prevent>
+            <Password
+              v-if="selectedItem === 2"
+              ref="password"
+              :loading="loading.changePass"
+              @change-pass="changePass"
+            />
+          </ValidationObserver>
         </v-card-text>
       </v-col>
     </v-row>
@@ -75,6 +81,9 @@ export default {
       return res.user
     },
     async changeName(e) {
+      const isValid = await this.$refs.changeNameValidation.validate()
+      if (!isValid) { return }
+      
       this.loading.changeName = true
       
       try {
@@ -92,7 +101,7 @@ export default {
     async changeEmail(e) {
       const isValid = await this.$refs.changeEmailValidation.validate()
       if (!isValid) { return }
-      
+
       this.loading.changeEmail = true
 
       try {
@@ -109,6 +118,9 @@ export default {
       this.loading.changeEmail = false
     },
     async changePass(e) {
+      const isValid = await this.$refs.changePassValidation.validate()
+      if (!isValid) { return }
+      
       this.loading.changePass = true
       
       try {
