@@ -39,7 +39,6 @@
             :loading="loading.changePass"
             @change-pass="changePass"
           />
-          <SiteLanguage v-if="selectedItem === 3" />
         </v-card-text>
       </v-col>
     </v-row>
@@ -50,20 +49,16 @@
 import UserInfo from '~/components/Setting/UserInfo.vue'
 import MailAddress from '~/components/Setting/MailAddress.vue'
 import Password from '~/components/Setting/Password.vue'
-import SiteLanguage from '~/components/Setting/SiteLanguage.vue'
 import Mixin from '~/mixins/mixin.js'
 
 export default {
-  components: {
-    UserInfo, MailAddress, Password, SiteLanguage
-  },
+  components: { UserInfo, MailAddress, Password },
   mixins: [ Mixin ],
   data: () => ({
     settingList: [
       { text: 'アカウント情報' },
       { text: 'メールアドレス変更' },
       { text: 'パスワード変更' },
-      { text: 'サイト内言語' },
     ],
     loading: {
       changeName: false,
