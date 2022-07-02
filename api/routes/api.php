@@ -32,9 +32,6 @@ Route::get('captions',  [YoutubeController::class, 'getCaptions' ]);
 Route::get('langList',  [YoutubeController::class, 'getLangList' ]);
 Route::get('videoInfo', [YoutubeController::class, 'getVideoInfo']);
 
-Route::post('translate',       [DeepLController::class, 'translate'        ]);
-Route::post('character/count', [DeepLController::class, 'getCharacterCount']);
-
 Route::group(['middleware' => ['session'], 'prefix' => 'oauth'], function () {
     Route::get('{provider}/redirect', [LoginController::class, 'socialRedirect'   ]);
     Route::get('{provider}/callback', [LoginController::class, 'handleSnsCallback']);
