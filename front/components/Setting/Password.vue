@@ -2,49 +2,77 @@
   <div>
     <v-card-title>パスワード変更</v-card-title>
 
-    <v-text-field
-      v-model="currentPass"
-      label="現在のパスワード"
-      :append-icon="currentPasswordIcon"
-      :type="currentPasswordType"
-      outlined
-      @click:append="toggleCurrentPasswordVisualization"
-    />
+    <form>
+      <ValidationProvider
+        v-slot="{ errors }"
+        rules="required|min:8|max:20"
+        name="現在のパスワード"
+        mode="passive"
+      >
+        <v-text-field
+          v-model="currentPass"
+          label="現在のパスワード"
+          :append-icon="currentPasswordIcon"
+          :type="currentPasswordType"
+          :error-messages="errors"
+          outlined
+          @click:append="toggleCurrentPasswordVisualization"
+        />
+      </ValidationProvider>
 
-    <v-btn plain small>
-      パスワードを忘れましたか？<v-icon>mdi-chevron-right</v-icon>
-    </v-btn>
+      <v-btn plain small>
+        パスワードを忘れましたか？<v-icon>mdi-chevron-right</v-icon>
+      </v-btn>
 
-    <v-text-field
-      v-model="newPass"
-      class="mt-7"
-      label="新しいパスワード"
-      :append-icon="newPasswordIcon"
-      :type="newPasswordType"
-      outlined
-      @click:append="toggleNewPasswordVisualization"
-    />
+      <ValidationProvider
+        v-slot="{ errors }"
+        rules="required|min:8|max:20|confirmed:confirmPass"
+        name="新しいパスワード"
+        mode="passive"
+      >
+        <v-text-field
+          v-model="newPass"
+          class="mt-7"
+          label="新しいパスワード"
+          :append-icon="newPasswordIcon"
+          :type="newPasswordType"
+          :error-messages="errors"
+          outlined
+          @click:append="toggleNewPasswordVisualization"
+        />
+      </ValidationProvider>
 
-    <v-text-field
-      v-model="confirmPass"
-      label="新しいパスワード確認用"
-      :append-icon="confirmPasswordIcon"
-      :type="confirmPasswordType"
-      outlined
-      @click:append="toggleConfirmPasswordVisualization"
-    />
+      <ValidationProvider
+        v-slot="{ errors }"
+        vid="confirmPass"
+        rules="required|min:8|max:20"
+        name="新しいパスワード確認用"
+        mode="passive"
+      >
+        <v-text-field
+          v-model="confirmPass"
+          label="新しいパスワード確認用"
+          :append-icon="confirmPasswordIcon"
+          :type="confirmPasswordType"
+          :error-messages="errors"
+          outlined
+          @click:append="toggleConfirmPasswordVisualization"
+        />
+      </ValidationProvider>
 
-    <v-row>
-      <v-col cols="12" align="right">
-        <v-btn
-          color="primary"
-          :loading="loading"
-          @click="$emit('change-pass', {currentPass, newPass, confirmPass})"
-        >
-          変更する
-        </v-btn>
-      </v-col>
-    </v-row>
+      <v-row>
+        <v-col cols="12" align="right">
+          <v-btn
+            color="primary"
+            type="submit"
+            :loading="loading"
+            @click="$emit('change-pass', {currentPass, newPass, confirmPass})"
+          >
+            変更する
+          </v-btn>
+        </v-col>
+      </v-row>
+    </form>
   </div>
 </template>
 
