@@ -166,7 +166,10 @@ export default {
           password: this.password
         }})
         this.showMessage(res.data.status, res.data.message)
-        this.$emit('update:show', false)
+
+        if (res.data.status === 'success') {
+          this.$emit('update:show', false)
+        }
       } catch (e) {
         console.log(e.message)
       }
