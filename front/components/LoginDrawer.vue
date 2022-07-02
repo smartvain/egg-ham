@@ -143,7 +143,7 @@ export default {
     loading: {
       login: false,
       googleLogin: false,
-      twitterLogin: false
+      passwordReset: false
     },
     screenWidth: window.innerWidth,
     passwordIcon: 'mdi-eye-off',
