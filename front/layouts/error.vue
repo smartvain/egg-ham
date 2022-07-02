@@ -33,16 +33,6 @@ export default {
       otherError: '予期しないエラーが発生しました。',
     }
   },
-  created() {
-    let message
-
-    switch (this.$route.name) {
-      case 'mypage': message = 'マイページはログインが必要なページです。'; break
-      default: message = 'ログインが必要です。'; break
-    }
-    
-    this.notLogged = message
-  },
   head() {
     let title
     switch (this.error.statusCode) {
@@ -53,6 +43,16 @@ export default {
 
     return { title }
   },
+  created() {
+    let message
+
+    switch (this.$route.name) {
+      case 'mypage': message = 'マイページはログインが必要なページです。'; break
+      default: message = 'ログインが必要です。'; break
+    }
+    
+    this.notLogged = message
+  }
 }
 </script>
 
