@@ -20,7 +20,7 @@
         />
       </ValidationProvider>
 
-      <v-btn plain small>
+      <v-btn plain small @click="passwordReset">
         パスワードを忘れましたか？<v-icon>mdi-chevron-right</v-icon>
       </v-btn>
       
@@ -58,9 +58,10 @@
 
 <script>
 import Mixin from '~/mixins/mixin.js'
+import PassResetMixin from '~/mixins/passwordReset.js'
 
 export default {
-  mixins: [ Mixin ],
+  mixins: [ Mixin, PassResetMixin ],
   props: {
     loading: { type: Boolean, default: false }
   },

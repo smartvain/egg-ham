@@ -106,6 +106,7 @@
         <v-btn
           class="pa-0 mb-8"
           absolute bottom right plain small
+          @click="passwordReset"
         >
           パスワードをお忘れの方
           <v-icon>mdi-chevron-right</v-icon>
@@ -128,9 +129,10 @@
 <script>
 import AuthMixin from '~/mixins/auth.js'
 import Mixin from '~/mixins/mixin.js'
+import PassResetMixin from '~/mixins/passwordReset.js'
 
 export default {
-  mixins: [ AuthMixin, Mixin ],
+  mixins: [ AuthMixin, Mixin, PassResetMixin ],
   props: {
     show: { type: Boolean, default: false }
   },
