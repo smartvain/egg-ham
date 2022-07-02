@@ -96,8 +96,10 @@
 <script>
 import { mapGetters } from 'vuex'
 import HorizontalBar from '~/components/HorizontalBar.vue'
+import Mixin from '~/mixins/mixin.js'
 
 export default {
+  mixins: [ Mixin ],
   name: 'IndexPage',
   components: { HorizontalBar },
   beforeRouteEnter(to, from, next) {
@@ -156,9 +158,9 @@ export default {
           video_title : this.videoTitle,
           url         : this.url,
         })
-        this.$toast.show('単語を保存しました。')
+        this.showMessage('success', '単語を保存しました。')
       } catch(e) {
-        this.$toast.error('単語の保存に失敗しました。')
+        console.log(e.message)
       }
 
       this.loading.storeWord = false

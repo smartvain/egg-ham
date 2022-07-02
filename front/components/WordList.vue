@@ -157,8 +157,10 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import Mixin from '~/mixins/mixin.js'
 
 export default {
+  mixins: [ Mixin ],
   props: {
     filteredItems: { type: Array, default: () => [] },
   },
@@ -189,9 +191,9 @@ export default {
       try {
         await this.$axios.$delete(`word/${wordId}`)
         await this.$nuxt.refresh()
-        this.$toast.show('単語を削除しました。')
+        this.showMessage('success', '単語を削除しました。')
       } catch (e) {
-        this.$toast.error('単語の削除に失敗しました。')
+        console.log(e.message)
       }
 
       this.loading.deleteWord = false
@@ -202,9 +204,9 @@ export default {
       try {
         await this.$axios.$put('words', { words: this.editedWords })
         this.editedWords = []
-        this.$toast.show('編集内容を保存しました。')
+        this.showMessage('success', '編集内容を保存しました。')
       } catch (e) {
-        this.$toast.error('編集内容の保存に失敗しました。')
+        console.log(e.message)
       }
       
       this.loading.saveWords = false
