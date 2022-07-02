@@ -30,8 +30,8 @@ class ChangePasswordController extends Controller
         } elseif (!Hash::check($currentPass, $user->password)) {
             $status  = 'mismatch_current_pass';
             $message = $messages['error'][$status];
-        } elseif ($newPass !== $confirmPass) {
-            $status  = 'mismatch_confirm_pass';
+        } elseif (Hash::check($newPass, $user->password)) {
+            $status  = 'registered_pass';
             $message = $messages['error'][$status];
         } else {
             $this->user->replace($user->id, ['password' => Hash::make($newPass)]);
@@ -49,7 +49,7 @@ class ChangePasswordController extends Controller
             'error'   => [
                 'non_existent_user'     => 'ユーザーが存在しません。',
                 'mismatch_current_pass' => '現在のパスワードが違います。',
-                'mismatch_confirm_pass' => '確認パスワードが一致しませんでした。'
+                'registered_pass'       => '登録済みのパスワードです。',
             ]
         ];
     }
