@@ -42,9 +42,6 @@ class LoginController extends Controller
         if ($provider === 'google') {
             $socialUser = Socialite::driver($provider)->stateless()->user();
             $messages   = $this->getGoogleLoginMessages();
-        } elseif ($provider === 'twitter') {
-            $socialUser = Socialite::driver($provider)->user();
-            $messages   = $this->getTwitterLoginMessages();
         }
 
         $user = User::firstOrCreate(['email' => $socialUser->getEmail()], [
@@ -89,14 +86,6 @@ class LoginController extends Controller
         return [
             'success' => 'Googleでのログインに成功しました。',
             'error'   => 'Google認証中にエラーが発生しました。時間をおいてもう一度お試し下さい。'
-        ];
-    }
-
-    private function getTwitterLoginMessages()
-    {
-        return [
-            'success' => 'Twitterでのログインに成功しました。',
-            'error'   => 'Twitter認証中にエラーが発生しました。時間をおいてもう一度お試し下さい。'
         ];
     }
 }
