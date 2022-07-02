@@ -52,8 +52,7 @@ export default {
 
   auth: {
     redirect: {
-      login: false,
-      logout: '/'
+      login: '/',
     },
     strategies: {
       local: {

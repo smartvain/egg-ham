@@ -32,7 +32,7 @@
             <v-list-item-title>サイト概要</v-list-item-title>
           </v-list-item>
 
-          <v-list-item v-for="(page, index) in pages" :key="index" :to="page.path">
+          <v-list-item v-for="(page, index) in pages" :key="index" @click="moveMypage(page.path)">
             <v-list-item-title>{{ page.title }}</v-list-item-title>
           </v-list-item>
 
@@ -89,6 +89,18 @@ export default {
   watch: {
     darkMode(value) {
       this.$vuetify.theme.dark = value
+    }
+  },
+  methods: {
+    moveMypage(path) {
+      if (path === '/mypage') {
+        if (!this.$auth.loggedIn) {
+          this.$toast.error('マイページに移動するにはログインが必要です。')
+          return
+        }
+      }
+
+      this.$router.push(path)
     }
   }
 }
