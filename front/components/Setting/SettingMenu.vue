@@ -28,11 +28,13 @@
             :loading="loading.changeName"
             @change-user-info="changeName"
           />
-          <MailAddress
-            v-if="selectedItem === 1"
-            :loading="loading.changeEmail"
-            @change-email="changeEmail"
-          />
+          <ValidationObserver ref="changeEmailValidation" @submit.prevent>
+            <MailAddress
+              v-if="selectedItem === 1"
+              :loading="loading.changeEmail"
+              @change-email="changeEmail"
+            />
+          </ValidationObserver>
           <Password
             v-if="selectedItem === 2"
             ref="password"
@@ -88,6 +90,9 @@ export default {
       this.loading.changeName = false
     },
     async changeEmail(e) {
+      const isValid = await this.$refs.changeEmailValidation.validate()
+      if (!isValid) { return }
+      
       this.loading.changeEmail = true
 
       try {
