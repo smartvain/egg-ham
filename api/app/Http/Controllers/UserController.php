@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\User\ChangeNameRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class UserController extends Controller
         $this->user = $user;
     }
     
-    public function changeName(Request $request)
+    public function changeName(ChangeNameRequest $request)
     {
         $isSuccess = $this->user->replace($request->user()->id, $request->input());
         $messages  = $this->getMessages();
