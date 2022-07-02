@@ -74,9 +74,9 @@ class LoginController extends Controller
         return [
             'success' => 'ログインしました。',
             'error'   => [
-                'email'      => 'このメールアドレスは登録されていません。',
-                'password'   => 'パスワードが違います。',
-                'unverified' => '先にメールアドレスを認証してください。'
+                'non_existent_email' => 'このメールアドレスは登録されていません。',
+                'mismatch_password'  => 'パスワードが違います。',
+                'unverified'         => '先にメールアドレスを認証してください。'
             ]
         ];
     }
