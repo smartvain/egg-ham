@@ -20,7 +20,7 @@
 
       <v-card-text class="py-0">
         <v-btn
-          class="text-capitalize caption mt-5"
+          class="text-capitalize caption"
           style="border-color: #979797"
           height="48px"
           :loading="loading.googleLogin"
