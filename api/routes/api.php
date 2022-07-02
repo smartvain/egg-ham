@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\ChangeEmailController;
 use App\Http\Controllers\Auth\ChangePasswordController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\PasswordResetController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\DeepLController;
@@ -27,6 +28,7 @@ Route::post('register',         RegisterController::class);
 Route::post('login',            [LoginController::class,        'login' ]);
 Route::get('email/verify/{id}', [VerificationController::class, 'verify'])->name('verification.verify');
 Route::get('email/resend',      [VerificationController::class, 'resend'])->name('verification.resend');
+Route::post('password/reset',   PasswordResetController::class);
 
 Route::get('captions',  [YoutubeController::class, 'getCaptions' ]);
 Route::get('langList',  [YoutubeController::class, 'getLangList' ]);
