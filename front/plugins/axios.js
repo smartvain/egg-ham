@@ -6,7 +6,7 @@ export default ({ $axios, $toast}) => {
         $toast.error(`${code}: ユーザーが承認されていません。先にログインをお試し下さい。`)
         break
       case 422:
-        $toast.error(`${code}: 不正なアクセスを検知しました。`)
+        $toast.error(`${code}: 不正な入力値を検知しました。`)
         break
       case 500:
         $toast.error(`${code}: サーバーエラーが発生しました。時間をおいてもう一度お試しください。`)
