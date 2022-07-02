@@ -28,7 +28,8 @@ export default {
   components: { WordList, Setting },
   middleware: 'auth',
   async asyncData({ $axios, $auth }) {
-    return { words: await $axios.$get('words', { params: {user_id: $auth.$state.user.id} }) }
+    const user_id = $auth.$state.user ? $auth.$state.user.id : null
+    return { words: await $axios.$get('words', { params: { user_id } }) }
   },
   data: () => ({
     tabItems: [ '単語', '設定' ],
