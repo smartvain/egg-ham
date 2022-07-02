@@ -43,7 +43,7 @@
               color="primary"
               dense solo block
               :loading="loading.saveWords"
-              :disabled="!editMode"
+              :disabled="!editMode || editedWords.length === 0"
               @click="saveWords()"
             >
               保存する

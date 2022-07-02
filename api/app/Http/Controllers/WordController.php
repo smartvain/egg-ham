@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Word\GetWordsRequest;
+use App\Http\Requests\Word\SaveWordsRequest;
+use App\Http\Requests\Word\StoreWordRequest;
 use App\Models\Word;
-use Illuminate\Http\Request;
 
 class WordController extends Controller
 {
@@ -14,17 +16,17 @@ class WordController extends Controller
         $this->word = $word;
     }
 
-    public function getWords(Request $request)
+    public function getWords(GetWordsRequest $request)
     {
         return $this->word->where('user_id', $request->user_id)->get();
     }
 
-    public function storeWord(Request $request)
+    public function storeWord(StoreWordRequest $request)
     {
         $this->word->store($request->input());
     }
 
-    public function saveWords(Request $request)
+    public function saveWords(SaveWordsRequest $request)
     {
         $this->word->replace($request->words);
     }
