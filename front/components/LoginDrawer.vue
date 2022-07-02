@@ -20,22 +20,6 @@
 
       <v-card-text class="py-0">
         <v-btn
-          class="text-capitalize caption"
-          color="#00ACEE"
-          height="48px"
-          :loading="loading.twitterLogin"
-          rounded dark depressed block
-          @click="beforeSnsLogin(twitterLogin)"
-        >
-          <v-img
-            class="mr-4"
-            :src="require('~/assets/img/twitter_logo_white.png')"
-            max-width="24"
-          />
-          twitterでログイン
-        </v-btn>
-
-        <v-btn
           class="text-capitalize caption mt-5"
           style="border-color: #979797"
           height="48px"
@@ -171,11 +155,6 @@ export default {
   },
   mounted() {
     window.addEventListener('resize', () => this.screenWidth = window.innerWidth)
-    console.log('loginUser: ', this.$auth.user)
-    if (!this.$auth.loggedIn) {
-      this.email = 'example@eggham.com'
-      this.password = 'hogehoge'
-    }
   },
   methods: {
     async login() {

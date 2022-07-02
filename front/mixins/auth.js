@@ -11,19 +11,6 @@ export default {
 
       this.loading.googleLogin = false
     },
-    twitterLogin() {
-      this.loading.twitterLogin = true
-
-      // try {
-      //   // await this.$auth.loginWith('twitter')
-      //   const redirectUrl = await this.$axios.$get('oauth/twitter/redirect')
-      //   window.location.href = redirectUrl
-      // } catch (e) {
-      //   console.log(e.message)
-      // }
-
-      this.loading.twitterLogin = false
-    },
     beforeSnsLogin(callback) {
       if (this.$auth.loggedIn) {
         this.$toast.error('すでにログインしています。')
