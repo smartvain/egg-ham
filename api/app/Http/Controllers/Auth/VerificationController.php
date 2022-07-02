@@ -7,7 +7,6 @@ use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\VerificationRequest;
 use App\Models\User;
 use App\Models\Word;
-use Illuminate\Support\Facades\Log;
 
 class VerificationController extends Controller
 {
