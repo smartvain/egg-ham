@@ -125,9 +125,9 @@ export default {
       
       try {
         const res = await this.$axios.$put('user/password', {
-          currentPass          : e.currentPass,
-          newPass              : e.newPass,
-          password_confirmation: e.confirmPass,
+          currentPass         : e.currentPass,
+          newPass             : e.newPass,
+          newPass_confirmation: e.confirmPass,
         })
         
         if (res.status === 'success') { this.$refs.password.initPasswords() }

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\User\ChangePasswordRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class ChangePasswordController extends Controller
@@ -16,11 +16,11 @@ class ChangePasswordController extends Controller
         $this->user = $user;
     }
     
-    public function __invoke(Request $request)
+    public function __invoke(ChangePasswordRequest $request)
     {
         $currentPass = $request->currentPass;
         $newPass     = $request->newPass;
-        $confirmPass = $request->confirmPass;
+        $confirmPass = $request->newPass_confirmation;
         $messages    = $this->getMessages();
         $user        = $this->user->find($request->user()->id);
         
