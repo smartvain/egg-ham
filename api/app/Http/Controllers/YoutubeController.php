@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Youtube\GetCaptionRequest;
+use App\Http\Requests\Youtube\GetLangRequest;
 use App\Models\ToeflWord;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 class YoutubeController extends Controller
 {
-    public function getLangList(Request $request)
+    public function getLangList(GetLangRequest $request)
     {
         $videoId = $request->videoId;
         
@@ -31,7 +33,7 @@ class YoutubeController extends Controller
         return $langList;
     }
 
-    public function getCaptions(Request $request)
+    public function getCaptions(GetCaptionRequest $request)
     {
         $videoId = $request->videoId;
         $lang    = $request->lang;
