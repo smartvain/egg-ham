@@ -78,7 +78,8 @@
         />
 
         <div v-else>
-          {{ item.mean }}
+          <span v-if="item.mean">{{ item.mean }}</span>
+          <span v-else class="grey--text">未入力</span>
         </div>
       </template>
 
