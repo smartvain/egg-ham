@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\User\ChangeEmailRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class ChangeEmailController extends Controller
@@ -16,7 +16,7 @@ class ChangeEmailController extends Controller
         $this->user = $user;
     }
     
-    public function __invoke(Request $request)
+    public function __invoke(ChangeEmailRequest $request)
     {
         $currentPass = $request->currentPass;
         $newEmail    = $request->newEmail;
