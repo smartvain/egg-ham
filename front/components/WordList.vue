@@ -43,7 +43,7 @@
               color="primary"
               dense solo block
               :loading="loading.saveWords"
-              :disabled="!editMode || editedWords.length === 0"
+              :disabled="!editMode"
               @click="saveWords()"
             >
               保存する
@@ -199,6 +199,8 @@ export default {
       this.loading.deleteWord = false
     },
     async saveWords() {
+      if (this.editedWords.length === 0) { return }
+
       this.loading.saveWords = true
       
       try {
