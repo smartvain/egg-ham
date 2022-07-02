@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\VerificationRequest;
 use App\Models\User;
 use App\Models\Word;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class VerificationController extends Controller
 {
@@ -16,7 +18,7 @@ class VerificationController extends Controller
         $this->user = $user;
     }
     
-    public function verify($userId, Request $request)
+    public function verify($userId, VerificationRequest $request)
     {
         $user       = $this->user->find($userId);
         $isVerified = $user->hasVerifiedEmail();
@@ -58,7 +60,7 @@ class VerificationController extends Controller
         return redirect("{$redirectUrl}?{$param1}{$param2}{$param3}");
     }
 
-    public function resend(Request $request)
+    public function resend(RegisterRequest $request)
     {
         $user     = $this->user->where('email', $request->email)->first();
         $messages = $this->getResendMessages();
