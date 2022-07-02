@@ -13,7 +13,7 @@ class VerificationRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,10 @@ class VerificationRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'expires'   => 'required',
+            'hash'      => 'required',
+            'signature' => 'required',
+            'oldUserId' => 'numeric',
         ];
     }
 }
