@@ -129,10 +129,12 @@ export default {
           newPass             : e.newPass,
           newPass_confirmation: e.confirmPass,
         })
-        
-        if (res.status === 'success') { this.$refs.password.initPasswords() }
-
         this.showMessage(res.status, res.message)
+
+        if (res.status === 'success') {
+          this.$refs.password.initPasswords()
+          this.$refs.changePassValidation.reset()
+        }
       } catch (e) {
         console.log(e.message)
       }
