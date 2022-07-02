@@ -112,6 +112,14 @@
         </a>
       </template>
 
+      <template #[`item.weblio`]="{ item }">
+        <v-btn
+          icon
+          @click="moveWeblio(item.text)"
+        >
+          <v-icon>mdi-search-web</v-icon>
+        </v-btn>
+      </template>
 
       <template #[`item.operation`]="{ item }">
         <v-btn
@@ -159,6 +167,7 @@ export default {
       { text: '意味', value: 'mean' },
       { text: '動画タイトル', value: 'video_title' },
       { text: 'URL', value: 'url' },
+      { text: 'Weblio検索', value: 'weblio', sortable: false },
       { text: '削除', value: 'operation', sortable: false }
     ],
     loading: {
@@ -205,7 +214,10 @@ export default {
         if (item.id === word.id) { return }
       }
       this.editedWords.push(word)
-    }
+    },
+    moveWeblio(word) {
+      window.open(`https://ejje.weblio.jp/content/${word}`, '_blank')
+    },
   }
 }
 </script>
