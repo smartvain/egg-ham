@@ -3,7 +3,7 @@
     <v-col cols="12" align="center" class="pa-0">
       <v-card class="px-8" elevation="5" height="300">
         <v-card-text>
-          <v-card-title class="text-h5 font-weight-bold">パスワード再設定</v-card-title>
+          <v-card-title class="text-h5 font-weight-bold">パスワード再設定メールを送信</v-card-title>
 
           <p class="text-left">パスワードを再設定したいユーザーのメールアドレスをご入力下さい。</p>
 
