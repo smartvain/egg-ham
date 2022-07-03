@@ -56,15 +56,15 @@ class ResetPasswordNotification extends ResetPassword
             ->line(Lang::get('mail.password_reset.line_02'));
     }
 
-    public function resetUrl($notifiable)
+    protected function resetUrl($notifiable)
     {
         if (static::$createUrlCallback) {
             return call_user_func(static::$createUrlCallback, $notifiable, $this->token);
         }
 
-        return url(route('password.reset', [
+        return config('app.reset_password_url') . '?' . http_build_query([
             'token' => $this->token,
             'email' => $notifiable->getEmailForPasswordReset(),
-        ], false));
+        ]);
     }
 }
