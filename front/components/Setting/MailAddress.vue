@@ -48,7 +48,7 @@
             :loading="loading"
             @click="$emit('change-email', {currentPass, newEmail})"
           >
-            変更する
+            メールアドレス確認メールを送る
           </v-btn>
         </v-col>
       </v-row>
