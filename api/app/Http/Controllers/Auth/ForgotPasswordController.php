@@ -59,7 +59,7 @@ class ForgotPasswordController extends Controller
     private function getResetPasswordMessages()
     {
         return [
-            'success' => 'パスワードをリセットしました。',
+            'success' => 'パスワードをリセットしました。ログインをお試し下さい。',
             'error'   => 'パスワードリセットに失敗しました。'
         ];
     }
