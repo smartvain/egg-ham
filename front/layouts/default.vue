@@ -28,7 +28,7 @@
         </template>
 
         <v-list>
-          <v-list-item @click="about = !dbout">
+          <v-list-item @click="about = !about">
             <v-list-item-title>サイト概要</v-list-item-title>
           </v-list-item>
 
