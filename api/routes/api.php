@@ -6,8 +6,6 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\PasswordResetController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\VerificationController;
-use App\Http\Controllers\DeepLController;
-use App\Http\Controllers\ToeflWordController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WordController;
 use App\Http\Controllers\YoutubeController;
