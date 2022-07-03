@@ -31,7 +31,7 @@ Route::get('email/verify/{id}', [VerificationController::class, 'verify'])->name
 Route::get('email/resend',      [VerificationController::class, 'resend'])->name('verification.resend');
 
 Route::post('password/forgot', [ForgotPasswordController::class, 'sendResetLinkEmail']);
-Route::post('password/reset',  [ForgotPasswordController::class, 'resetPassword'])->name('password.reset');
+Route::post('password/reset',  [ForgotPasswordController::class, 'resetPassword'     ])->name('password.reset');
 
 Route::get('captions',  [YoutubeController::class, 'getCaptions' ]);
 Route::get('langList',  [YoutubeController::class, 'getLangList' ]);
