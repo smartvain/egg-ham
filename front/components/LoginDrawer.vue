@@ -129,10 +129,9 @@
 <script>
 import AuthMixin from '~/mixins/auth.js'
 import Mixin from '~/mixins/mixin.js'
-import PassResetMixin from '~/mixins/passwordReset.js'
 
 export default {
-  mixins: [ AuthMixin, Mixin, PassResetMixin ],
+  mixins: [ AuthMixin, Mixin ],
   props: {
     show: { type: Boolean, default: false }
   },
@@ -143,7 +142,6 @@ export default {
     loading: {
       login: false,
       googleLogin: false,
-      passwordReset: false
     },
     screenWidth: window.innerWidth,
     passwordIcon: 'mdi-eye-off',

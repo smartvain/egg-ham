@@ -78,10 +78,9 @@
 
 <script>
 import Mixin from '~/mixins/mixin.js'
-import PassResetMixin from '~/mixins/passwordReset.js'
 
 export default {
-  mixins: [ Mixin, PassResetMixin ],
+  mixins: [ Mixin ],
   props: {
     loading: { type: Boolean, default: false }
   },
