@@ -106,7 +106,7 @@
         <v-btn
           class="pa-0 mb-8"
           absolute bottom right plain small
-          @click="passwordReset"
+          @click="resetLinkDialog = !resetLinkDialog"
         >
           パスワードをお忘れの方
           <v-icon>mdi-chevron-right</v-icon>
@@ -123,15 +123,19 @@
         </v-btn>
       </v-card-text>
     </v-card>
+
+    <SendResetLinkDialog :show.sync="resetLinkDialog" />
   </v-navigation-drawer>
 </template>
 
 <script>
 import AuthMixin from '~/mixins/auth.js'
 import Mixin from '~/mixins/mixin.js'
+import SendResetLinkDialog from '~/components/SendResetLinkDialog.vue'
 
 export default {
   mixins: [ AuthMixin, Mixin ],
+  components: { SendResetLinkDialog },
   props: {
     show: { type: Boolean, default: false }
   },
@@ -143,6 +147,7 @@ export default {
       login: false,
       googleLogin: false,
     },
+    resetLinkDialog: false,
     screenWidth: window.innerWidth,
     passwordIcon: 'mdi-eye-off',
     passwordType: 'password'

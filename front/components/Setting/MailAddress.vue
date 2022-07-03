@@ -20,7 +20,7 @@
         />
       </ValidationProvider>
 
-      <v-btn plain small @click="passwordReset">
+      <v-btn plain small @click="resetLinkDialog = !resetLinkDialog">
         パスワードを忘れましたか？<v-icon>mdi-chevron-right</v-icon>
       </v-btn>
       
@@ -53,14 +53,18 @@
         </v-col>
       </v-row>
     </form>
+
+    <SendResetLinkDialog :show.sync="resetLinkDialog" />
   </div>
 </template>
 
 <script>
 import Mixin from '~/mixins/mixin.js'
+import SendResetLinkDialog from '~/components/SendResetLinkDialog.vue'
 
 export default {
   mixins: [ Mixin ],
+  components: { SendResetLinkDialog },
   props: {
     loading: { type: Boolean, default: false }
   },
@@ -69,6 +73,7 @@ export default {
     newEmail: null,
     currentPasswordIcon: 'mdi-eye-off',
     currentPasswordType: 'password',
+    resetLinkDialog: false,
   })
 }
 </script>
