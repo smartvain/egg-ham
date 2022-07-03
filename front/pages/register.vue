@@ -30,7 +30,7 @@
             <form>
               <ValidationProvider
                 v-slot="{ errors }"
-                rules="required|_email|max:20"
+                rules="required|_email|max:50"
                 name="メールアドレス"
                 mode="passive"
               >
@@ -40,7 +40,7 @@
                   append-icon="mdi-email"
                   label="メールアドレス"
                   type="text"
-                  counter="20"
+                  counter="50"
                   outlined dense
                   :error-messages="errors"
                 />

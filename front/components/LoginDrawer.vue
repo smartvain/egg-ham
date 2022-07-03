@@ -41,7 +41,7 @@
           <form>
             <ValidationProvider
               v-slot="{ errors }"
-              rules="required|_email|max:20"
+              rules="required|_email|max:50"
               name="メールアドレス"
               mode="passive"
             >
