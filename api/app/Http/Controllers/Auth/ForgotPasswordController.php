@@ -45,11 +45,7 @@ class ForgotPasswordController extends Controller
             $message = $messages[$status];
         }
 
-        $redirectUrl = config('app.home_url') . '/oauth/email/verify';
-        $param1      = "message={$message}";
-        $param2      = "&status={$status}";
-
-        return redirect("{$redirectUrl}?{$param1}{$param2}");
+        return compact('message', 'status');
     }
 
     private function getSendResetLinkMessages()
