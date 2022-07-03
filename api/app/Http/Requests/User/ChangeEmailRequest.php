@@ -25,7 +25,7 @@ class ChangeEmailRequest extends FormRequest
     {
         return [
             'currentPass' => 'required|min:8|max:20',
-            'newEmail'    => 'required|email|max:20',
+            'newEmail'    => 'required|email',
         ];
     }
 }
