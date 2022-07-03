@@ -31,18 +31,30 @@ class ForgotPasswordController extends Controller
     {
         $messages    = $this->getResetPasswordMessages();
         $credentials = $request->only(['email', 'token', 'password']);
+        $user        = User::where('email', $credentials['email'])->first();
 
-        $response = Password::reset($credentials, function (User $user, string $password) {
-            $user->password = Hash::make($password);
-            $user->save();
-        });
-
-        if ($response !== Password::PASSWORD_RESET) {
-            $status  = 'default';
+        if (!$credentials['token']) {
+            $status  = 'init';
+            $message = $messages['error'][$status];
+        } elseif (!$user) {
+            $status  = 'non_existent_user';
+            $message = $messages['error'][$status];
+        } elseif ($user->provider_id) {
+            $status  = 'sns_logged';
             $message = $messages['error'][$status];
         } else {
-            $status  = 'success';
-            $message = $messages[$status];
+            $response = Password::reset($credentials, function (User $user, string $password) {
+                $user->password = Hash::make($password);
+                $user->save();
+            });
+
+            if ($response !== Password::PASSWORD_RESET) {
+                $status  = 'default';
+                $message = $messages['error'][$status];
+            } else {
+                $status  = 'success';
+                $message = $messages[$status];
+            }
         }
 
         return compact('message', 'status');
@@ -63,7 +75,10 @@ class ForgotPasswordController extends Controller
         return [
             'success' => 'パスワードをリセットしました。ログインをお試し下さい。',
             'error'   => [
-                'default' => 'パスワードリセットに失敗しました。時間をおいてもう一度お試しください。'
+                'default'           => 'パスワードリセットに失敗しました。時間をおいてもう一度お試しください。',
+                'init'              => 'パスワードリセットに失敗しました。もう一度パスワード再設定メール送信からお試し下さい。',
+                'non_existent_user' => 'ユーザーが存在しません。',
+                'sns_logged'        => 'SNSログインしている場合はメールアドレス変更はできません。',
             ]
         ];
     }
