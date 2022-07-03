@@ -26,6 +26,9 @@ class ChangeEmailController extends Controller
         if (!$user) {
             $status  = 'non_existent_user';
             $message = $messages['error'][$status];
+        } elseif ($user->provider_id) {
+            $status  = 'sns_logged';
+            $message = $messages['error'][$status];
         } elseif ($user->email === $newEmail) {
             $status  = 'registered_email';
             $message = $messages['error'][$status];
@@ -51,6 +54,7 @@ class ChangeEmailController extends Controller
             'success' => '変更したメールアドレスに確認メールを送信しました。',
             'error'   => [
                 'non_existent_user' => 'ユーザーが存在しません。',
+                'sns_logged'        => 'SNSログインしている場合はメールアドレス変更はできません。',
                 'registered_email'  => 'すでに登録されているメールアドレスです。',
                 'mismatch_password' => 'パスワードが違います。',
                 'unverified_email'  => '先にメールアドレスを認証してください。'

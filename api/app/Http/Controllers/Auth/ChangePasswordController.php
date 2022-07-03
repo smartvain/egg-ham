@@ -27,6 +27,9 @@ class ChangePasswordController extends Controller
         if (!$user) {
             $status  = 'non_existent_user';
             $message = $messages['error'][$status];
+        } elseif ($user->provider_id) {
+            $status  = 'sns_logged';
+            $message = $messages['error'][$status];
         } elseif (!Hash::check($currentPass, $user->password)) {
             $status  = 'mismatch_current_pass';
             $message = $messages['error'][$status];
@@ -48,8 +51,9 @@ class ChangePasswordController extends Controller
             'success' => 'パスワードの変更に成功しました。',
             'error'   => [
                 'non_existent_user'     => 'ユーザーが存在しません。',
+                'sns_logged'            => 'SNSログインしている場合はメールアドレス変更はできません。',
                 'mismatch_current_pass' => '現在のパスワードが違います。',
-                'registered_pass'       => '登録済みのパスワードです。',
+                'registered_pass'       => '登録済みのパスワードです。'
             ]
         ];
     }
