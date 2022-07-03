@@ -2,7 +2,11 @@
   <div>
     <v-card-title>メールアドレス変更</v-card-title>
 
-    <form>
+    <v-card-text v-if="$auth.user.provider_id" class="grey--text">
+      SNSログインしている場合は、メールアドレスの変更はできません。
+    </v-card-text>
+
+    <form v-else>
       <ValidationProvider
         v-slot="{ errors }"
         rules="required|min:8|max:20"
