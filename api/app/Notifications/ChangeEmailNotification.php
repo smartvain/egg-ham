@@ -61,19 +61,6 @@ class ChangeEmailNotification extends VerifyEmail
     }
 
     /**
-     * Get the array representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
-    public function toArray($notifiable)
-    {
-        return [
-            //
-        ];
-    }
-
-    /**
      * Get the verification URL for the given notifiable.
      *
      * @param  mixed  $notifiable

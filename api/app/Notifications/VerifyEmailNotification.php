@@ -54,17 +54,4 @@ class VerifyEmailNotification extends VerifyEmail
             ->action(Lang::get('mail.verification.action'), $verificationUrl)
             ->line(Lang::get('mail.verification.line_02'));
     }
-
-    /**
-     * Get the array representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
-    public function toArray($notifiable)
-    {
-        return [
-            //
-        ];
-    }
 }
