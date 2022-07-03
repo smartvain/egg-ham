@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Notifications\ChangeEmailNotification;
+use App\Notifications\ResetPasswordNotification;
 use App\Notifications\VerifyEmailNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -77,5 +78,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function changeEmailVerificationNotification($oldUserId)
     {
         $this->notify(new ChangeEmailNotification($oldUserId));
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPasswordNotification($token));
     }
 }
