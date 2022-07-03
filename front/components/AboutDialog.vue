@@ -11,34 +11,31 @@
         当サイトについて
       </v-card-title>
       <v-card-text>
-        EggHamはWelio様の「TOEFL®に出る単語リスト」を参考にYouTube動画に含まれているTOEFL単語を探し出し、すぐに単語の意味を調べられるサイトです。
-        アカウントを作成すると、単語を保存することができます。
+        EggHamはWelio様の「TOEFL®に出る単語リスト」を参考にYouTube動画に含まれているTOEFL単語を探し出し、すぐに単語の意味を調べられるサイトです。<br>
+        アカウントを作成すると、単語を保存したり編集することができます。
       </v-card-text>
 
-      <v-card-title :class="aboutTitleClass">
+      <!-- <v-card-title :class="aboutTitleClass">
         アクセス解析ツールについて
       </v-card-title>
       <v-card-text>
-        当サイトでは、Googleによるアクセス解析ツール「Googleアナリティクス」を利用しています。
-        このGoogleアナリティクスはトラフィックデータの収集のためにクッキー（Cookie）を使用しております。
-        トラフィックデータは匿名で収集されており、個人を特定するものではありません。
-      </v-card-text>
+        当サイトでは、Googleによるアクセス解析ツール「Googleアナリティクス」を利用しています。<br>
+        このGoogleアナリティクスはトラフィックデータの収集のためにクッキー（Cookie）を使用しております。<br>
+        トラフィックデータは匿名で収集されており、個人を特定するものではありません。<br>
+      </v-card-text> -->
 
       <v-card-title :class="aboutTitleClass">
         お問い合わせ
       </v-card-title>
       <v-card-text>
-        こちらのGoogleFormsからお問い合わせお願いします。
+        こちらの<a href="https://docs.google.com/forms/d/e/1FAIpQLSfPMRHz2iztNIfoj2PtGgihaLOlD9R8Kz60ge5MkQckv4vspQ/viewform?usp=sf_link" target="subwindow">GoogleForms</a>からお問い合わせお願いします。
       </v-card-text>
 
       <v-card-title :class="aboutTitleClass">
         開発者について
       </v-card-title>
       <v-card-text>
-        Twitter: _________
-      </v-card-text>
-      <v-card-text>
-        GitHub: _________
+        GitHub: <a href="https://github.com/smartvain" target="subwindow">https://github.com/smartvain</a>
       </v-card-text>
 
       <v-card-actions>
