@@ -17,8 +17,8 @@ class ForgotPasswordController extends Controller
         $response = Password::sendResetLink($request->only('email'));
         
         if ($response !== Password::RESET_LINK_SENT) {
-            $status  = 'error';
-            $message = $messages[$status];
+            $status  = 'default';
+            $message = $messages['error'][$status];
         } else {
             $status  = 'success';
             $message = $messages[$status];
@@ -38,8 +38,8 @@ class ForgotPasswordController extends Controller
         });
 
         if ($response !== Password::PASSWORD_RESET) {
-            $status  = 'error';
-            $message = $messages[$status];
+            $status  = 'default';
+            $message = $messages['error'][$status];
         } else {
             $status  = 'success';
             $message = $messages[$status];
@@ -52,7 +52,9 @@ class ForgotPasswordController extends Controller
     {
         return [
             'success' => 'パスワード再設定メールを送信しました。',
-            'error'   => 'パスワード再設定メールの送信に失敗しました。'
+            'error'   => [
+                'default'    => 'パスワード再設定メールの送信に失敗しました。時間をおいてもう一度お試しください。',
+            ]
         ];
     }
 
@@ -60,7 +62,9 @@ class ForgotPasswordController extends Controller
     {
         return [
             'success' => 'パスワードをリセットしました。ログインをお試し下さい。',
-            'error'   => 'パスワードリセットに失敗しました。'
+            'error'   => [
+                'default' => 'パスワードリセットに失敗しました。時間をおいてもう一度お試しください。'
+            ]
         ];
     }
 }
