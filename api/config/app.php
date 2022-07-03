@@ -58,6 +58,8 @@ return [
 
     'home_url' => env('HOME_URL', '/home'),
 
+    'reset_password_url' => env('RESET_PASSWORD_URL', '/home'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
