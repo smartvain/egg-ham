@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ChangeEmailController;
 use App\Http\Controllers\Auth\ChangePasswordController;
 use App\Http\Controllers\Auth\LoginController;
@@ -28,7 +29,9 @@ Route::post('login', [LoginController::class, 'login']);
 
 Route::get('email/verify/{id}', [VerificationController::class, 'verify'])->name('verification.verify');
 Route::get('email/resend',      [VerificationController::class, 'resend'])->name('verification.resend');
-Route::post('password/reset',   PasswordResetController::class);
+
+Route::post('password/forgot', [ForgotPasswordController::class, 'sendResetLinkEmail']);
+Route::post('password/reset',  [ForgotPasswordController::class, 'resetPassword'])->name('password.reset');
 
 Route::get('captions',  [YoutubeController::class, 'getCaptions' ]);
 Route::get('langList',  [YoutubeController::class, 'getLangList' ]);
