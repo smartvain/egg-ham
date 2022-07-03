@@ -96,7 +96,11 @@ export default {
       this.loading.sendResetLinkEmail = true
       
       try {
-        const res = await this.$axios.$post('password/reset', this.form)
+        const res = await this.$axios.$post('password/reset', {
+          email: this.$route.query.email,
+          token: this.$route.query.token,
+          ...this.form
+        })
         this.showMessage(res.status, res.message)
       } catch (e) {
         console.log(e.message)
