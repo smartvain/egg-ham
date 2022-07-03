@@ -22,8 +22,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('register',         RegisterController::class);
-Route::post('login',            [LoginController::class,        'login' ]);
+Route::post('register', RegisterController::class);
+
+Route::post('login', [LoginController::class, 'login']);
+
 Route::get('email/verify/{id}', [VerificationController::class, 'verify'])->name('verification.verify');
 Route::get('email/resend',      [VerificationController::class, 'resend'])->name('verification.resend');
 Route::post('password/reset',   PasswordResetController::class);
