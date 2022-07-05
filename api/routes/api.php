@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('register', RegisterController::class);
 
 Route::post('login', [LoginController::class, 'login']);
+Route::post('token', [LoginController::class, 'refresh']);
 
 Route::get('email/verify/{id}', [VerificationController::class, 'verify'])->name('verification.verify');
 Route::get('email/resend',      [VerificationController::class, 'resend'])->name('verification.resend');
