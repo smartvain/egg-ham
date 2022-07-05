@@ -17,7 +17,7 @@
       <v-col cols="4">
         <v-card
           class="overflow-y-auto overflow-x-hidden"
-          :height="height"
+          height="100%"
           outlined
         >
           <v-data-table
@@ -26,6 +26,7 @@
             :search="localSearchWord"
             :hide-default-header="!isCaptions"
             :items-per-page="-1"
+            :height="height"
             hide-default-footer fixed-header
           >
             <template #top>
