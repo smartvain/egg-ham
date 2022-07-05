@@ -56,29 +56,37 @@ export default {
     },
     strategies: {
       local: {
+        scheme: 'refresh',
         token: {
-          property: "token",
+          property: 'access_token',
+          maxAge: 5,
           global: true,
           // required: true,
           // type: 'Bearer'
         },
+        refreshToken: {
+          property: 'refresh_token',
+          data: 'refresh_token',
+          maxAge: 60 * 60 * 24 * 30,
+        },
         user: {
-          property: "user",
+          property: 'user',
           // autoFetch: true
         },
         endpoints: {
-          login: { url: "/login", method: "post" },
-          user: { url: "/user", method: "get" },
+          login: { url: '/login', method: 'post' },
+          refresh: { url: '/token', method: 'post' },
+          user: { url: '/user', method: 'get' },
           logout: false
         }
       },
       google: {
         token: {
-          property: "token",
+          property: 'token',
           global: true,
         },
         user: {
-          property: "user",
+          property: 'user',
         },
         clientId: process.env.GOOGLE_CLIENT_ID,
         codeChallengeMethod: '',
