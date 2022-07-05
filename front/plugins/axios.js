@@ -1,4 +1,4 @@
-export default ({ $axios, $toast}) => {
+export default ({ $axios, $toast }) => {
   $axios.onError(error => {
     const code = error.response.status
     switch (code) {
