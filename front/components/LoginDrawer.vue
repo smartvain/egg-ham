@@ -72,12 +72,6 @@
               />
             </ValidationProvider>
 
-            <v-checkbox v-model="remember" class="mt-n2">
-              <template #label>
-                <span class="text-caption">ログインしたままにする</span>
-              </template>
-            </v-checkbox>
-
             <div class="text-center">
               <v-btn
                 class="primary"
@@ -142,7 +136,6 @@ export default {
   data: () => ({
     email: null,
     password: null,
-    remember: false,
     loading: {
       login: false,
       googleLogin: false,
@@ -168,8 +161,9 @@ export default {
       try {
         const res = await this.$auth.loginWith('local', { data: {
           email: this.email,
-          password: this.password
+          password: this.password,
         }})
+
         this.showMessage(res.data.status, res.data.message)
 
         if (res.data.status === 'success') {
