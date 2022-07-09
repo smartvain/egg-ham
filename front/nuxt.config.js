@@ -56,18 +56,12 @@ export default {
     },
     strategies: {
       local: {
-        scheme: 'refresh',
         token: {
-          property: 'access_token',
-          maxAge: 5,
+          property: 'token',
+          maxAge: 60 * 60,
           global: true,
           // required: true,
-          // type: 'Bearer'
-        },
-        refreshToken: {
-          property: 'refresh_token',
-          data: 'refresh_token',
-          maxAge: 60 * 60 * 24 * 30,
+          type: 'Bearer'
         },
         user: {
           property: 'user',
@@ -75,7 +69,6 @@ export default {
         },
         endpoints: {
           login: { url: '/login', method: 'post' },
-          refresh: { url: '/token', method: 'post' },
           user: { url: '/user', method: 'get' },
           logout: false
         }
