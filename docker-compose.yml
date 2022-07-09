@@ -5,13 +5,9 @@ services:
   front:
     image: node:16.13.2-alpine
     command: yarn dev
-    ports: # comment out when ssl
-      - ${FRONT_PORT}:80 # comment out when ssl
+    ports:
+      - ${FRONT_PORT}:80
     environment:
-      # VIRTUAL_HOST: dev.yuleapp.com # comment in when ssl
-      # LETSENCRYPT_HOST: dev.yuleapp.com # comment in when ssl
-      # LETSENCRYPT_EMAIL: yuleapp@example.com # comment in when ssl
-      # CERT_NAME: default # comment in when ssl
       HOST: '0.0.0.0'
       PORT: 80
     volumes:
@@ -36,7 +32,7 @@ services:
       dockerfile: ./docker/php/Dockerfile
     volumes:
       - ./api:/var/www/api
-      # - ./docker/php/php.ini:/usr/local/etc/php/conf.d/php.ini # phpの設定を変更したい時にコメントイン
+      # - ./docker/php/php.ini:/usr/local/etc/php/conf.d/php.ini # swicth original php.ini
     working_dir: /var/www/api
     depends_on:
       - db
@@ -51,39 +47,6 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       TZ: 'Asia/Tokyo'
-
-  # letsencrypt-nginx:
-  #   image: jrcs/letsencrypt-nginx-proxy-companion
-  #   container_name: letsencrypt-nginx-test
-  #   privileged: true
-  #   environment:
-  #     NGINX_PROXY_CONTAINER: nginx-proxy-test
-  #   volumes:
-  #     - /var/run/docker.sock:/var/run/docker.sock:ro
-  #     - proxy:/usr/share/nginx/html
-  #     - proxy:/etc/nginx/vhost.d
-  #     - ./docker/encrypt/certs:/etc/nginx/certs:rw
-  #   depends_on:
-  #     - nginx-proxy
-
-  # nginx-proxy:
-  #   image: jwilder/nginx-proxy
-  #   container_name: nginx-proxy-test
-  #   privileged: true
-  #   environment:
-  #     - "DHPARAM_GENERATION=false"
-  #   ports:
-  #     - ${HTTP_PORT}:80
-  #     - ${HTTPS_PORT}:443
-  #   volumes:
-  #     - /var/run/docker.sock:/tmp/docker.sock:ro
-  #     - proxy:/usr/share/nginx/html
-  #     - proxy:/etc/nginx/vhost.d
-  #     - ./docker/encrypt/certs:/etc/nginx/certs:ro
-  #   labels:
-  #     com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy: "true"
-  #   depends_on:
-  #     - front
 
 volumes:
   proxy:
