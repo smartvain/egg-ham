@@ -78,9 +78,6 @@ export default {
       set() {}
     }
   },
-  head() {
-    return { title: 'パスワード再設定' }
-  },
   methods: {
     async sendResetLinkEmail() {
       this.loading.sendResetLinkEmail = true
