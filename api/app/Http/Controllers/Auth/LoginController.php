@@ -29,6 +29,7 @@ class LoginController extends Controller
             $status  = 'unverified';
             $message = $messages['error'][$status];
         } else {
+            $user->tokens()->delete();
             $token   = $user->createToken('normal')->plainTextToken;
             $status  = 'success';
             $message = $messages['success'];
